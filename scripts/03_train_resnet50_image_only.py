@@ -173,6 +173,7 @@ def run_epoch(
     criterion: nn.Module,
     device: torch.device,
     optimizer: torch.optim.Optimizer | None = None,
+    max_batches: int = 0,
 ) -> Dict[str, float]:
     is_train = optimizer is not None
     model.train(is_train)
@@ -182,8 +183,11 @@ def run_epoch(
     top1 = 0
     top5 = 0
 
-    progress = tqdm(loader, leave=False, desc="train" if is_train else "eval")
-    for images, target in progress:
+    total_batches = min(len(loader), max_batches) if max_batches > 0 else len(loader)
+    progress = tqdm(loader, leave=False, desc="train" if is_train else "eval", total=total_batches)
+    for batch_idx, (images, target) in enumerate(progress, start=1):
+        if max_batches > 0 and batch_idx > max_batches:
+            break
         images = images.to(device, non_blocking=True)
         target = target.to(device, non_blocking=True)
 
@@ -252,6 +256,18 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
     loaders = build_loaders(splits, image_root, args.batch_size, args.num_workers)
 
     device = torch.device(args.device if args.device else ("cuda" if torch.cuda.is_available() else "cpu"))
+    print(f"Using device: {device}", flush=True)
+    print(
+        "Split counts:",
+        {str(k): int(v) for k, v in splits["split"].value_counts().items()},
+        flush=True,
+    )
+    if args.max_train_batches or args.max_eval_batches:
+        print(
+            f"Batch limits: train={args.max_train_batches or 'all'} "
+            f"eval={args.max_eval_batches or 'all'}",
+            flush=True,
+        )
     model = build_model(NUM_CLASSES).to(device)
     criterion = nn.CrossEntropyLoss()
 
@@ -283,8 +299,21 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         )
 
         for epoch in range(1, stage.epochs + 1):
-            train_metrics = run_epoch(model, loaders["train"], criterion, device, optimizer)
-            val_metrics = run_epoch(model, loaders["val"], criterion, device)
+            train_metrics = run_epoch(
+                model,
+                loaders["train"],
+                criterion,
+                device,
+                optimizer,
+                max_batches=args.max_train_batches,
+            )
+            val_metrics = run_epoch(
+                model,
+                loaders["val"],
+                criterion,
+                device,
+                max_batches=args.max_eval_batches,
+            )
 
             row = {
                 "stage": stage.name,
@@ -315,7 +344,13 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
 
     if best_path.exists():
         load_model_state(best_path, model, device)
-    test_metrics = run_epoch(model, loaders["test"], criterion, device)
+    test_metrics = run_epoch(
+        model,
+        loaders["test"],
+        criterion,
+        device,
+        max_batches=args.max_eval_batches,
+    )
     metrics = {
         "status": "ok",
         "device": str(device),
@@ -367,6 +402,8 @@ def main() -> None:
     parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--device", type=str, default="")
     parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--max-train-batches", type=int, default=0, help="Limit training batches per epoch; 0 means all batches.")
+    parser.add_argument("--max-eval-batches", type=int, default=0, help="Limit validation/test batches per epoch; 0 means all batches.")
     parser.add_argument("--dry-run", action="store_true", help="Validate data loading without building or training ResNet-50.")
     args = parser.parse_args()
 
