@@ -2,6 +2,11 @@
 
 Use `notebooks/colab_run_baseline_v2.ipynb` from VS Code with a Google Colab GPU kernel.
 
+If Colab GPU quota is depleted, use `notebooks/colab_cpu_safe_checks.ipynb`
+instead. The CPU-safe notebook restores data, verifies metadata/splits, and runs
+a tiny dataloader check, but it does not train ResNet-50 or extract full
+embeddings.
+
 ## VS Code
 
 Install these extensions:
