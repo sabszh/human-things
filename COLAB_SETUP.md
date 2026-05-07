@@ -1,6 +1,6 @@
 # Colab GPU Setup
 
-Use `notebooks/colab_run_baseline.ipynb` from VS Code with a Google Colab GPU kernel.
+Use `notebooks/colab_run_baseline_v2.ipynb` from VS Code with a Google Colab GPU kernel.
 
 ## VS Code
 
@@ -9,7 +9,11 @@ Install these extensions:
 - Google Colab
 - Jupyter
 
-Open `notebooks/colab_run_baseline.ipynb`, then select a Colab kernel with a GPU runtime.
+Open `notebooks/colab_run_baseline_v2.ipynb`, then select a Colab kernel with a GPU runtime.
+
+The older `notebooks/colab_run_baseline.ipynb` is kept for reference, but the
+v2 notebook is the cleaner path after the partial-download issue we hit in
+Colab.
 
 ## Google Drive Data Layout
 
@@ -46,15 +50,68 @@ data/raw/THINGS-database
 
 Then set `DRIVE_DATA_ROOT` to the candidate root it prints.
 
-If no Drive data folder exists, the notebook can download the required THINGS files
-from OSF by running the **Prepare Data on Colab** cell with:
+The fastest path is to package local data once, upload it to Drive, and let the
+v2 notebook unpack it.
+
+On your local machine:
+
+```bash
+python3 scripts/06_package_data_for_colab.py --force
+```
+
+Upload the resulting file:
+
+```text
+exports/human-things-data.zip
+```
+
+to:
+
+```text
+MyDrive/human-things-data/human-things-data.zip
+```
+
+The package script stores files without recompressing by default, because the
+image files are already compressed JPEGs. Use `--compress` only if Drive storage
+is tight and you are willing to wait longer locally.
+
+In the notebook, keep:
 
 ```python
-DOWNLOAD_FROM_OSF = True
+USE_DRIVE_DATA_ZIP = True
+DRIVE_DATA_ZIP = Path("/content/drive/MyDrive/human-things-data/human-things-data.zip")
+DRIVE_DATA_FILE_ID = "1OofSEPS34SA6Jol3OIqO208ekIHz1UEF"
+```
+
+If `DRIVE_DATA_ZIP` is not present in mounted Drive, the notebook downloads the
+shared Drive file by `DRIVE_DATA_FILE_ID` to `/content/human-things-data.zip`
+and unpacks it from there.
+
+If no Drive zip exists, the v2 notebook downloads the required THINGS files from
+OSF directly into the temporary Colab checkout when:
+
+```python
+DOWNLOAD_IMAGES = True
 ```
 
 This downloads and extracts both image archives, so it needs enough temporary Colab
 disk space and time for roughly 6.2 GB of zip files plus extracted images.
+
+Leave this setting as false unless a local OSF file is corrupt:
+
+```python
+FORCE_FETCH = False
+```
+
+If a Colab run is interrupted halfway through data setup, the simplest recovery is:
+
+```python
+RESET_LOCAL_REPO = True
+FORCE_FETCH = False
+```
+
+Then rerun from the fresh clone cell. This removes only `/content/human-things`,
+which is temporary Colab storage, and avoids keeping partial raw metadata.
 
 The notebook clones:
 
@@ -68,22 +125,23 @@ into:
 /content/human-things
 ```
 
-Then it copies Drive data into `/content/human-things/data` before training.
+Then it downloads data into `/content/human-things/data` before training.
 
 ## Run Order
 
-Inside the notebook:
+Inside the v2 notebook:
 
 1. Runtime check.
 2. Mount Drive.
-3. Clone or pull repo.
-4. Copy data to local Colab disk.
-5. Install requirements.
-6. Rebuild metadata and splits.
-7. Dry-run data loading.
-8. Short training run.
-9. Full training run.
-10. Extract and evaluate embeddings.
-11. Copy outputs back to Drive.
+3. Fresh clone.
+4. Install requirements.
+5. Download and process THINGS data.
+6. Verify processed data covers all 1,854 concepts.
+7. Build metadata and splits.
+8. Dry-run data loading.
+9. Short training run.
+10. Full training run.
+11. Extract and evaluate embeddings.
+12. Copy outputs back to Drive.
 
-Start with `RUN_SHORT = True` and `RUN_FULL = False`. Only switch to the full run after the short run finishes.
+Start with `RUN_SHORT_TRAINING = True` and `RUN_FULL_TRAINING = False`. Only switch to the full run after the short run finishes.

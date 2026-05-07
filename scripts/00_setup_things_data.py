@@ -48,7 +48,11 @@ def fetch(remote: str, local: Path, force: bool) -> None:
     if local.exists() and not force:
         print(f"Exists, skipping: {local}")
         return
-    run(["osf", "-p", PROJECT_ID, "fetch", remote, str(local)])
+    command = ["osf", "-p", PROJECT_ID, "fetch"]
+    if force:
+        command.append("-f")
+    command.extend([remote, str(local)])
+    run(command)
 
 
 def parse_password() -> bytes:
