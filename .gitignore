@@ -3,3 +3,4 @@ data/*
 outputs/*
 .codex
 data/
+scripts/archive
