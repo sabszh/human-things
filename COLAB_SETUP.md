@@ -13,7 +13,7 @@ Open `notebooks/colab_run_baseline.ipynb`, then select a Colab kernel with a GPU
 
 ## Google Drive Data Layout
 
-The notebook expects this Drive folder:
+The fastest path is to provide this Drive folder:
 
 ```text
 /content/drive/MyDrive/human-things-data/
@@ -36,6 +36,25 @@ If your folder has another name, change this line in the notebook:
 ```python
 DRIVE_DATA_ROOT = Path("/content/drive/MyDrive/human-things-data")
 ```
+
+If that path does not exist in Colab, run the notebook section **Find Drive Data Folder**. It searches Drive for folders containing either:
+
+```text
+data/processed/images.csv
+data/raw/THINGS-database
+```
+
+Then set `DRIVE_DATA_ROOT` to the candidate root it prints.
+
+If no Drive data folder exists, the notebook can download the required THINGS files
+from OSF by running the **Prepare Data on Colab** cell with:
+
+```python
+DOWNLOAD_FROM_OSF = True
+```
+
+This downloads and extracts both image archives, so it needs enough temporary Colab
+disk space and time for roughly 6.2 GB of zip files plus extracted images.
 
 The notebook clones:
 
