@@ -7,6 +7,10 @@ instead. The CPU-safe notebook restores data, verifies metadata/splits, and runs
 a tiny dataloader check, but it does not train ResNet-50 or extract full
 embeddings.
 
+For this local HP laptop, use `notebooks/local_cpu_safe_checks.ipynb`. It assumes
+the local `data/` folder already exists and does not use Colab, Google Drive, or
+GitHub clone steps.
+
 ## VS Code
 
 Install these extensions:
