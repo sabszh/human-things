@@ -174,6 +174,7 @@ def run_epoch(
     device: torch.device,
     optimizer: torch.optim.Optimizer | None = None,
     max_batches: int = 0,
+    progress_every_batches: int = 0,
 ) -> Dict[str, float]:
     is_train = optimizer is not None
     model.train(is_train)
@@ -208,6 +209,14 @@ def run_epoch(
         top5 += topk_correct(logits, target, min(5, logits.shape[1]))
 
         progress.set_postfix(loss=total_loss / max(1, total_samples), top1=top1 / max(1, total_samples))
+        if progress_every_batches > 0 and (batch_idx % progress_every_batches == 0 or batch_idx == total_batches):
+            print(
+                f"{'train' if is_train else 'eval'} batch {batch_idx}/{total_batches} "
+                f"loss={total_loss / max(1, total_samples):.4f} "
+                f"top1={top1 / max(1, total_samples):.4f} "
+                f"top5={top5 / max(1, total_samples):.4f}",
+                flush=True,
+            )
 
     return {
         "loss": total_loss / max(1, total_samples),
@@ -306,6 +315,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
                 device,
                 optimizer,
                 max_batches=args.max_train_batches,
+                progress_every_batches=args.progress_every_batches,
             )
             val_metrics = run_epoch(
                 model,
@@ -313,6 +323,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
                 criterion,
                 device,
                 max_batches=args.max_eval_batches,
+                progress_every_batches=args.progress_every_batches,
             )
 
             row = {
@@ -350,6 +361,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         criterion,
         device,
         max_batches=args.max_eval_batches,
+        progress_every_batches=args.progress_every_batches,
     )
     metrics = {
         "status": "ok",
@@ -404,6 +416,7 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--max-train-batches", type=int, default=0, help="Limit training batches per epoch; 0 means all batches.")
     parser.add_argument("--max-eval-batches", type=int, default=0, help="Limit validation/test batches per epoch; 0 means all batches.")
+    parser.add_argument("--progress-every-batches", type=int, default=0, help="Print flushed batch progress every N batches; 0 disables extra batch prints.")
     parser.add_argument("--dry-run", action="store_true", help="Validate data loading without building or training ResNet-50.")
     args = parser.parse_args()
 

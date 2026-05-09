@@ -2,6 +2,10 @@
 
 Use `notebooks/colab_run_baseline_v2.ipynb` from VS Code with a Google Colab GPU kernel.
 
+For the actual full baseline run, use `notebooks/colab_full_training.ipynb`.
+That notebook skips the smoke-training workflow, requires CUDA before training,
+prints batch progress during long epochs, and copies checkpoints/logs to Drive.
+
 If Colab GPU quota is depleted, use `notebooks/colab_cpu_safe_checks.ipynb`
 instead. The CPU-safe notebook restores data, verifies metadata/splits, and runs
 a tiny dataloader check, but it does not train ResNet-50 or extract full
