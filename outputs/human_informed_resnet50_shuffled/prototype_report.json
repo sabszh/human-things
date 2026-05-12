@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "source_embeddings": "outputs\\baseline_resnet50\\embeddings\\image_embeddings.npy",
+  "source_metadata": "outputs\\baseline_resnet50\\embeddings\\image_embedding_metadata.csv",
+  "prototype_path": "outputs\\human_informed_resnet50_shuffled\\train_image_concept_prototypes.npy",
+  "prototype_source": "baseline image embeddings",
+  "prototype_images_used": "train split only",
+  "validation_images_used": false,
+  "test_images_used": false,
+  "num_concepts": 1854,
+  "embedding_dim": 2048,
+  "train_images_used": 19713,
+  "train_images_per_concept_min": 9,
+  "train_images_per_concept_max": 26,
+  "train_images_per_concept_mean": 10.632686084142394
+}

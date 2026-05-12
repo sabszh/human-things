@@ -51,6 +51,13 @@ def fail(message: str) -> None:
     raise SystemExit(f"ERROR: {message}")
 
 
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def missing_columns(columns: Iterable[str], required: set[str]) -> List[str]:
     return sorted(required - set(columns))
 
@@ -148,9 +155,10 @@ def save_outputs(
     concept_frame: pd.DataFrame,
     concept_embeddings: np.ndarray,
     checkpoint_path: Path,
+    output_dir: Path,
     normalize: bool,
 ) -> Dict[str, object]:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     image_meta = frame[
         ["image_id", "image_path", "concept_id", "concept_name", "unique_id", "split"]
@@ -159,11 +167,11 @@ def save_outputs(
         image_embeddings = l2_normalize(image_embeddings)
         concept_embeddings = l2_normalize(concept_embeddings)
 
-    image_embeddings_path = OUTPUT_DIR / "image_embeddings.npy"
-    concept_embeddings_path = OUTPUT_DIR / "concept_embeddings.npy"
-    image_metadata_path = OUTPUT_DIR / "image_embedding_metadata.csv"
-    concept_metadata_path = OUTPUT_DIR / "concept_embedding_metadata.csv"
-    report_path = OUTPUT_DIR / "embedding_report.json"
+    image_embeddings_path = output_dir / "image_embeddings.npy"
+    concept_embeddings_path = output_dir / "concept_embeddings.npy"
+    image_metadata_path = output_dir / "image_embedding_metadata.csv"
+    concept_metadata_path = output_dir / "concept_embedding_metadata.csv"
+    report_path = output_dir / "embedding_report.json"
 
     np.save(image_embeddings_path, image_embeddings)
     np.save(concept_embeddings_path, concept_embeddings)
@@ -172,16 +180,16 @@ def save_outputs(
 
     report = {
         "status": "ok",
-        "checkpoint": str(checkpoint_path.relative_to(ROOT)),
+        "checkpoint": display_path(checkpoint_path),
         "normalized": normalize,
         "num_images": int(image_embeddings.shape[0]),
         "num_concepts": int(concept_embeddings.shape[0]),
         "embedding_dim": int(image_embeddings.shape[1]),
         "outputs": {
-            "image_embeddings": str(image_embeddings_path.relative_to(ROOT)),
-            "image_metadata": str(image_metadata_path.relative_to(ROOT)),
-            "concept_embeddings": str(concept_embeddings_path.relative_to(ROOT)),
-            "concept_metadata": str(concept_metadata_path.relative_to(ROOT)),
+            "image_embeddings": display_path(image_embeddings_path),
+            "image_metadata": display_path(image_metadata_path),
+            "concept_embeddings": display_path(concept_embeddings_path),
+            "concept_metadata": display_path(concept_metadata_path),
         },
     }
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
@@ -190,19 +198,23 @@ def save_outputs(
 
 def dry_run(args: argparse.Namespace) -> None:
     image_root = args.image_root.expanduser().resolve()
+    checkpoint = args.checkpoint.expanduser().resolve()
+    output_dir = args.output_dir.expanduser().resolve()
     frame = load_metadata(SPLITS_CSV)
     dataset = EmbeddingDataset(frame.head(args.batch_size), image_root, build_transform())
     images, indices = next(iter(DataLoader(dataset, batch_size=args.batch_size, num_workers=0)))
     print(f"Loaded metadata: {len(frame)} images, {frame['concept_id'].nunique()} concepts")
     print(f"Batch images: {tuple(images.shape)}")
     print(f"Batch indices: {indices.tolist()[:8]}")
-    print(f"Checkpoint exists: {args.checkpoint.exists()}")
+    print(f"Checkpoint exists: {checkpoint.exists()}")
+    print(f"Output dir: {output_dir}")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Extract image and concept embeddings from the trained ResNet baseline.")
     parser.add_argument("--image-root", type=Path, default=DEFAULT_IMAGE_ROOT)
     parser.add_argument("--checkpoint", type=Path, default=DEFAULT_CHECKPOINT)
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--num-workers", type=int, default=2)
     parser.add_argument("--device", type=str, default="")
@@ -211,6 +223,7 @@ def main() -> None:
     args = parser.parse_args()
 
     args.checkpoint = args.checkpoint.expanduser().resolve()
+    args.output_dir = args.output_dir.expanduser().resolve()
     if args.dry_run:
         dry_run(args)
         return
@@ -236,11 +249,12 @@ def main() -> None:
         concept_frame,
         concept_embeddings,
         args.checkpoint,
+        args.output_dir,
         normalize=not args.no_normalize,
     )
 
     print(f"Wrote embeddings for {report['num_images']} images and {report['num_concepts']} concepts.")
-    print(f"Wrote: {OUTPUT_DIR / 'embedding_report.json'}")
+    print(f"Wrote: {args.output_dir / 'embedding_report.json'}")
 
 
 if __name__ == "__main__":

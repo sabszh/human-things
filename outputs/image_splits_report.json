@@ -1,0 +1,25 @@
+{
+  "status": "ok",
+  "input_csv": "data/baseline/image_metadata.csv",
+  "output_csv": "data/baseline/image_splits.csv",
+  "seed": 7,
+  "fractions": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "total_image_rows": 27961,
+  "total_concepts": 1854,
+  "split_counts": {
+    "train": 19713,
+    "val": 4124,
+    "test": 4124
+  },
+  "concepts_per_split": {
+    "train": 1854,
+    "val": 1854,
+    "test": 1854
+  },
+  "missing_image_files": 0,
+  "warnings": []
+}

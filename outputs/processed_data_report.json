@@ -1,0 +1,13 @@
+{
+  "status": "ok",
+  "outputs": {
+    "concepts": {
+      "rows": 1854,
+      "path": "data/processed/concepts.csv"
+    },
+    "images": {
+      "rows": 27961,
+      "path": "data/processed/images.csv"
+    }
+  }
+}

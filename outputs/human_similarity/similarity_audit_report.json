@@ -1,0 +1,29 @@
+{
+  "status": "ok",
+  "detected_similarity_file_type": "raw_odd_one_out_triplets",
+  "source_file": "data/processed/triplets.csv",
+  "number_of_concepts": 1854,
+  "number_of_pairs": 1717727,
+  "train_pairs": 1374182,
+  "val_pairs": 171773,
+  "test_pairs": 171772,
+  "duplicate_pairs_removed": 10691182,
+  "diagonal_pairs_removed": 0,
+  "unmatched_concepts": [],
+  "pair_overlap_train_val": 0,
+  "pair_overlap_train_test": 0,
+  "pair_overlap_val_test": 0,
+  "similarity_min": 0.0,
+  "similarity_max": 1.0,
+  "similarity_mean": 0.3333766610294211,
+  "similarity_scale_detected": "[0,1]",
+  "thingsplus_variables_used": false,
+  "leakage_notes": [
+    "Human similarity is treated as concept-level supervision only.",
+    "THINGSplus categories, typicality, nameability, and property norms were not used.",
+    "Pair splits prevent direct reuse of identical unordered concept pairs across train/val/test."
+  ],
+  "seed": 7,
+  "triplet_rows_read": 4136303,
+  "raw_pair_observations": 12408909
+}

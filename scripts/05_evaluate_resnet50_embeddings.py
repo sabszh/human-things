@@ -27,16 +27,27 @@ def fail(message: str) -> None:
     raise SystemExit(f"ERROR: {message}")
 
 
-def load_inputs() -> tuple[np.ndarray, pd.DataFrame, np.ndarray, pd.DataFrame, pd.DataFrame]:
-    required = [CONCEPT_EMBEDDINGS, CONCEPT_METADATA, IMAGE_EMBEDDINGS, IMAGE_METADATA, CONCEPTS_CSV]
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def load_inputs(embedding_dir: Path) -> tuple[np.ndarray, pd.DataFrame, np.ndarray, pd.DataFrame, pd.DataFrame]:
+    concept_embeddings_path = embedding_dir / "concept_embeddings.npy"
+    concept_metadata_path = embedding_dir / "concept_embedding_metadata.csv"
+    image_embeddings_path = embedding_dir / "image_embeddings.npy"
+    image_metadata_path = embedding_dir / "image_embedding_metadata.csv"
+    required = [concept_embeddings_path, concept_metadata_path, image_embeddings_path, image_metadata_path, CONCEPTS_CSV]
     missing = [str(path) for path in required if not path.exists()]
     if missing:
         fail(f"Missing inputs: {missing}. Run scripts/04_extract_resnet50_embeddings.py first.")
 
-    concept_embeddings = np.load(CONCEPT_EMBEDDINGS)
-    concept_metadata = pd.read_csv(CONCEPT_METADATA)
-    image_embeddings = np.load(IMAGE_EMBEDDINGS)
-    image_metadata = pd.read_csv(IMAGE_METADATA)
+    concept_embeddings = np.load(concept_embeddings_path)
+    concept_metadata = pd.read_csv(concept_metadata_path)
+    image_embeddings = np.load(image_embeddings_path)
+    image_metadata = pd.read_csv(image_metadata_path)
     concepts = pd.read_csv(CONCEPTS_CSV)
     return concept_embeddings, concept_metadata, image_embeddings, image_metadata, concepts
 
@@ -93,9 +104,13 @@ def norm_prediction(concept_embeddings: np.ndarray, concepts: pd.DataFrame, seed
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate ResNet-50 baseline embeddings.")
     parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--embedding-dir", type=Path, default=EMBEDDING_DIR)
+    parser.add_argument("--output-report", type=Path, default=OUTPUT_REPORT)
     args = parser.parse_args()
 
-    concept_embeddings, concept_metadata, image_embeddings, image_metadata, concepts = load_inputs()
+    embedding_dir = args.embedding_dir.expanduser().resolve()
+    output_report = args.output_report.expanduser().resolve()
+    concept_embeddings, concept_metadata, image_embeddings, image_metadata, concepts = load_inputs(embedding_dir)
     concepts_sorted = concepts.sort_values("concept_index").reset_index(drop=True)
 
     if concept_embeddings.shape[0] != len(concepts_sorted):
@@ -119,14 +134,14 @@ def main() -> None:
             "norm_prediction": norm_prediction(concept_embeddings, concepts_sorted, args.seed),
         },
         "inputs": {
-            "concept_embeddings": str(CONCEPT_EMBEDDINGS.relative_to(ROOT)),
-            "image_embeddings": str(IMAGE_EMBEDDINGS.relative_to(ROOT)),
+            "concept_embeddings": display_path(embedding_dir / "concept_embeddings.npy"),
+            "image_embeddings": display_path(embedding_dir / "image_embeddings.npy"),
         },
     }
 
-    OUTPUT_REPORT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_REPORT.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print(f"Wrote: {OUTPUT_REPORT}")
+    output_report.parent.mkdir(parents=True, exist_ok=True)
+    output_report.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print(f"Wrote: {output_report}")
 
 
 if __name__ == "__main__":
