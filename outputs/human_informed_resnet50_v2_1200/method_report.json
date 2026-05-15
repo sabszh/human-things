@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "training_type": "human_informed_v2_current_batch_concept_triplets",
+  "baseline_checkpoint": "outputs\\baseline_resnet50\\best_model.pt",
+  "triplets": "data\\human_similarity\\train_triplets.csv",
+  "human_similarity_supervision_level": "concept",
+  "prototype_strategy": "current batch concept prototypes, recomputed every batch",
+  "fixed_baseline_prototypes_used": false,
+  "validation_images_used_for_human_loss": false,
+  "test_images_used_for_human_loss": false,
+  "thingsplus_variables_used": false,
+  "triplets_per_batch": 8,
+  "images_per_concept": 2,
+  "effective_train_image_batch_size": 48,
+  "note": "This v2 trainer applies relative human similarity to current model concept prototypes inside each sampled triplet batch, avoiding the static fixed-prototype limitation of v1."
+}

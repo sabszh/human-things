@@ -1,0 +1,1855 @@
+concept_id,concept_name,unique_id,num_images
+0,aardvark,aardvark,15
+1,abacus,abacus,15
+2,accordion,accordion,15
+3,acorn,acorn,17
+4,air conditioner,air_conditioner,14
+5,air mattress,air_mattress,14
+6,air pump,air_pump,14
+7,airbag,airbag,17
+8,airboat,airboat,14
+9,aircraft carrier,aircraft_carrier,24
+10,airplane,airplane,13
+11,album,album,17
+12,alligator,alligator,15
+13,almond,almond,14
+14,aloe,aloe,13
+15,alpaca,alpaca,16
+16,altar,altar,19
+17,aluminum foil,aluminum_foil,16
+18,amber,amber,13
+19,ambulance,ambulance,14
+20,amplifier,amplifier,17
+21,anchor,anchor,15
+22,ankle,ankle,13
+23,anklet,anklet,13
+24,ant,ant,13
+25,anteater,anteater,13
+26,antelope,antelope,13
+27,antenna,antenna,13
+28,anvil,anvil,14
+29,appetizer,appetizer,30
+30,apple,apple,13
+31,apple tree,apple_tree,13
+32,applesauce,applesauce,17
+33,apron,apron,14
+34,aquarium,aquarium,13
+35,arch,arch,13
+36,arm,arm,14
+37,armor,armor,15
+38,arrow,arrow,16
+39,artichoke,artichoke,13
+40,arugula,arugula,14
+41,ashtray,ashtray,15
+42,asparagus,asparagus,13
+43,avocado,avocado,17
+44,awning,awning,14
+45,axe,axe,15
+46,baby,baby,36
+47,backdrop,backdrop,15
+48,backgammon,backgammon,14
+49,backpack,backpack,14
+50,backscratcher,backscratcher,21
+51,bacon,bacon,19
+52,badge,badge,14
+53,badger,badger,24
+54,bag,bag,17
+55,bagel,bagel,25
+56,bagpipe,bagpipe,16
+57,baklava,baklava,17
+58,balance beam,balance_beam,14
+59,ball,ball,17
+60,balloon,balloon,21
+61,ballot box,ballot_box,17
+62,bamboo,bamboo,17
+63,banana,banana,14
+64,banana peel,banana_peel,18
+65,banana split,banana_split,16
+66,bandage,bandage,13
+67,bandanna,bandanna,13
+68,banjo,banjo,17
+69,bank,bank,14
+70,banner,banner,14
+71,barbed wire,barbed_wire,18
+72,barbell,barbell,13
+73,barcode,barcode,15
+74,bark,bark,23
+75,barnacle,barnacle,13
+76,barrel,barrel,20
+77,barrette,barrette,13
+78,baseball,baseball,19
+79,baseball bat,baseball_bat,13
+80,baseball glove,baseball_glove,20
+81,basil,basil,15
+82,basket,basket,13
+83,basketball,basketball,14
+84,basketball hoop,basketball_hoop,13
+85,bassinet,bassinet,17
+86,bassoon,bassoon,20
+87,bat,bat1,19
+88,bat,bat2,16
+89,bathmat,bathmat,14
+90,bathrobe,bathrobe,22
+91,bathtub,bathtub,25
+92,baton,baton1,17
+93,baton,baton2,14
+94,baton,baton3,18
+95,baton,baton4,19
+96,batter,batter,13
+97,battery,battery,14
+98,bazooka,bazooka,14
+99,beachball,beachball,20
+100,bead,bead,15
+101,beaker,beaker,17
+102,bean,bean,14
+103,beanbag,beanbag,17
+104,beanie,beanie,19
+105,bear,bear,22
+106,beard,beard,17
+107,beaver,beaver,18
+108,bed,bed,23
+109,bedpan,bedpan,14
+110,bedpost,bedpost,16
+111,bee,bee,28
+112,beehive,beehive,14
+113,beer,beer,17
+114,beet,beet,16
+115,beetle,beetle,16
+116,bell,bell,18
+117,bell pepper,bell_pepper,15
+118,belt,belt,15
+119,belt buckle,belt_buckle,18
+120,bench,bench,17
+121,berry,berry,13
+122,bib,bib,16
+123,bike,bike,24
+124,bikini,bikini,13
+125,bin,bin,15
+126,binder,binder,25
+127,binoculars,binoculars,13
+128,bird,bird,24
+129,birdbath,birdbath,16
+130,birdcage,birdcage,13
+131,birdhouse,birdhouse,13
+132,birthday cake,birthday_cake,19
+133,biscuit,biscuit,13
+134,bison,bison,14
+135,blackberry,blackberry,13
+136,blanket,blanket,13
+137,blazer,blazer,16
+138,blender,blender,15
+139,blimp,blimp,13
+140,blind,blind,27
+141,blinder,blinder,14
+142,blindfold,blindfold,19
+143,block,block,16
+144,blouse,blouse,17
+145,blower,blower,17
+146,blowfish,blowfish,17
+147,blowgun,blowgun,14
+148,blowtorch,blowtorch,15
+149,blueberry,blueberry,13
+150,boa,boa,16
+151,boar,boar,13
+152,board,board,17
+153,board game,board_game,23
+154,boat,boat,16
+155,bobsled,bobsled,19
+156,bok choy,bok_choy,18
+157,bolo tie,bolo_tie,13
+158,bologna,bologna,13
+159,bolt,bolt,16
+160,bomb,bomb,16
+161,bone,bone,16
+162,bongo,bongo,19
+163,bonnet,bonnet,13
+164,bonsai,bonsai,13
+165,book,book,14
+166,bookmark,bookmark,18
+167,bookshelf,bookshelf,13
+168,boomerang,boomerang,13
+169,boot,boot,17
+170,bottle,bottle,13
+171,bottle opener,bottle_opener,16
+172,boulder,boulder,23
+173,bouquet,bouquet,15
+174,bow,bow1,20
+175,bow,bow2,13
+176,bow,bow3,13
+177,bowl,bowl,13
+178,bowler hat,bowler_hat,14
+179,bowling ball,bowling_ball,19
+180,bowtie,bowtie,15
+181,box,box,13
+182,boxer shorts,boxer_shorts,14
+183,boxing gloves,boxing_gloves,16
+184,boy,boy,14
+185,bra,bra,15
+186,brace,brace,17
+187,bracelet,bracelet1,19
+188,bracelet,bracelet2,18
+189,bracket,bracket,16
+190,braid,braid,13
+191,brake,brake,13
+192,branch,branch,15
+193,brass knuckles,brass_knuckles,15
+194,bread,bread,23
+195,breadbox,breadbox,15
+196,breadstick,breadstick,17
+197,breakfast,breakfast,14
+198,breathalyzer,breathalyzer,13
+199,brick,brick,15
+200,briefcase,briefcase,14
+201,broccoli,broccoli,15
+202,brooch,brooch,13
+203,broom,broom,13
+204,brownie,brownie,19
+205,brush,brush,14
+206,brussels sprouts,brussels_sprouts,13
+207,bubble,bubble,13
+208,bubble wrap,bubble_wrap,13
+209,bucket,bucket,13
+210,buckle,buckle,15
+211,buffet,buffet,15
+212,bug,bug,18
+213,buggy,buggy,13
+214,bull,bull,13
+215,bulldozer,bulldozer,23
+216,bullet,bullet,14
+217,bulletin board,bulletin_board,13
+218,bulletproof vest,bulletproof_vest,13
+219,bumper,bumper,13
+220,bun,bun,13
+221,bungee,bungee,13
+222,bunkbed,bunkbed,16
+223,buoy,buoy,13
+224,burner,burner,13
+225,burrito,burrito,13
+226,bus,bus,13
+227,bush,bush,13
+228,butter,butter,17
+229,butterfly,butterfly,17
+230,button,button1,20
+231,button,button2,13
+232,cabbage,cabbage,14
+233,cabinet,cabinet,15
+234,cable,cable,13
+235,cactus,cactus,13
+236,cage,cage,13
+237,cake,cake,16
+238,cake mix,cake_mix,13
+239,calamari,calamari,15
+240,calculator,calculator,15
+241,calf,calf1,17
+242,calf,calf2,15
+243,calzone,calzone,13
+244,camcorder,camcorder,13
+245,camel,camel,14
+246,camera lens,camera_lens,15
+247,camera,camera1,13
+248,camera,camera2,13
+249,camper,camper,13
+250,can,can,13
+251,can opener,can_opener,13
+252,candelabra,candelabra,18
+253,candle,candle,13
+254,candlestick,candlestick,15
+255,candy,candy,14
+256,candy bar,candy_bar,13
+257,candy cane,candy_cane,13
+258,cane,cane,13
+259,canister,canister,16
+260,cannon,cannon,13
+261,cannonball,cannonball,17
+262,canoe,canoe,22
+263,cantaloupe,cantaloupe,14
+264,canvas,canvas,17
+265,cap,cap,15
+266,cape,cape,16
+267,car,car,13
+268,car door,car_door,13
+269,car seat,car_seat,14
+270,caramel,caramel,14
+271,card,card,16
+272,cardboard,cardboard,14
+273,cardigan,cardigan,15
+274,cardinal,cardinal,16
+275,carousel,carousel,13
+276,carriage,carriage,17
+277,carrot,carrot,13
+278,cart,cart,13
+279,cash machine,cash_machine,13
+280,cash register,cash_register,13
+281,cashew,cashew,16
+282,casserole,casserole,13
+283,cassette,cassette,13
+284,cat,cat,13
+285,catapult,catapult,13
+286,caterpillar,caterpillar,22
+287,catfish,catfish,13
+288,cauliflower,cauliflower,17
+289,caviar,caviar,14
+290,cd player,cd_player,13
+291,celery,celery,13
+292,cello,cello,15
+293,cellphone,cellphone,17
+294,cement mixer,cement_mixer,13
+295,centerpiece,centerpiece,14
+296,centrifuge,centrifuge,13
+297,cereal,cereal,13
+298,chain,chain,17
+299,chainsaw,chainsaw,17
+300,chair,chair,13
+301,chalice,chalice,17
+302,chalk,chalk,14
+303,chalkboard,chalkboard,13
+304,champagne,champagne,19
+305,chandelier,chandelier,13
+306,chaps,chaps,20
+307,charcoal,charcoal,13
+308,charger,charger,15
+309,chariot,chariot,15
+310,checkbook,checkbook,13
+311,checkers,checkers,13
+312,cheese,cheese,16
+313,cheeseburger,cheeseburger,13
+314,cheesecake,cheesecake,16
+315,cheetah,cheetah,14
+316,cherry,cherry,13
+317,chess piece,chess_piece,14
+318,chessboard,chessboard,13
+319,chest,chest1,15
+320,chest,chest2,13
+321,chick,chick,13
+322,chicken wire,chicken_wire,15
+323,chicken,chicken1,13
+324,chicken,chicken2,13
+325,chickpea,chickpea,16
+326,chihuahua,chihuahua,13
+327,chili,chili,15
+328,chime,chime,13
+329,chimney,chimney,13
+330,chin,chin,13
+331,chinaware,chinaware,16
+332,chinchilla,chinchilla,16
+333,chip,chip,13
+334,chipmunk,chipmunk,17
+335,chips,chips,13
+336,chisel,chisel,17
+337,chive,chive,13
+338,chocolate,chocolate,15
+339,chopsticks,chopsticks,13
+340,christmas card,christmas_card,16
+341,christmas tree,christmas_tree,13
+342,chute,chute,14
+343,cigar,cigar,26
+344,cigarette,cigarette,18
+345,cigarette butt,cigarette_butt,15
+346,cigarette holder,cigarette_holder,21
+347,cilantro,cilantro,14
+348,cinnamon,cinnamon,13
+349,clam,clam,17
+350,clarinet,clarinet,14
+351,clasp,clasp,14
+352,clay,clay,13
+353,cleat,cleat,23
+354,cleaver,cleaver,14
+355,clipboard,clipboard,16
+356,clipper,clipper1,14
+357,clipper,clipper2,13
+358,cloak,cloak,15
+359,clock,clock,13
+360,closet,closet,14
+361,clothes,clothes,14
+362,clothesline,clothesline,13
+363,clothespin,clothespin,13
+364,cloud,cloud,13
+365,clove,clove,13
+366,clover,clover,19
+367,coal,coal,13
+368,coaster,coaster,19
+369,coat,coat,13
+370,coat rack,coat_rack,16
+371,cobra,cobra,14
+372,cockatoo,cockatoo,14
+373,cockroach,cockroach,13
+374,cocktail,cocktail,13
+375,coconut,coconut,21
+376,cocoon,cocoon,13
+377,coffee,coffee,16
+378,coffee bean,coffee_bean,13
+379,coffee filter,coffee_filter,13
+380,coffee pot,coffee_pot,15
+381,coffee table,coffee_table,15
+382,coffeemaker,coffeemaker,15
+383,coffin,coffin,14
+384,coil,coil,13
+385,coin,coin,16
+386,coleslaw,coleslaw,16
+387,collar,collar,17
+388,column,column,15
+389,comb,comb,13
+390,combination lock,combination_lock,13
+391,comic book,comic_book,16
+392,compass,compass,13
+393,compost,compost,17
+394,computer,computer,13
+395,computer screen,computer_screen,17
+396,confetti,confetti,13
+397,contact lens,contact_lens,17
+398,container,container,14
+399,cooker,cooker,17
+400,cookie,cookie,16
+401,cookie cutter,cookie_cutter,14
+402,cookie sheet,cookie_sheet,15
+403,cooler,cooler,14
+404,coop,coop,14
+405,copier,copier,16
+406,coral,coral,14
+407,cord,cord,16
+408,cordon bleu,cordon_bleu,13
+409,cork,cork,15
+410,corkboard,corkboard,16
+411,corkscrew,corkscrew,13
+412,corn,corn,18
+413,cornbread,cornbread,15
+414,cornhusk,cornhusk,16
+415,cornmeal,cornmeal,15
+416,cornucopia,cornucopia,14
+417,corsage,corsage,16
+418,corset,corset,19
+419,costume,costume,15
+420,cot,cot,18
+421,cotton candy,cotton_candy,14
+422,couch,couch,23
+423,cougar,cougar,21
+424,counter,counter,18
+425,coverall,coverall,15
+426,cow,cow,17
+427,coyote,coyote,21
+428,crab,crab,18
+429,cracker,cracker,16
+430,cranberry,cranberry,15
+431,crane,crane,19
+432,crank,crank,17
+433,crate,crate,18
+434,crayfish,crayfish,16
+435,crayon,crayon,18
+436,cream,cream,13
+437,cream cheese,cream_cheese,13
+438,credit card,credit_card,13
+439,creme brulee,creme_brulee,20
+440,crepe,crepe,20
+441,crib,crib,18
+442,croissant,croissant,15
+443,cross,cross,19
+444,crossbow,crossbow,13
+445,crouton,crouton,13
+446,crow,crow,22
+447,crowbar,crowbar,13
+448,crown,crown,13
+449,crucifix,crucifix,13
+450,cruise ship,cruise_ship,13
+451,crumb,crumb,13
+452,crutch,crutch,15
+453,crystal ball,crystal_ball,13
+454,crystal,crystal1,13
+455,crystal,crystal2,21
+456,cuckoo clock,cuckoo_clock,22
+457,cucumber,cucumber,17
+458,cufflink,cufflink,19
+459,cummerbund,cummerbund,18
+460,cup,cup,16
+461,cupcake,cupcake,18
+462,curb,curb,15
+463,curling iron,curling_iron,15
+464,curry,curry,23
+465,curtain,curtain,13
+466,cushion,cushion,13
+467,cutting board,cutting_board,13
+468,cymbal,cymbal,17
+469,dagger,dagger,15
+470,daisy,daisy,13
+471,dalmatian,dalmatian,13
+472,dandelion,dandelion,16
+473,dart,dart,13
+474,dartboard,dartboard,13
+475,dashboard,dashboard,14
+476,deer,deer,15
+477,defibrillator,defibrillator,15
+478,denture,denture,15
+479,deodorant,deodorant,13
+480,desk,desk,15
+481,dessert,dessert,23
+482,detonator,detonator,13
+483,dial,dial,13
+484,diamond,diamond,17
+485,diaper,diaper,13
+486,dice,dice,16
+487,dip,dip,15
+488,dirt bike,dirt_bike,13
+489,dish,dish,22
+490,dishrag,dishrag,13
+491,dishwasher,dishwasher,14
+492,dishwashing liquid,dishwashing_liquid,14
+493,diskette,diskette,13
+494,diving board,diving_board,14
+495,dog,dog,13
+496,dogfood,dogfood,14
+497,doghouse,doghouse,14
+498,doily,doily,18
+499,doll,doll,16
+500,dollhouse,dollhouse,15
+501,dolly,dolly,14
+502,dolphin,dolphin,15
+503,domino,domino,19
+504,donkey,donkey,18
+505,donut,donut,17
+506,door,door,15
+507,doorbell,doorbell,15
+508,doorhandle,doorhandle,14
+509,doorknob,doorknob,21
+510,doorknocker,doorknocker,29
+511,doormat,doormat,17
+512,doorstop,doorstop,16
+513,dough,dough,23
+514,dragonfly,dragonfly,17
+515,drain,drain,18
+516,drawer,drawer,14
+517,dreidel,dreidel,14
+518,dress,dress,14
+519,dresser,dresser,20
+520,drill,drill,15
+521,drink,drink,16
+522,drum,drum,16
+523,drumstick,drumstick,13
+524,dryer,dryer,13
+525,duck,duck,14
+526,duckling,duckling,26
+527,duct,duct,14
+528,duct tape,duct_tape,13
+529,duffel bag,duffel_bag,14
+530,dumbbell,dumbbell,18
+531,dumbwaiter,dumbwaiter,18
+532,dumpling,dumpling,14
+533,dumpster,dumpster,15
+534,duster,duster,13
+535,dustpan,dustpan,14
+536,dynamite,dynamite,14
+537,eagle,eagle,22
+538,ear,ear,13
+539,earplug,earplug,14
+540,earring,earring,17
+541,earwig,earwig,15
+542,easel,easel,17
+543,easter egg,easter_egg,16
+544,eclair,eclair,15
+545,eel,eel,13
+546,egg,egg,16
+547,egg roll,egg_roll,13
+548,eggbeater,eggbeater,18
+549,eggnog,eggnog,13
+550,eggplant,eggplant,13
+551,eggshell,eggshell,15
+552,elbow,elbow,15
+553,electric chair,electric_chair,13
+554,elephant,elephant,13
+555,emerald,emerald,13
+556,enchilada,enchilada,17
+557,engine,engine,13
+558,envelope,envelope,13
+559,eraser,eraser,13
+560,espresso,espresso,13
+561,exerciser,exerciser,13
+562,exhaust pipe,exhaust_pipe,17
+563,extinguisher,extinguisher,17
+564,eye,eye,22
+565,eye patch,eye_patch,13
+566,eyedropper,eyedropper,13
+567,eyeliner,eyeliner,13
+568,eyepiece,eyepiece,13
+569,face,face,13
+570,face mask,face_mask,13
+571,fan,fan,15
+572,fast food,fast_food,13
+573,faucet,faucet,13
+574,feather,feather,17
+575,fence,fence,25
+576,fencepost,fencepost,15
+577,fern,fern,13
+578,ferret,ferret,14
+579,ferris wheel,ferris_wheel,23
+580,ferry,ferry,13
+581,fig,fig,13
+582,figurine,figurine,13
+583,file,file1,13
+584,file,file2,13
+585,filing cabinet,filing_cabinet,13
+586,film,film,13
+587,filter,filter,16
+588,finger,finger,13
+589,fingerprint,fingerprint,14
+590,fire,fire,13
+591,fire alarm,fire_alarm,22
+592,fire hydrant,fire_hydrant,15
+593,fire pit,fire_pit,15
+594,firecracker,firecracker,16
+595,fireplace,fireplace,20
+596,firetruck,firetruck,13
+597,firewood,firewood,13
+598,fireworks,fireworks,23
+599,first-aid kit,first-aid_kit,13
+600,fish,fish,14
+601,fishbowl,fishbowl,18
+602,fishhook,fishhook,13
+603,fishing pole,fishing_pole,13
+604,fishnet stockings,fishnet_stockings,16
+605,flag,flag,15
+606,flagpole,flagpole,15
+607,flamethrower,flamethrower,13
+608,flamingo,flamingo,23
+609,flan,flan,13
+610,flashbulb,flashbulb,13
+611,flashlight,flashlight,13
+612,flask,flask,15
+613,flatiron,flatiron,13
+614,flip-flop,flip_flop,13
+615,flipper,flipper,13
+616,float,float,13
+617,floss,floss,14
+618,flour,flour,13
+619,flower,flower,20
+620,flute,flute,16
+621,fly,fly,18
+622,flypaper,flypaper,14
+623,flyswatter,flyswatter,13
+624,foam,foam,13
+625,folder,folder,20
+626,fondue,fondue,16
+627,food processor,food_processor,15
+628,foot,foot,15
+629,football,football,13
+630,football helmet,football_helmet,17
+631,footbath,footbath,13
+632,footprint,footprint,16
+633,footrest,footrest,13
+634,fork,fork,13
+635,forklift,forklift,13
+636,fossil,fossil,13
+637,fountain pen,fountain_pen,16
+638,fox,fox,17
+639,frame,frame,13
+640,freezer,freezer,13
+641,french fries,french_fries,13
+642,french horn,french_horn,13
+643,frisbee,frisbee,13
+644,frog,frog,16
+645,fruit,fruit,13
+646,fruitcake,fruitcake,13
+647,fudge,fudge,15
+648,fungus,fungus,13
+649,funnel,funnel,13
+650,fur coat,fur_coat,13
+651,furnace,furnace,13
+652,fuse,fuse,13
+653,gallows,gallows,13
+654,game,game,13
+655,garbage,garbage,13
+656,garbage truck,garbage_truck,16
+657,gargoyle,gargoyle,18
+658,garlic,garlic,13
+659,garter,garter,13
+660,gas mask,gas_mask,13
+661,gasket,gasket,13
+662,gate,gate,13
+663,gauge,gauge,13
+664,gauze,gauze,13
+665,gavel,gavel,13
+666,gazelle,gazelle,15
+667,gear,gear,13
+668,gearshift,gearshift,13
+669,gel,gel,15
+670,gem,gem,13
+671,generator,generator,13
+672,gift,gift,13
+673,ginger,ginger,13
+674,gingerbread man,gingerbread_man,13
+675,giraffe,giraffe,25
+676,girl,girl,14
+677,glass,glass,13
+678,glasses,glasses,18
+679,globe,globe,13
+680,glove,glove,17
+681,glue,glue,13
+682,go-kart,go-kart,13
+683,goalpost,goalpost,14
+684,goat,goat,13
+685,goblet,goblet,15
+686,goggles,goggles,14
+687,gold,gold,19
+688,goldfish,goldfish,13
+689,golf cart,golf_cart,13
+690,golf club,golf_club,13
+691,gondola,gondola,13
+692,gong,gong,13
+693,goose,goose,17
+694,gopher,gopher,17
+695,gorilla,gorilla,22
+696,gourd,gourd,18
+697,graffiti,graffiti,20
+698,grain,grain,13
+699,gramophone,gramophone,18
+700,granite,granite,15
+701,granola,granola,18
+702,grape,grape,21
+703,grapefruit,grapefruit,19
+704,grapevine,grapevine,14
+705,grass,grass,16
+706,grasshopper,grasshopper,21
+707,grate,grate,18
+708,grater,grater,13
+709,gravel,gravel,13
+710,gravestone,gravestone,13
+711,gravy,gravy,20
+712,green beans,green_beans,13
+713,grenade,grenade,13
+714,grill,grill,13
+715,grille,grille,13
+716,grinder,grinder,14
+717,grits,grits,13
+718,groundhog,groundhog,13
+719,guacamole,guacamole,26
+720,guardrail,guardrail,19
+721,guillotine,guillotine,15
+722,guinea pig,guinea_pig,15
+723,guitar,guitar,18
+724,gum,gum,13
+725,gumball,gumball,13
+726,gumdrop,gumdrop,14
+727,gun,gun,13
+728,gurney,gurney,27
+729,gutter,gutter,15
+730,gyro,gyro,13
+731,gyroscope,gyroscope,13
+732,hail,hail,13
+733,hair,hair,13
+734,hairbrush,hairbrush,16
+735,hairdryer,hairdryer,16
+736,hairnet,hairnet,15
+737,hairpin,hairpin,16
+738,hairspray,hairspray,13
+739,ham,ham,13
+740,hamburger,hamburger,13
+741,hammer,hammer,13
+742,hammock,hammock,13
+743,hamster,hamster,15
+744,hand,hand,15
+745,handbrake,handbrake,13
+746,handcuff,handcuff,13
+747,handkerchief,handkerchief,15
+748,handle,handle,14
+749,handlebar,handlebar,13
+750,handprint,handprint,13
+751,hanger,hanger,15
+752,hard disk,hard_disk,15
+753,harmonica,harmonica,20
+754,harness,harness,14
+755,harp,harp,13
+756,hash,hash,14
+757,hat,hat,18
+758,hatbox,hatbox,13
+759,hatchet,hatchet,21
+760,hawk,hawk,18
+761,hay,hay,14
+762,headband,headband,16
+763,headdress,headdress,16
+764,headlamp,headlamp,17
+765,headlight,headlight,14
+766,headphones,headphones,14
+767,headrest,headrest,13
+768,headscarf,headscarf,13
+769,headset,headset,14
+770,hearing aid,hearing_aid,15
+771,hearse,hearse,13
+772,heater,heater,15
+773,hedge,hedge,14
+774,hedgehog,hedgehog,16
+775,helicopter,helicopter,26
+776,helmet,helmet,13
+777,highchair,highchair,13
+778,highlighter,highlighter,13
+779,hinge,hinge,13
+780,hip,hip,13
+781,hippopotamus,hippopotamus,19
+782,hobbyhorse,hobbyhorse,14
+783,hockey stick,hockey_stick,13
+784,hoe,hoe,14
+785,hole,hole,14
+786,holster,holster,15
+787,home plate,home_plate,14
+788,honey,honey,16
+789,honeycomb,honeycomb,14
+790,honeypot,honeypot,20
+791,hood,hood,13
+792,hoodie,hoodie,16
+793,hook,hook1,17
+794,hook,hook2,13
+795,hookah,hookah,16
+796,hopscotch,hopscotch,13
+797,horn,horn,13
+798,horse,horse,18
+799,horseshoe,horseshoe,15
+800,hose,hose,13
+801,hot chocolate,hot_chocolate,14
+802,hot tub,hot_tub,15
+803,hot-air balloon,hot-air_balloon,23
+804,hot-water bottle,hot-water_bottle,13
+805,hotdog,hotdog,13
+806,hotplate,hotplate,13
+807,hourglass,hourglass,15
+808,hovercraft,hovercraft,14
+809,hubcap,hubcap,19
+810,hula hoop,hula_hoop,17
+811,hummingbird,hummingbird,13
+812,hummus,hummus,18
+813,humvee,humvee,17
+814,hydrant,hydrant,14
+815,hyena,hyena,17
+816,ice,ice,15
+817,ice cream,ice_cream,13
+818,ice cube,ice_cube,15
+819,ice pack,ice_pack,13
+820,ice-cream cone,ice-cream_cone,16
+821,icemaker,icemaker,13
+822,icepick,icepick,14
+823,iceskate,iceskate,15
+824,icicle,icicle,13
+825,iguana,iguana,27
+826,incense,incense,13
+827,incubator,incubator,13
+828,inhaler,inhaler,13
+829,ink,ink,14
+830,inkwell,inkwell,15
+831,insole,insole,14
+832,iron,iron,18
+833,ironing board,ironing_board,16
+834,ivy,ivy,14
+835,jack,jack,13
+836,jacket,jacket,17
+837,jackhammer,jackhammer,14
+838,jalapeno,jalapeno,16
+839,jam,jam,16
+840,jar,jar,15
+841,javelin,javelin,13
+842,jeans,jeans,18
+843,jeep,jeep,16
+844,jelly bean,jelly_bean,14
+845,jellyfish,jellyfish,16
+846,jersey,jersey,16
+847,jet,jet,16
+848,jetski,jetski,15
+849,jewel,jewel,22
+850,jewelry,jewelry,16
+851,jigsaw puzzle,jigsaw_puzzle,15
+852,joystick,joystick,16
+853,jug,jug,14
+854,juice,juice,14
+855,juicer,juicer1,13
+856,juicer,juicer2,14
+857,jukebox,jukebox,14
+858,jump rope,jump_rope,15
+859,jumpsuit,jumpsuit,14
+860,kale,kale,16
+861,kaleidoscope,kaleidoscope,13
+862,kangaroo,kangaroo,16
+863,kayak,kayak,14
+864,kazoo,kazoo,20
+865,kebab,kebab,13
+866,keg,keg,19
+867,ketchup,ketchup,17
+868,kettle,kettle,16
+869,key,key,20
+870,keyboard,keyboard,16
+871,keyhole,keyhole,15
+872,kilt,kilt,19
+873,kimono,kimono,18
+874,kite,kite,15
+875,kitten,kitten,13
+876,kiwi,kiwi,13
+877,knee,knee,14
+878,kneepad,kneepad,17
+879,knife,knife,16
+880,knitting,knitting,13
+881,knitting needle,knitting_needle,19
+882,knob,knob,19
+883,knot,knot,13
+884,koala,koala,14
+885,lab coat,lab_coat,16
+886,ladder,ladder,16
+887,ladle,ladle,14
+888,ladybug,ladybug,14
+889,lamb,lamb,17
+890,lamb chop,lamb_chop,19
+891,lamp,lamp,14
+892,lamppost,lamppost,18
+893,lampshade,lampshade,13
+894,landmine,landmine,13
+895,lantern,lantern,15
+896,lanyard,lanyard,14
+897,laptop,laptop,16
+898,lasagna,lasagna,16
+899,laser pointer,laser_pointer,13
+900,latch,latch,17
+901,latte,latte,13
+902,laundry basket,laundry_basket,13
+903,lava,lava,13
+904,lavender,lavender,13
+905,lawnmower,lawnmower,17
+906,leaf,leaf,15
+907,leash,leash,13
+908,lectern,lectern,13
+909,leech,leech,14
+910,leek,leek,17
+911,leg,leg,17
+912,leggings,leggings,13
+913,lego,lego,14
+914,lemon,lemon,13
+915,lemonade,lemonade,17
+916,lens,lens,13
+917,leopard,leopard,14
+918,leotard,leotard,14
+919,letter opener,letter_opener,13
+920,lettuce,lettuce,13
+921,license plate,license_plate,13
+922,licorice,licorice,14
+923,lid,lid,13
+924,life jacket,life_jacket,13
+925,lifesaver,lifesaver,14
+926,light switch,light_switch,18
+927,lightbulb,lightbulb,16
+928,lighter,lighter,16
+929,lightning bug,lightning_bug,13
+930,lime,lime,15
+931,limousine,limousine,16
+932,lingerie,lingerie,13
+933,lion,lion,26
+934,lip balm,lip_balm,13
+935,lip gloss,lip_gloss,13
+936,lipstick,lipstick,13
+937,lizard,lizard,13
+938,llama,llama,14
+939,lobster,lobster,13
+940,lock,lock,13
+941,locker,locker,15
+942,locket,locket,13
+943,log,log,13
+944,loincloth,loincloth,13
+945,lollipop,lollipop,13
+946,loom,loom,17
+947,loveseat,loveseat,17
+948,luggage,luggage,13
+949,lumber,lumber,13
+950,lunchbox,lunchbox,14
+951,macadamia,macadamia,14
+952,macaroni,macaroni,16
+953,machete,machete,13
+954,machine gun,machine_gun,14
+955,maggot,maggot,13
+956,magnet,magnet,13
+957,magnifier,magnifier,13
+958,magnifying glass,magnifying_glass,13
+959,mail,mail,13
+960,mailbox,mailbox,21
+961,makeup,makeup,17
+962,mallet,mallet,17
+963,man,man,13
+964,manatee,manatee,13
+965,mandolin,mandolin,13
+966,mango,mango,20
+967,manhole,manhole,21
+968,mannequin,mannequin,13
+969,mantle,mantle,15
+970,map,map,15
+971,maple syrup,maple_syrup,13
+972,marble,marble,14
+973,margarita,margarita,18
+974,marijuana,marijuana,15
+975,marker,marker,14
+976,marmalade,marmalade,13
+977,marshmallow,marshmallow,14
+978,mascara,mascara,15
+979,mashed potato,mashed_potato,17
+980,mask,mask,16
+981,mast,mast,15
+982,mat,mat,15
+983,match,match,14
+984,matchbox,matchbox,13
+985,mattress,mattress,15
+986,measuring cup,measuring_cup,13
+987,meat,meat,14
+988,meat grinder,meat_grinder,13
+989,meatball,meatball,17
+990,meatloaf,meatloaf,13
+991,medal,medal,15
+992,meerkat,meerkat,14
+993,megaphone,megaphone,13
+994,melon,melon,16
+995,memory stick,memory_stick,17
+996,metal detector,metal_detector,13
+997,metronome,metronome,14
+998,microphone,microphone,16
+999,microscope,microscope,15
+1000,microwave,microwave,13
+1001,milk,milk,22
+1002,milkshake,milkshake,20
+1003,minivan,minivan,20
+1004,mint,mint,14
+1005,mirror,mirror,13
+1006,missile,missile,18
+1007,mistletoe,mistletoe,18
+1008,mitten,mitten,13
+1009,mixer,mixer,13
+1010,moccasin,moccasin,14
+1011,modem,modem,13
+1012,mold,mold1,14
+1013,mold,mold2,15
+1014,mole,mole,16
+1015,money,money,17
+1016,mongoose,mongoose,13
+1017,monkey,monkey,20
+1018,moose,moose,13
+1019,mop,mop,14
+1020,mosquito,mosquito,20
+1021,mosquito net,mosquito_net,14
+1022,moss,moss,13
+1023,moth,moth,15
+1024,motherboard,motherboard,19
+1025,motorcycle,motorcycle,16
+1026,mouse,mouse1,18
+1027,mouse,mouse2,19
+1028,mousepad,mousepad,13
+1029,mousetrap,mousetrap,19
+1030,mousse,mousse,13
+1031,mouth,mouth,13
+1032,mouthpiece,mouthpiece,15
+1033,mud,mud,14
+1034,muff,muff,13
+1035,muffin,muffin,14
+1036,mug,mug,15
+1037,mulberry,mulberry,16
+1038,mulch,mulch,13
+1039,mullet,mullet,13
+1040,mushroom,mushroom,14
+1041,music box,music_box,15
+1042,mussel,mussel,15
+1043,mustache,mustache,14
+1044,mustard,mustard,13
+1045,nacho,nacho,15
+1046,nail,nail,14
+1047,nail clippers,nail_clippers,14
+1048,nail file,nail_file,16
+1049,nail polish,nail_polish,15
+1050,napkin,napkin,14
+1051,napkin ring,napkin_ring,17
+1052,navel,navel,13
+1053,neck,neck,13
+1054,necklace,necklace,16
+1055,needle,needle,13
+1056,nest,nest,14
+1057,net,net,14
+1058,nightshirt,nightshirt,14
+1059,nightstand,nightstand,15
+1060,noisemaker,noisemaker,13
+1061,noodle,noodle,14
+1062,noose,noose,15
+1063,nose,nose,14
+1064,notebook,notebook,14
+1065,notepad,notepad,13
+1066,nut,nut,13
+1067,nutcracker,nutcracker,13
+1068,oar,oar,14
+1069,oatmeal,oatmeal,17
+1070,octopus,octopus,13
+1071,odometer,odometer,17
+1072,oil,oil,18
+1073,oilcan,oilcan,13
+1074,okra,okra,16
+1075,olive,olive,13
+1076,omelet,omelet,19
+1077,onion,onion,16
+1078,orange,orange,14
+1079,orange rind,orange_rind,17
+1080,orangutan,orangutan,19
+1081,orchid,orchid,18
+1082,organ,organ,13
+1083,origami,origami,18
+1084,ostrich,ostrich,20
+1085,otter,otter,15
+1086,ottoman,ottoman,16
+1087,outfit,outfit,13
+1088,outlet,outlet,13
+1089,oven,oven,16
+1090,overalls,overalls,13
+1091,owl,owl,28
+1092,oyster,oyster,14
+1093,pacifier,pacifier,15
+1094,paddle,paddle,15
+1095,padlock,padlock,15
+1096,paint,paint,14
+1097,paintbrush,paintbrush,14
+1098,painting,painting,13
+1099,pajamas,pajamas,14
+1100,palette,palette,13
+1101,pallet,pallet,16
+1102,palm tree,palm_tree,13
+1103,pan,pan,18
+1104,pancake,pancake,13
+1105,panda,panda,19
+1106,panther,panther,15
+1107,panties,panties,13
+1108,pants,pants,14
+1109,pantsuit,pantsuit,13
+1110,pantyhose,pantyhose,15
+1111,papaya,papaya,13
+1112,paper,paper,15
+1113,paper bag,paper_bag,15
+1114,paper plate,paper_plate,13
+1115,paper towel,paper_towel,15
+1116,paperclip,paperclip,14
+1117,paperweight,paperweight,13
+1118,parachute,parachute,14
+1119,parfait,parfait,22
+1120,parking meter,parking_meter,23
+1121,parrot,parrot,29
+1122,parsley,parsley,14
+1123,pasta,pasta,13
+1124,pastry,pastry,14
+1125,patch,patch,15
+1126,patty,patty,14
+1127,payphone,payphone,18
+1128,pea,pea,15
+1129,peach,peach,15
+1130,peacock,peacock,13
+1131,peanut,peanut,15
+1132,peanut butter,peanut_butter,14
+1133,pear,pear,14
+1134,pearl,pearl,14
+1135,pecan,pecan,13
+1136,pedal,pedal,15
+1137,pedometer,pedometer,13
+1138,peeler,peeler,14
+1139,peg,peg,15
+1140,pelican,pelican,14
+1141,pen,pen,13
+1142,pencil,pencil,13
+1143,pencil sharpener,pencil_sharpener,13
+1144,pendulum,pendulum,14
+1145,penguin,penguin,25
+1146,penholder,penholder,14
+1147,penlight,penlight,14
+1148,pennant,pennant,13
+1149,pepper mill,pepper_mill,15
+1150,pepper,pepper1,16
+1151,pepper,pepper2,23
+1152,peppermint,peppermint,13
+1153,pepperoni,pepperoni,13
+1154,perfume,perfume,13
+1155,periscope,periscope,14
+1156,pesto,pesto,18
+1157,pet food,pet_food,14
+1158,petal,petal,13
+1159,petri dish,petri_dish,14
+1160,pheasant,pheasant,22
+1161,phone,phone,14
+1162,phone booth,phone_booth,15
+1163,photo booth,photo_booth,16
+1164,photograph,photograph,13
+1165,piano,piano,14
+1166,pickax,pickax,13
+1167,pickle,pickle,17
+1168,pie,pie,20
+1169,piecrust,piecrust,16
+1170,pig,pig,13
+1171,pigeon,pigeon,13
+1172,piggy bank,piggy_bank,18
+1173,piglet,piglet,13
+1174,pill,pill,13
+1175,pillbox,pillbox,16
+1176,pillow,pillow,14
+1177,pin,pin,18
+1178,pinball,pinball,17
+1179,pincushion,pincushion,13
+1180,pine needle,pine_needle,16
+1181,pine tree,pine_tree,16
+1182,pineapple,pineapple,13
+1183,pinecone,pinecone,13
+1184,ping-pong table,ping-pong_table,14
+1185,pinwheel,pinwheel,13
+1186,pipe,pipe1,15
+1187,pipe,pipe2,14
+1188,pistachio,pistachio,13
+1189,pita,pita,13
+1190,pitcher,pitcher,16
+1191,pitchfork,pitchfork,17
+1192,pizza,pizza,16
+1193,place mat,place_mat,13
+1194,plant,plant,13
+1195,plaster cast,plaster_cast,14
+1196,plastic film,plastic_film,14
+1197,plate,plate,14
+1198,platypus,platypus,14
+1199,playing card,playing_card,13
+1200,playpen,playpen,15
+1201,pliers,pliers,16
+1202,plug,plug,14
+1203,plum,plum,14
+1204,plunger,plunger,14
+1205,pocket,pocket,17
+1206,pocket watch,pocket_watch,17
+1207,pocketknife,pocketknife,15
+1208,pogo stick,pogo_stick,15
+1209,poinsettia,poinsettia,15
+1210,poker,poker,13
+1211,polar bear,polar_bear,25
+1212,polaroid,polaroid,14
+1213,pole,pole,14
+1214,police car,police_car,31
+1215,polisher,polisher,15
+1216,polo shirt,polo_shirt,16
+1217,polygraph,polygraph,16
+1218,pom-pom,pom-pom,13
+1219,pomegranate,pomegranate,13
+1220,pony,pony,14
+1221,poodle,poodle,21
+1222,pool table,pool_table,14
+1223,popcorn,popcorn,16
+1224,poppy,poppy,16
+1225,popsicle,popsicle,13
+1226,porcupine,porcupine,13
+1227,porthole,porthole,14
+1228,possum,possum,13
+1229,poster,poster,13
+1230,pot,pot,17
+1231,potato,potato,15
+1232,potholder,potholder,15
+1233,pothole,pothole,15
+1234,potpie,potpie,18
+1235,potpourri,potpourri,14
+1236,powder,powder,14
+1237,power line,power_line,13
+1238,praying mantis,praying_mantis,22
+1239,pretzel,pretzel,14
+1240,printer,printer,14
+1241,prism,prism,13
+1242,projector,projector,16
+1243,propeller,propeller,15
+1244,prune,prune,14
+1245,puck,puck,13
+1246,pudding,pudding,13
+1247,puddle,puddle,15
+1248,puffin,puffin,34
+1249,pug,pug,25
+1250,pulley,pulley,15
+1251,pulpit,pulpit,16
+1252,pump,pump,14
+1253,pumpkin,pumpkin,22
+1254,punch,punch1,15
+1255,punch,punch2,15
+1256,punching bag,punching_bag,13
+1257,puppet,puppet,15
+1258,puppy,puppy,15
+1259,purse,purse,13
+1260,quad,quad,13
+1261,quesadilla,quesadilla,25
+1262,quiche,quiche,20
+1263,quill,quill,16
+1264,quilt,quilt,14
+1265,rabbit,rabbit,15
+1266,raccoon,raccoon,15
+1267,racehorse,racehorse,13
+1268,rack,rack1,14
+1269,rack,rack2,14
+1270,racket,racket,15
+1271,radar,radar,13
+1272,radiator,radiator,14
+1273,radio,radio,16
+1274,radish,radish,16
+1275,raft,raft,14
+1276,rag,rag,13
+1277,railing,railing,14
+1278,rain gauge,rain_gauge,13
+1279,raincoat,raincoat,14
+1280,raisin,raisin,15
+1281,rake,rake,15
+1282,ram,ram,15
+1283,ramp,ramp,13
+1284,raspberry,raspberry,13
+1285,rat,rat,13
+1286,ratchet,ratchet,14
+1287,rattle,rattle,13
+1288,rattlesnake,rattlesnake,16
+1289,ravioli,ravioli,18
+1290,razor,razor,13
+1291,razor blade,razor_blade,14
+1292,ready meal,ready_meal,13
+1293,rearview mirror,rearview_mirror,13
+1294,recliner,recliner,13
+1295,record,record,13
+1296,record player,record_player,29
+1297,recorder,recorder,18
+1298,red carpet,red_carpet,15
+1299,reel,reel,16
+1300,refrigerator,refrigerator,13
+1301,reindeer,reindeer,21
+1302,remote control,remote_control,14
+1303,retainer,retainer,13
+1304,revolver,revolver,13
+1305,revolving door,revolving_door,21
+1306,rhinoceros,rhinoceros,13
+1307,rhubarb,rhubarb,14
+1308,ribbon,ribbon,16
+1309,rice,rice,13
+1310,rickshaw,rickshaw,15
+1311,rifle,rifle,13
+1312,rim,rim,14
+1313,ring,ring,13
+1314,riser,riser,15
+1315,road sign,road_sign,17
+1316,roadsweeper,roadsweeper,14
+1317,robe,robe,13
+1318,robot,robot,16
+1319,rock,rock,14
+1320,rocket,rocket,17
+1321,rocking chair,rocking_chair,14
+1322,rocking horse,rocking_horse,14
+1323,roll,roll,13
+1324,roller,roller,14
+1325,roller coaster,roller_coaster,18
+1326,rollerblade,rollerblade,14
+1327,rollerskate,rollerskate,14
+1328,rolling pin,rolling_pin,13
+1329,roof rack,roof_rack,13
+1330,rooster,rooster,15
+1331,root,root,14
+1332,rope,rope,17
+1333,rosary,rosary,13
+1334,rose,rose,18
+1335,roulette wheel,roulette_wheel,17
+1336,router,router,15
+1337,rubber band,rubber_band,13
+1338,ruby,ruby,16
+1339,rudder,rudder,14
+1340,rug,rug,15
+1341,ruler,ruler,14
+1342,rust,rust,14
+1343,saddle,saddle,14
+1344,safety pin,safety_pin,13
+1345,saffron,saffron,15
+1346,sail,sail,13
+1347,sailboat,sailboat,16
+1348,salad,salad,18
+1349,salami,salami,15
+1350,saltshaker,saltshaker,17
+1351,sand,sand,22
+1352,sandal,sandal,16
+1353,sandbag,sandbag,15
+1354,sandbox,sandbox,15
+1355,sandcastle,sandcastle,13
+1356,sandpaper,sandpaper,13
+1357,sandwich,sandwich,16
+1358,sarcophagus,sarcophagus,13
+1359,sardine,sardine,13
+1360,satellite,satellite,13
+1361,satellite dish,satellite_dish,13
+1362,sauce,sauce,13
+1363,saucer,saucer,13
+1364,sauerkraut,sauerkraut,14
+1365,sausage,sausage,17
+1366,saw,saw,14
+1367,sawhorse,sawhorse,13
+1368,saxophone,saxophone,13
+1369,scaffold,scaffold,14
+1370,scaffolding,scaffolding,13
+1371,scale,scale,13
+1372,scallion,scallion,16
+1373,scallop,scallop,16
+1374,scalpel,scalpel,14
+1375,scanner,scanner,13
+1376,scarecrow,scarecrow,13
+1377,scarf,scarf,17
+1378,school bus,school_bus,14
+1379,scissors,scissors,15
+1380,scone,scone,15
+1381,scoop,scoop,13
+1382,scooter,scooter,17
+1383,scoreboard,scoreboard,14
+1384,scorpion,scorpion,14
+1385,scrabble,scrabble,13
+1386,scrambled egg,scrambled_egg,13
+1387,scraper,scraper,13
+1388,screen,screen1,15
+1389,screen,screen2,15
+1390,screw,screw,15
+1391,screwdriver,screwdriver,16
+1392,scuba,scuba,14
+1393,sea urchin,sea_urchin,28
+1394,seafood,seafood,14
+1395,seagull,seagull,13
+1396,seahorse,seahorse,16
+1397,seal,seal,15
+1398,seaplane,seaplane,15
+1399,seatbelt,seatbelt,14
+1400,seaweed,seaweed,13
+1401,seed,seed,15
+1402,seesaw,seesaw,14
+1403,seismograph,seismograph,13
+1404,sequin,sequin,14
+1405,sewage,sewage,14
+1406,sewing kit,sewing_kit,16
+1407,sewing machine,sewing_machine,13
+1408,shaker,shaker,13
+1409,shark,shark,18
+1410,shaving cream,shaving_cream,13
+1411,shawl,shawl,14
+1412,shears,shears,16
+1413,sheath,sheath,13
+1414,sheep,sheep,13
+1415,sheet,sheet,14
+1416,shelf,shelf,13
+1417,shell,shell1,15
+1418,shell,shell2,17
+1419,shell,shell3,13
+1420,shield,shield,13
+1421,ship,ship,14
+1422,shirt,shirt,13
+1423,shoe,shoe,19
+1424,shoe polish,shoe_polish,13
+1425,shoehorn,shoehorn,13
+1426,shoelace,shoelace,14
+1427,shopping basket,shopping_basket,13
+1428,shopping cart,shopping_cart,17
+1429,shortbread,shortbread,15
+1430,shorts,shorts,15
+1431,shoulder,shoulder,13
+1432,shovel,shovel,13
+1433,shower,shower,14
+1434,shower cap,shower_cap,13
+1435,shower curtain,shower_curtain,20
+1436,showerhead,showerhead,17
+1437,shredder,shredder,15
+1438,shrimp,shrimp,13
+1439,shuffleboard,shuffleboard,17
+1440,shutter,shutter,16
+1441,sickle,sickle,14
+1442,sidecar,sidecar,21
+1443,sifter,sifter,14
+1444,silicone,silicone,14
+1445,silverware,silverware,14
+1446,sim card,sim_card,14
+1447,sink,sink,16
+1448,siren,siren,14
+1449,skateboard,skateboard,15
+1450,skeleton,skeleton,17
+1451,skewer,skewer,13
+1452,ski,ski,14
+1453,ski boots,ski_boots,14
+1454,ski lift,ski_lift,17
+1455,ski pole,ski_pole,13
+1456,skin,skin,14
+1457,skirt,skirt,16
+1458,skull,skull,14
+1459,skunk,skunk,15
+1460,sled,sled,13
+1461,sledgehammer,sledgehammer,14
+1462,sleeping bag,sleeping_bag,13
+1463,slicer,slicer,15
+1464,slide,slide,17
+1465,slime,slime,13
+1466,sling,sling,13
+1467,slingshot,slingshot,13
+1468,slipper,slipper,13
+1469,slot,slot,14
+1470,slot machine,slot_machine,16
+1471,sloth,sloth,13
+1472,slug,slug,15
+1473,smoke alarm,smoke_alarm,13
+1474,smoothie,smoothie,15
+1475,snack,snack,15
+1476,snail,snail,20
+1477,snake,snake,17
+1478,snorkel,snorkel,15
+1479,snow,snow,13
+1480,snowball,snowball,13
+1481,snowboard,snowboard,13
+1482,snowman,snowman,13
+1483,snowmobile,snowmobile,13
+1484,snowplow,snowplow,13
+1485,snowshoe,snowshoe,14
+1486,snowsuit,snowsuit,13
+1487,soap,soap,13
+1488,soccer ball,soccer_ball,14
+1489,sock,sock,14
+1490,soda,soda,13
+1491,soda fountain,soda_fountain,14
+1492,sofa bed,sofa_bed,14
+1493,solar panel,solar_panel,14
+1494,soldering iron,soldering_iron,15
+1495,sombrero,sombrero,13
+1496,sonogram,sonogram,14
+1497,sorbet,sorbet,13
+1498,souffle,souffle,19
+1499,soup,soup,13
+1500,soy sauce,soy_sauce,14
+1501,space shuttle,space_shuttle,14
+1502,spacesuit,spacesuit,13
+1503,spaghetti,spaghetti,15
+1504,spam,spam,13
+1505,spareribs,spareribs,14
+1506,spark plug,spark_plug,13
+1507,sparkler,sparkler,16
+1508,spatula,spatula,14
+1509,speaker,speaker,20
+1510,spear,spear,13
+1511,speedboat,speedboat,13
+1512,speedometer,speedometer,13
+1513,spider,spider,13
+1514,spider web,spider_web,16
+1515,spinach,spinach,14
+1516,splinter,splinter,13
+1517,sponge,sponge,15
+1518,spool,spool,15
+1519,spoon,spoon,14
+1520,spout,spout,15
+1521,spring roll,spring_roll,17
+1522,springboard,springboard,14
+1523,sprinkler,sprinkler,16
+1524,sprouts,sprouts,13
+1525,spur,spur,14
+1526,squash,squash,14
+1527,squeegee,squeegee,13
+1528,squid,squid,14
+1529,squirrel,squirrel,15
+1530,squirt gun,squirt_gun,16
+1531,stained glass,stained_glass,13
+1532,stair,stair,18
+1533,stake,stake,14
+1534,stalagmite,stalagmite,16
+1535,stamp,stamp1,14
+1536,stamp,stamp2,13
+1537,staple,staple,13
+1538,staple gun,staple_gun,13
+1539,stapler,stapler,13
+1540,star fruit,star_fruit,14
+1541,starfish,starfish,16
+1542,station wagon,station_wagon,14
+1543,statue,statue,18
+1544,steak,steak,16
+1545,steamroller,steamroller,14
+1546,steering wheel,steering_wheel,16
+1547,stem,stem,13
+1548,step stool,step_stool,13
+1549,stereo,stereo,14
+1550,stethoscope,stethoscope,13
+1551,stew,stew,19
+1552,stick,stick,14
+1553,sticker,sticker,14
+1554,stiletto,stiletto,16
+1555,stilt,stilt,15
+1556,stingray,stingray,14
+1557,stir fry,stir_fry,21
+1558,stirrup,stirrup,13
+1559,stockings,stockings,13
+1560,stomach,stomach,13
+1561,stool,stool,13
+1562,stopwatch,stopwatch,14
+1563,stove,stove1,14
+1564,stove,stove2,14
+1565,straightjacket,straightjacket,13
+1566,strainer,strainer,15
+1567,strap,strap,18
+1568,straw,straw1,14
+1569,straw,straw2,18
+1570,strawberry,strawberry,16
+1571,streetlight,streetlight,17
+1572,stretcher,stretcher,13
+1573,string cheese,string_cheese,14
+1574,stroller,stroller,17
+1575,stuffing,stuffing,13
+1576,stump,stump,15
+1577,submarine,submarine,15
+1578,subway,subway,14
+1579,sugar cube,sugar_cube,13
+1580,suit,suit,16
+1581,suitcase,suitcase,15
+1582,sundae,sundae,14
+1583,sundial,sundial,15
+1584,sunflower,sunflower,19
+1585,sunglasses,sunglasses,16
+1586,sunroof,sunroof,13
+1587,surfboard,surfboard,17
+1588,sushi,sushi,19
+1589,suspenders,suspenders,16
+1590,swab,swab,17
+1591,swan,swan,15
+1592,sweater,sweater,21
+1593,sweatsuit,sweatsuit,13
+1594,sweeper,sweeper,15
+1595,sweet potato,sweet_potato,13
+1596,swimming pool,swimming_pool,21
+1597,swimsuit,swimsuit,13
+1598,swing,swing,14
+1599,swing set,swing_set,16
+1600,switch,switch,15
+1601,swizzle stick,swizzle_stick,14
+1602,sword,sword,15
+1603,swordfish,swordfish,13
+1604,syringe,syringe,15
+1605,syrup,syrup,13
+1606,t-shirt,t-shirt,16
+1607,tab,tab,15
+1608,table,table,13
+1609,tablecloth,tablecloth,13
+1610,tablet,tablet,14
+1611,tack,tack,14
+1612,tackle,tackle,14
+1613,taco,taco,14
+1614,tadpole,tadpole,13
+1615,taffy,taffy,14
+1616,tag,tag,14
+1617,taillight,taillight,17
+1618,tamale,tamale,17
+1619,tambourine,tambourine,15
+1620,tank,tank1,18
+1621,tank,tank2,13
+1622,tape,tape,14
+1623,tape measure,tape_measure,15
+1624,tape recorder,tape_recorder,13
+1625,tapestry,tapestry,16
+1626,tarantula,tarantula,17
+1627,target,target,15
+1628,tarp,tarp,14
+1629,tattoo,tattoo,20
+1630,taxi,taxi,18
+1631,tea,tea,16
+1632,teabag,teabag,15
+1633,teacup,teacup,14
+1634,teapot,teapot,14
+1635,teddy bear,teddy_bear,13
+1636,tee,tee,13
+1637,teepee,teepee,13
+1638,telegraph,telegraph,14
+1639,telephone pole,telephone_pole,13
+1640,telescope,telescope,14
+1641,television,television,15
+1642,tennis ball,tennis_ball,18
+1643,tent,tent,17
+1644,terrarium,terrarium,14
+1645,test tube,test_tube,18
+1646,thermometer,thermometer,13
+1647,thermos,thermos,18
+1648,thermostat,thermostat,17
+1649,thimble,thimble,13
+1650,thorn,thorn,18
+1651,thread,thread,13
+1652,throne,throne,13
+1653,thumb,thumb,13
+1654,thumbtack,thumbtack,16
+1655,tiara,tiara,13
+1656,tick,tick,13
+1657,ticktacktoe,ticktacktoe,13
+1658,tie,tie,14
+1659,tiger,tiger,14
+1660,tile,tile,16
+1661,timer,timer,13
+1662,tinsel,tinsel,14
+1663,tiramisu,tiramisu,17
+1664,toad,toad,18
+1665,toast,toast,14
+1666,toaster,toaster,15
+1667,toaster oven,toaster_oven,15
+1668,toe,toe,15
+1669,toga,toga,13
+1670,toilet,toilet,15
+1671,toilet paper,toilet_paper,21
+1672,tomato,tomato,15
+1673,tomato sauce,tomato_sauce,15
+1674,tongs,tongs,13
+1675,tongue,tongue,13
+1676,tool,tool,13
+1677,toolbox,toolbox,14
+1678,tooth,tooth,16
+1679,toothbrush,toothbrush,13
+1680,toothpaste,toothpaste,15
+1681,toothpick,toothpick,16
+1682,top hat,top_hat,14
+1683,torch,torch,14
+1684,torpedo,torpedo,14
+1685,torso,torso,13
+1686,tortellini,tortellini,17
+1687,tortilla,tortilla,14
+1688,tostada,tostada,14
+1689,totem pole,totem_pole,15
+1690,toucan,toucan,17
+1691,touchpad,touchpad,13
+1692,towel,towel,17
+1693,towel rack,towel_rack,14
+1694,toy,toy,13
+1695,tractor,tractor,13
+1696,traffic light,traffic_light,16
+1697,trailer,trailer,19
+1698,train,train,13
+1699,train car,train_car,14
+1700,train set,train_set,13
+1701,trampoline,trampoline,15
+1702,trap,trap,15
+1703,trapdoor,trapdoor,14
+1704,trashcan,trashcan,15
+1705,tray,tray,13
+1706,treadmill,treadmill,18
+1707,treasure,treasure,14
+1708,tree,tree,13
+1709,tree trunk,tree_trunk,13
+1710,triangle,triangle,13
+1711,tricycle,tricycle,15
+1712,trident,trident,13
+1713,trigger,trigger,13
+1714,tripod,tripod,13
+1715,trolley,trolley,15
+1716,trombone,trombone,15
+1717,trophy,trophy,15
+1718,trough,trough,14
+1719,trowel,trowel,18
+1720,truck,truck,13
+1721,trumpet,trumpet,13
+1722,trunk,trunk,15
+1723,tuba,tuba,16
+1724,tube top,tube_top,13
+1725,tugboat,tugboat,13
+1726,tulip,tulip,17
+1727,tumbleweed,tumbleweed,14
+1728,tuning fork,tuning_fork,14
+1729,tupperware,tupperware,16
+1730,turban,turban,13
+1731,turbine,turbine,16
+1732,turf,turf,13
+1733,turkey,turkey,16
+1734,turnstile,turnstile,14
+1735,turntable,turntable,14
+1736,turtle,turtle,19
+1737,turtleneck,turtleneck,15
+1738,tuxedo,tuxedo,17
+1739,tweezers,tweezers,13
+1740,twig,twig,14
+1741,typewriter,typewriter,16
+1742,ukulele,ukulele,16
+1743,umbrella,umbrella,17
+1744,undershirt,undershirt,13
+1745,underwear,underwear,13
+1746,unicycle,unicycle,13
+1747,uniform,uniform,17
+1748,urinal,urinal,14
+1749,urn,urn,15
+1750,vacuum,vacuum,14
+1751,valve,valve,13
+1752,van,van,15
+1753,vase,vase,21
+1754,vegetable,vegetable,16
+1755,veil,veil,17
+1756,velcro,velcro,14
+1757,vending machine,vending_machine,15
+1758,vent,vent,15
+1759,vest,vest,16
+1760,vial,vial,16
+1761,videocassette,videocassette,13
+1762,videogame,videogame,16
+1763,viewfinder,viewfinder,13
+1764,violin,violin,14
+1765,vise,vise,16
+1766,visor,visor,17
+1767,volleyball,volleyball,17
+1768,vulture,vulture,18
+1769,wafer,wafer,13
+1770,waffle,waffle,19
+1771,waffle iron,waffle_iron,15
+1772,wagon,wagon,15
+1773,walker,walker1,14
+1774,walker,walker2,16
+1775,wall,wall,13
+1776,wallet,wallet,15
+1777,wallpaper,wallpaper,17
+1778,walnut,walnut,14
+1779,walrus,walrus,15
+1780,wand,wand,13
+1781,warthog,warthog,16
+1782,washboard,washboard,14
+1783,washcloth,washcloth,13
+1784,washing machine,washing_machine,13
+1785,wasp,wasp,16
+1786,watch,watch,16
+1787,water bottle,water_bottle,13
+1788,water cooler,water_cooler,13
+1789,water filter,water_filter,13
+1790,water fountain,water_fountain,13
+1791,water heater,water_heater,15
+1792,watering can,watering_can,15
+1793,watermelon,watermelon,14
+1794,waterwheel,waterwheel,14
+1795,wax,wax,13
+1796,wax paper,wax_paper,14
+1797,weasel,weasel,13
+1798,weather vane,weather_vane,23
+1799,webcam,webcam,14
+1800,wedding cake,wedding_cake,15
+1801,wedge,wedge,13
+1802,weed,weed,15
+1803,wetsuit,wetsuit,14
+1804,whale,whale,16
+1805,wheat,wheat,13
+1806,wheel,wheel,13
+1807,wheelbarrow,wheelbarrow,13
+1808,wheelchair,wheelchair,13
+1809,whip,whip,15
+1810,whipped cream,whipped_cream,14
+1811,whisk,whisk,13
+1812,whistle,whistle,14
+1813,whiteboard,whiteboard,16
+1814,whoopee cushion,whoopee_cushion,14
+1815,wick,wick,13
+1816,wig,wig,15
+1817,wind chimes,wind_chimes,13
+1818,window,window,15
+1819,windowsill,windowsill,14
+1820,windshield,windshield,16
+1821,windshield wiper,windshield_wiper,14
+1822,windsock,windsock,14
+1823,wine,wine,27
+1824,wine bottle,wine_bottle,16
+1825,wine cooler,wine_cooler,14
+1826,wineglass,wineglass,14
+1827,wing,wing,16
+1828,wire,wire,14
+1829,wire cutters,wire_cutters,14
+1830,wok,wok,13
+1831,wolf,wolf,14
+1832,woman,woman,13
+1833,wood,wood,15
+1834,wooden leg,wooden_leg,13
+1835,workbench,workbench,15
+1836,worm,worm,13
+1837,wrap,wrap,19
+1838,wrapping paper,wrapping_paper,13
+1839,wreath,wreath,15
+1840,wreck,wreck,14
+1841,wrench,wrench,13
+1842,wrist,wrist,13
+1843,xylophone,xylophone,13
+1844,yacht,yacht,13
+1845,yak,yak,16
+1846,yarn,yarn,16
+1847,yo-yo,yo-yo,15
+1848,yogurt,yogurt,14
+1849,yoke,yoke,13
+1850,yolk,yolk,19
+1851,zebra,zebra,21
+1852,zipper,zipper,13
+1853,zucchini,zucchini,14

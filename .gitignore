@@ -1,5 +1,13 @@
-.venv
-data/*
-.codex
-data/
-scripts/archive
+.venv/
+.codex/
+__pycache__/
+*.py[cod]
+
+# Large/raw data are intentionally kept local unless explicitly tracked.
+data/raw/
+data/**/*.zip
+data/**/*.tar
+data/**/*.tar.gz
+
+# Archived exploratory scripts are not part of the runnable pipeline.
+scripts/archive/

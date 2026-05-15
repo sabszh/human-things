@@ -1,2 +1,4 @@
 *.pt filter=lfs diff=lfs merge=lfs -text
 *.npy filter=lfs diff=lfs merge=lfs -text
+data/human_similarity/*.csv filter=lfs diff=lfs merge=lfs -text
+data/processed/triplets.csv filter=lfs diff=lfs merge=lfs -text

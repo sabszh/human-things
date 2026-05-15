@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "human-things"
+version = "0.1.0"
+description = "Human-informed visual embedding experiments on THINGS."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Sabrina Zaki Hansen" }
+]
+dependencies = [
+  "pandas>=2.0",
+  "numpy>=1.24",
+  "osfclient>=0.0.5",
+  "Pillow>=10.0",
+  "scikit-learn>=1.2",
+  "scipy>=1.10",
+  "matplotlib>=3.7",
+  "torch>=2.1",
+  "torchvision>=0.16",
+  "tqdm>=4.66"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

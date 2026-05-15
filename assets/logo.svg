@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="180" viewBox="0 0 760 180" role="img" aria-labelledby="title desc">
+  <title id="title">Human Things logo</title>
+  <desc id="desc">Minimal object tiles connected to a human-similarity embedding curve.</desc>
+  <rect width="760" height="180" rx="22" fill="#fbfcfe"/>
+  <g transform="translate(46 38)">
+    <rect x="0" y="0" width="52" height="52" rx="10" fill="#dbeafe"/>
+    <rect x="66" y="0" width="52" height="52" rx="10" fill="#fef3c7"/>
+    <rect x="132" y="0" width="52" height="52" rx="10" fill="#dcfce7"/>
+    <path d="M26 72 C58 105, 126 105, 158 72" fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="26" cy="72" r="7" fill="#2563eb"/>
+    <circle cx="158" cy="72" r="7" fill="#059669"/>
+  </g>
+  <text x="270" y="82" font-family="Arial, sans-serif" font-size="44" font-weight="800" fill="#111827">Human Things</text>
+  <text x="272" y="116" font-family="Arial, sans-serif" font-size="16" fill="#475569">human-informed visual embedding experiments</text>
+</svg>

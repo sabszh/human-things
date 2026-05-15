@@ -1,0 +1,767 @@
+{
+  "status": "ok",
+  "seed": 7,
+  "benchmark_groups": {
+    "standard_embedding_utility": [
+      "classification metrics from training",
+      "within-image-set retrieval hit@k",
+      "image-to-concept retrieval hit@k",
+      "concept category kNN",
+      "concept category linear probe"
+    ],
+    "thingsplus_semantic_benchmarks": [
+      "nameability and naming consistency regression",
+      "known/concreteness/frequency regression",
+      "object-property norm regression"
+    ],
+    "human_similarity_alignment": [
+      "Spearman correlation on held-out aggregated pair rows; not treated as fully independent external test."
+    ]
+  },
+  "models": {
+    "baseline": {
+      "model": "baseline",
+      "model_dir": "outputs/baseline_resnet50",
+      "classification": {
+        "best_val_top1": 0.742725509214355,
+        "test_top1": 0.7274490785645005,
+        "test_top5": 0.9110087293889427
+      },
+      "standard_embedding_utility": {
+        "image_retrieval_hit@1": 0.7266192196273381,
+        "image_retrieval_hit@5": 0.8887736490111227,
+        "image_retrieval_hit@10": 0.9310468152068954,
+        "image_retrieval_source": "embedding_eval_report.json cache",
+        "image_to_concept_hit@1": {
+          "hit": 0.884,
+          "num_images": 3000,
+          "sampled": true
+        },
+        "image_to_concept_hit@5": {
+          "hit": 0.9813333333333333,
+          "num_images": 3000,
+          "sampled": true
+        },
+        "category_knn@5": {
+          "accuracy": 0.48342541436464087,
+          "num_concepts": 1448,
+          "num_categories": 208
+        },
+        "category_linear_probe_53": {
+          "accuracy_mean": 0.49171697888080185,
+          "accuracy_std": 0.013680159303873125,
+          "num_concepts": 1448,
+          "num_categories": 208,
+          "source": "embedding_eval_report.json cache"
+        }
+      },
+      "thingsplus_semantic_benchmarks": {
+        "nameability": {
+          "targets": {
+            "image-label_nameability_mean": {
+              "r2": 0.00643272494690772,
+              "spearman": 0.16659691974154514,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "image-label_consistency_mean": {
+              "r2": 0.015310841838339528,
+              "spearman": 0.2053546478735267,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "image-label_ratings-per-image_mean": {
+              "r2": -0.004864514493650107,
+              "spearman": -0.07251724407944199,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.005626350763865713,
+            "mean_spearman": 0.09981144117854329,
+            "num_targets": 3
+          }
+        },
+        "lexical_concept": {
+          "targets": {
+            "Percent_known": {
+              "r2": 0.0023263545074860836,
+              "spearman": 0.08410035554256402,
+              "num_concepts": 1853,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "Concreteness (M)": {
+              "r2": 0.02887670402009579,
+              "spearman": 0.24664487188401685,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "COCA word freq": {
+              "r2": 0.054179779042663356,
+              "spearman": 0.13478517065111079,
+              "num_concepts": 1524,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "SUBTLEX freq": {
+              "r2": -0.07974007110363668,
+              "spearman": 0.0008004475924212592,
+              "num_concepts": 1850,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.0014106916166521377,
+            "mean_spearman": 0.11658271141752823,
+            "num_targets": 4
+          }
+        },
+        "object_properties": {
+          "targets": {
+            "property_manmade_mean": {
+              "r2": 0.3439900263851021,
+              "spearman": 0.5815770386141299,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_precious_mean": {
+              "r2": 0.13135314363477746,
+              "spearman": 0.5085317240994383,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_lives_mean": {
+              "r2": 0.32580140419591264,
+              "spearman": 0.6393158297459551,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_heavy_mean": {
+              "r2": 0.2883259335029974,
+              "spearman": 0.7289722466691811,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_natural_mean": {
+              "r2": 0.3855919665395472,
+              "spearman": 0.732165648787959,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_moves_mean": {
+              "r2": 0.23453935048130248,
+              "spearman": 0.5708056308533496,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_grasp_mean": {
+              "r2": 0.2558187640189187,
+              "spearman": 0.6954851868475063,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_hold_mean": {
+              "r2": 0.286966398515606,
+              "spearman": 0.7291724796052484,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_be-moved_mean": {
+              "r2": 0.25863253638063566,
+              "spearman": 0.7125702382873562,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_pleasant_mean": {
+              "r2": 0.13741111456811306,
+              "spearman": 0.6167903015997892,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_arousal_mean": {
+              "r2": 0.10251406072135949,
+              "spearman": 0.4819365759342096,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_arousal_work-time_mean": {
+              "r2": -0.004743058086831731,
+              "spearman": -0.045142430874718004,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.22885013673812002,
+            "mean_spearman": 0.5793483725141171,
+            "num_targets": 12
+          }
+        }
+      },
+      "human_similarity_alignment": {
+        "status": "ok",
+        "num_pairs": 171772,
+        "spearman": 0.4173032134130256,
+        "note": "This uses held-out pair rows from the aggregated THINGS odd-one-out data. It is useful for leakage control but not a fully independent human-similarity benchmark."
+      },
+      "previous_embedding_eval_report": {
+        "image_retrieval_hit@1": 0.7266192196273381,
+        "image_retrieval_hit@5": 0.8887736490111227,
+        "image_retrieval_hit@10": 0.9310468152068954,
+        "category_probe_53": {
+          "accuracy_mean": 0.49171697888080185,
+          "accuracy_std": 0.013680159303873125,
+          "num_concepts": 1448,
+          "num_categories": 208
+        },
+        "norm_prediction": {
+          "num_targets": 14,
+          "num_concepts": 1854,
+          "r2_variance_weighted": -0.0047407266683876514
+        }
+      },
+      "inputs": {
+        "concepts": "data/processed/concepts.csv",
+        "human_similarity_test_pairs": "data/human_similarity/test_similarity_pairs.csv",
+        "thingsplus_variables_used": [
+          "COCA word freq",
+          "Concreteness (M)",
+          "Percent_known",
+          "SUBTLEX freq",
+          "image-label_consistency_mean",
+          "image-label_nameability_mean",
+          "image-label_ratings-per-image_mean",
+          "property_arousal_mean",
+          "property_arousal_work-time_mean",
+          "property_be-moved_mean",
+          "property_grasp_mean",
+          "property_heavy_mean",
+          "property_hold_mean",
+          "property_lives_mean",
+          "property_manmade_mean",
+          "property_moves_mean",
+          "property_natural_mean",
+          "property_pleasant_mean",
+          "property_precious_mean",
+          "categories_53",
+          "category_manual"
+        ]
+      }
+    },
+    "human_informed": {
+      "model": "human_informed",
+      "model_dir": "outputs/human_informed_resnet50",
+      "classification": {
+        "best_val_top1": 0.7463627546071775,
+        "test_top1": 0.7429679922405431,
+        "test_top5": 0.918525703200776
+      },
+      "standard_embedding_utility": {
+        "image_retrieval_hit@1": 0.7422123672257788,
+        "image_retrieval_hit@5": 0.8997889918100211,
+        "image_retrieval_hit@10": 0.9385572762061443,
+        "image_retrieval_source": "embedding_eval_report.json cache",
+        "image_to_concept_hit@1": {
+          "hit": 0.8933333333333333,
+          "num_images": 3000,
+          "sampled": true
+        },
+        "image_to_concept_hit@5": {
+          "hit": 0.9836666666666667,
+          "num_images": 3000,
+          "sampled": true
+        },
+        "category_knn@5": {
+          "accuracy": 0.48687845303867405,
+          "num_concepts": 1448,
+          "num_categories": 208
+        },
+        "category_linear_probe_53": {
+          "accuracy_mean": 0.4903376685359742,
+          "accuracy_std": 0.015287420139616155,
+          "num_concepts": 1448,
+          "num_categories": 208,
+          "source": "embedding_eval_report.json cache"
+        }
+      },
+      "thingsplus_semantic_benchmarks": {
+        "nameability": {
+          "targets": {
+            "image-label_nameability_mean": {
+              "r2": 0.006355968650571975,
+              "spearman": 0.16694834213886395,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "image-label_consistency_mean": {
+              "r2": 0.015354779879478975,
+              "spearman": 0.20557861883910555,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "image-label_ratings-per-image_mean": {
+              "r2": -0.00408217559429791,
+              "spearman": -0.05556190951450266,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.005876190978584346,
+            "mean_spearman": 0.10565501715448894,
+            "num_targets": 3
+          }
+        },
+        "lexical_concept": {
+          "targets": {
+            "Percent_known": {
+              "r2": 0.00229325705052863,
+              "spearman": 0.0810817543689518,
+              "num_concepts": 1853,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "Concreteness (M)": {
+              "r2": 0.027879363090408615,
+              "spearman": 0.24756875108635562,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "COCA word freq": {
+              "r2": 0.05314107997486828,
+              "spearman": 0.135054219601584,
+              "num_concepts": 1524,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "SUBTLEX freq": {
+              "r2": -0.08061343725911341,
+              "spearman": -0.0069030731194168445,
+              "num_concepts": 1850,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.0006750657141730287,
+            "mean_spearman": 0.11420041298436864,
+            "num_targets": 4
+          }
+        },
+        "object_properties": {
+          "targets": {
+            "property_manmade_mean": {
+              "r2": 0.3177115763243673,
+              "spearman": 0.5701482602132166,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_precious_mean": {
+              "r2": 0.12471021430506413,
+              "spearman": 0.5062020850721014,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_lives_mean": {
+              "r2": 0.29823315037609,
+              "spearman": 0.6309608568226459,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_heavy_mean": {
+              "r2": 0.27449415071909944,
+              "spearman": 0.7288390883936295,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_natural_mean": {
+              "r2": 0.359002282462781,
+              "spearman": 0.7231210654169201,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_moves_mean": {
+              "r2": 0.21473186920187926,
+              "spearman": 0.5614607155034885,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_grasp_mean": {
+              "r2": 0.2429424621395394,
+              "spearman": 0.69049206206385,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_hold_mean": {
+              "r2": 0.2726667619049997,
+              "spearman": 0.7271603286785495,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_be-moved_mean": {
+              "r2": 0.24819575336464206,
+              "spearman": 0.7126174474382219,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_pleasant_mean": {
+              "r2": 0.1303873604717547,
+              "spearman": 0.6203893598337056,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_arousal_mean": {
+              "r2": 0.0974391945136579,
+              "spearman": 0.477842096364152,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_arousal_work-time_mean": {
+              "r2": -0.004977999008884071,
+              "spearman": -0.04699462226431765,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.2146280647312493,
+            "mean_spearman": 0.5751865619613469,
+            "num_targets": 12
+          }
+        }
+      },
+      "human_similarity_alignment": {
+        "status": "ok",
+        "num_pairs": 171772,
+        "spearman": 0.389748921075018,
+        "note": "This uses held-out pair rows from the aggregated THINGS odd-one-out data. It is useful for leakage control but not a fully independent human-similarity benchmark."
+      },
+      "previous_embedding_eval_report": {
+        "image_retrieval_hit@1": 0.7422123672257788,
+        "image_retrieval_hit@5": 0.8997889918100211,
+        "image_retrieval_hit@10": 0.9385572762061443,
+        "category_probe_53": {
+          "accuracy_mean": 0.4903376685359742,
+          "accuracy_std": 0.015287420139616155,
+          "num_concepts": 1448,
+          "num_categories": 208
+        },
+        "norm_prediction": {
+          "num_targets": 14,
+          "num_concepts": 1854,
+          "r2_variance_weighted": -0.004978840705007315
+        }
+      },
+      "inputs": {
+        "concepts": "data/processed/concepts.csv",
+        "human_similarity_test_pairs": "data/human_similarity/test_similarity_pairs.csv",
+        "thingsplus_variables_used": [
+          "COCA word freq",
+          "Concreteness (M)",
+          "Percent_known",
+          "SUBTLEX freq",
+          "image-label_consistency_mean",
+          "image-label_nameability_mean",
+          "image-label_ratings-per-image_mean",
+          "property_arousal_mean",
+          "property_arousal_work-time_mean",
+          "property_be-moved_mean",
+          "property_grasp_mean",
+          "property_heavy_mean",
+          "property_hold_mean",
+          "property_lives_mean",
+          "property_manmade_mean",
+          "property_moves_mean",
+          "property_natural_mean",
+          "property_pleasant_mean",
+          "property_precious_mean",
+          "categories_53",
+          "category_manual"
+        ]
+      }
+    },
+    "shuffled_control": {
+      "model": "shuffled_control",
+      "model_dir": "outputs/human_informed_resnet50_shuffled",
+      "classification": {
+        "best_val_top1": 0.7458777885548011,
+        "test_top1": 0.7429679922405431,
+        "test_top5": 0.9182832201745877
+      },
+      "standard_embedding_utility": {
+        "image_retrieval_hit@1": 0.7423196595257681,
+        "image_retrieval_hit@5": 0.8998962841100103,
+        "image_retrieval_hit@10": 0.9384857480061515,
+        "image_retrieval_source": "embedding_eval_report.json cache",
+        "image_to_concept_hit@1": {
+          "hit": 0.8933333333333333,
+          "num_images": 3000,
+          "sampled": true
+        },
+        "image_to_concept_hit@5": {
+          "hit": 0.9833333333333333,
+          "num_images": 3000,
+          "sampled": true
+        },
+        "category_knn@5": {
+          "accuracy": 0.48756906077348067,
+          "num_concepts": 1448,
+          "num_categories": 208
+        },
+        "category_linear_probe_53": {
+          "accuracy_mean": 0.4910297100584655,
+          "accuracy_std": 0.015550258760616458,
+          "num_concepts": 1448,
+          "num_categories": 208,
+          "source": "embedding_eval_report.json cache"
+        }
+      },
+      "thingsplus_semantic_benchmarks": {
+        "nameability": {
+          "targets": {
+            "image-label_nameability_mean": {
+              "r2": 0.0063592905877261074,
+              "spearman": 0.16702347962289157,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "image-label_consistency_mean": {
+              "r2": 0.015356150759033182,
+              "spearman": 0.20650056958237054,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "image-label_ratings-per-image_mean": {
+              "r2": -0.0040890490013525405,
+              "spearman": -0.05576125031829845,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.005875464115135583,
+            "mean_spearman": 0.10592093296232123,
+            "num_targets": 3
+          }
+        },
+        "lexical_concept": {
+          "targets": {
+            "Percent_known": {
+              "r2": 0.0023016054274934694,
+              "spearman": 0.08127121686200289,
+              "num_concepts": 1853,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "Concreteness (M)": {
+              "r2": 0.027786690690843052,
+              "spearman": 0.24764393971949644,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "COCA word freq": {
+              "r2": 0.05308129845652243,
+              "spearman": 0.13428482639321468,
+              "num_concepts": 1524,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "SUBTLEX freq": {
+              "r2": -0.08065859915519713,
+              "spearman": -0.006546093843559482,
+              "num_concepts": 1850,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.0006277488549154553,
+            "mean_spearman": 0.11416347228278863,
+            "num_targets": 4
+          }
+        },
+        "object_properties": {
+          "targets": {
+            "property_manmade_mean": {
+              "r2": 0.31569037317402293,
+              "spearman": 0.5694438871745384,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_precious_mean": {
+              "r2": 0.12420973284108527,
+              "spearman": 0.5059361889735629,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_lives_mean": {
+              "r2": 0.296148338071196,
+              "spearman": 0.6305467150241958,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_heavy_mean": {
+              "r2": 0.27390809730638466,
+              "spearman": 0.7288977092673049,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_natural_mean": {
+              "r2": 0.35683245223940696,
+              "spearman": 0.7229252614126329,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_moves_mean": {
+              "r2": 0.21367603952601943,
+              "spearman": 0.5617063103081031,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_grasp_mean": {
+              "r2": 0.24235171285022217,
+              "spearman": 0.6905605935003385,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_hold_mean": {
+              "r2": 0.27206621435143763,
+              "spearman": 0.7272028528675617,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_be-moved_mean": {
+              "r2": 0.24771221566124613,
+              "spearman": 0.7124473503450269,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_pleasant_mean": {
+              "r2": 0.13003812933131176,
+              "spearman": 0.6209389907188324,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_arousal_mean": {
+              "r2": 0.09720286290506797,
+              "spearman": 0.477926081110419,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            },
+            "property_arousal_work-time_mean": {
+              "r2": -0.004981680482220696,
+              "spearman": -0.04669323005883667,
+              "num_concepts": 1854,
+              "alpha": 100.0,
+              "solver": "lsqr"
+            }
+          },
+          "summary": {
+            "mean_r2": 0.213737873981265,
+            "mean_spearman": 0.5751532258869733,
+            "num_targets": 12
+          }
+        }
+      },
+      "human_similarity_alignment": {
+        "status": "ok",
+        "num_pairs": 171772,
+        "spearman": 0.3879519573437761,
+        "note": "This uses held-out pair rows from the aggregated THINGS odd-one-out data. It is useful for leakage control but not a fully independent human-similarity benchmark."
+      },
+      "previous_embedding_eval_report": {
+        "image_retrieval_hit@1": 0.7423196595257681,
+        "image_retrieval_hit@5": 0.8998962841100103,
+        "image_retrieval_hit@10": 0.9384857480061515,
+        "category_probe_53": {
+          "accuracy_mean": 0.4910297100584655,
+          "accuracy_std": 0.015550258760616458,
+          "num_concepts": 1448,
+          "num_categories": 208
+        },
+        "norm_prediction": {
+          "num_targets": 14,
+          "num_concepts": 1854,
+          "r2_variance_weighted": -0.00498206214979291
+        }
+      },
+      "inputs": {
+        "concepts": "data/processed/concepts.csv",
+        "human_similarity_test_pairs": "data/human_similarity/test_similarity_pairs.csv",
+        "thingsplus_variables_used": [
+          "COCA word freq",
+          "Concreteness (M)",
+          "Percent_known",
+          "SUBTLEX freq",
+          "image-label_consistency_mean",
+          "image-label_nameability_mean",
+          "image-label_ratings-per-image_mean",
+          "property_arousal_mean",
+          "property_arousal_work-time_mean",
+          "property_be-moved_mean",
+          "property_grasp_mean",
+          "property_heavy_mean",
+          "property_hold_mean",
+          "property_lives_mean",
+          "property_manmade_mean",
+          "property_moves_mean",
+          "property_natural_mean",
+          "property_pleasant_mean",
+          "property_precious_mean",
+          "categories_53",
+          "category_manual"
+        ]
+      }
+    }
+  }
+}

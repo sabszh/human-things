@@ -194,7 +194,10 @@ def make_shuffled_control(triplets: pd.DataFrame, seed: int) -> pd.DataFrame:
     shuffled[negative_cols] = neg_values[neg_perm]
 
     # Fix illegal collisions while preserving row count and anchor frequencies.
-    for _ in range(10):
+    # The final assertion below is intentional: shuffled controls are only useful
+    # if they disrupt semantic assignments without creating impossible triplets.
+    collision_iterations = 0
+    for collision_iterations in range(1, 101):
         bad = (
             (shuffled["positive_concept_id"].astype(int) == shuffled["anchor_concept_id"].astype(int))
             | (shuffled["negative_concept_id"].astype(int) == shuffled["anchor_concept_id"].astype(int))
@@ -203,17 +206,28 @@ def make_shuffled_control(triplets: pd.DataFrame, seed: int) -> pd.DataFrame:
         if not bool(bad.any()):
             break
         bad_idx = np.flatnonzero(bad.to_numpy())
-        swap_idx = rng.permutation(len(shuffled))[: len(bad_idx)]
-        shuffled.loc[bad_idx, positive_cols] = shuffled.loc[swap_idx, positive_cols].to_numpy(dtype=object)
-        shuffled.loc[bad_idx, negative_cols] = shuffled.loc[rng.permutation(len(shuffled))[: len(bad_idx)], negative_cols].to_numpy(dtype=object)
+        pos_swap_idx = rng.permutation(len(shuffled))[: len(bad_idx)]
+        neg_swap_idx = rng.permutation(len(shuffled))[: len(bad_idx)]
+        shuffled.loc[bad_idx, positive_cols] = shuffled.loc[pos_swap_idx, positive_cols].to_numpy(dtype=object)
+        shuffled.loc[bad_idx, negative_cols] = shuffled.loc[neg_swap_idx, negative_cols].to_numpy(dtype=object)
+
+    remaining_bad = (
+        (shuffled["positive_concept_id"].astype(int) == shuffled["anchor_concept_id"].astype(int))
+        | (shuffled["negative_concept_id"].astype(int) == shuffled["anchor_concept_id"].astype(int))
+        | (shuffled["positive_concept_id"].astype(int) == shuffled["negative_concept_id"].astype(int))
+    )
+    if bool(remaining_bad.any()):
+        fail(f"Could not remove {int(remaining_bad.sum())} illegal shuffled triplet collisions after 100 iterations.")
 
     shuffled["similarity_gap"] = shuffled["positive_similarity"].astype(float) - shuffled["negative_similarity"].astype(float)
     shuffled["seed"] = seed
     shuffled["shuffled_control"] = True
+    shuffled.attrs["collision_resolution_iterations"] = collision_iterations
     return shuffled
 
 
 def build_report(
+    concepts: pd.DataFrame,
     pairs: pd.DataFrame,
     triplets: pd.DataFrame,
     shuffled: pd.DataFrame,
@@ -234,10 +248,20 @@ def build_report(
     return {
         "status": "ok",
         "source_pairs": str(TRAIN_PAIRS.relative_to(ROOT)),
-        "number_of_concepts": int(pd.read_csv(CONCEPTS_CSV)["concept_index"].nunique()),
+        "number_of_concepts": int(concepts["concept_index"].nunique()),
         "number_of_train_pairs": int(len(pairs)),
         "number_of_triplets": int(len(triplets)),
         "number_of_shuffled_triplets": int(len(shuffled)),
+        "shuffled_illegal_collisions": int(
+            (
+                (shuffled["positive_concept_id"].astype(int) == shuffled["anchor_concept_id"].astype(int))
+                | (shuffled["negative_concept_id"].astype(int) == shuffled["anchor_concept_id"].astype(int))
+                | (shuffled["positive_concept_id"].astype(int) == shuffled["negative_concept_id"].astype(int))
+            ).sum()
+        )
+        if not shuffled.empty
+        else 0,
+        "shuffled_collision_resolution_iterations": int(shuffled.attrs.get("collision_resolution_iterations", 0)),
         "concepts_with_no_triplets": list(map(int, concepts_with_no_triplets)),
         "num_concepts_with_no_triplets": int(len(concepts_with_no_triplets)),
         "similarity_min": float(pairs["similarity"].min()),
@@ -311,6 +335,7 @@ def main() -> None:
     triplets.to_csv(OUTPUT_TRIPLETS, index=False)
     shuffled.to_csv(OUTPUT_SHUFFLED, index=False)
     report = build_report(
+        concepts,
         pairs,
         triplets,
         shuffled,

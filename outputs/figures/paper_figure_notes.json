@@ -1,0 +1,89 @@
+{
+  "status": "ok",
+  "source_models": [
+    "baseline",
+    "v1_human",
+    "v1_shuffled",
+    "v2_1200",
+    "v3_human"
+  ],
+  "figures": {
+    "classification_top1": {
+      "png": "outputs\\figures\\figure_classification_top1.png",
+      "svg": "outputs\\figures\\figure_classification_top1.svg"
+    },
+    "image_retrieval": {
+      "png": "outputs\\figures\\figure_image_retrieval.png",
+      "svg": "outputs\\figures\\figure_image_retrieval.svg"
+    },
+    "retrieval_curves": {
+      "png": "outputs\\figures\\figure_retrieval_curves.png",
+      "svg": "outputs\\figures\\figure_retrieval_curves.svg"
+    },
+    "human_alignment": {
+      "png": "outputs\\figures\\figure_human_similarity_alignment.png",
+      "svg": "outputs\\figures\\figure_human_similarity_alignment.svg"
+    },
+    "thingsplus_transfer": {
+      "png": "outputs\\figures\\figure_thingsplus_transfer.png",
+      "svg": "outputs\\figures\\figure_thingsplus_transfer.svg"
+    },
+    "classification_vs_retrieval": {
+      "png": "outputs\\figures\\figure_classification_vs_retrieval.png",
+      "svg": "outputs\\figures\\figure_classification_vs_retrieval.svg"
+    },
+    "semantic_transfer_vs_human_alignment": {
+      "png": "outputs\\figures\\figure_semantic_transfer_vs_human_alignment.png",
+      "svg": "outputs\\figures\\figure_semantic_transfer_vs_human_alignment.svg"
+    },
+    "benchmark_scorecard": {
+      "png": "outputs\\figures\\figure_benchmark_scorecard.png",
+      "svg": "outputs\\figures\\figure_benchmark_scorecard.svg"
+    },
+    "benchmark_rank_bump_chart": {
+      "png": "outputs\\figures\\figure_benchmark_rank_bump_chart.png",
+      "svg": "outputs\\figures\\figure_benchmark_rank_bump_chart.svg"
+    },
+    "tradeoff": {
+      "png": "outputs\\figures\\figure_tradeoff_retrieval_vs_human_alignment.png",
+      "svg": "outputs\\figures\\figure_tradeoff_retrieval_vs_human_alignment.svg"
+    },
+    "delta_heatmap": {
+      "png": "outputs\\figures\\figure_delta_heatmap_vs_baseline.png",
+      "svg": "outputs\\figures\\figure_delta_heatmap_vs_baseline.svg"
+    },
+    "metric_delta_profiles": {
+      "png": "outputs\\figures\\figure_metric_delta_profiles.png",
+      "svg": "outputs\\figures\\figure_metric_delta_profiles.svg"
+    },
+    "v1_human_vs_shuffled_deltas": {
+      "png": "outputs\\figures\\figure_v1_human_vs_shuffled_deltas.png",
+      "svg": "outputs\\figures\\figure_v1_human_vs_shuffled_deltas.svg"
+    },
+    "triplet_satisfaction": {
+      "png": "outputs\\figures\\figure_triplet_satisfaction.png",
+      "svg": "outputs\\figures\\figure_triplet_satisfaction.svg"
+    },
+    "triplet_margin_intervals": {
+      "png": "outputs\\figures\\figure_triplet_margin_intervals.png",
+      "svg": "outputs\\figures\\figure_triplet_margin_intervals.svg"
+    },
+    "triplet_real_vs_shuffled_gap": {
+      "png": "outputs\\figures\\figure_triplet_real_vs_shuffled_gap.png",
+      "svg": "outputs\\figures\\figure_triplet_real_vs_shuffled_gap.svg"
+    },
+    "training_curves_val_top1": {
+      "png": "outputs\\figures\\figure_training_curves_val_top1.png",
+      "svg": "outputs\\figures\\figure_training_curves_val_top1.svg"
+    },
+    "pipeline_story": {
+      "drawio": "outputs\\figures\\drawio\\figure_pipeline_story.drawio"
+    }
+  },
+  "interpretation_notes": [
+    "v1 human and v1 shuffled show nearly identical gains on classification and retrieval, suggesting generic fine-tuning or regularization rather than human-specific structure.",
+    "v3 human increases within-source human-similarity alignment, but this is a manipulation check because the model is trained from the same human-similarity source.",
+    "Triplet satisfaction shows that the image-only baseline already satisfies most real human triplets; v3 improves this diagnostic while v1/v1 shuffled reduce it.",
+    "External THINGSplus transfer is mixed; current results do not support a broad claim that human similarity improves semantic quality or practical utility."
+  ]
+}

@@ -52,6 +52,28 @@ def load_inputs(embedding_dir: Path) -> tuple[np.ndarray, pd.DataFrame, np.ndarr
     return concept_embeddings, concept_metadata, image_embeddings, image_metadata, concepts
 
 
+def validate_concept_alignment(concept_embeddings: np.ndarray, concept_metadata: pd.DataFrame, concepts_sorted: pd.DataFrame) -> None:
+    required_concept_meta = {"concept_id", "unique_id"}
+    missing = sorted(required_concept_meta - set(concept_metadata.columns))
+    if missing:
+        fail(f"Concept embedding metadata is missing columns: {missing}")
+
+    expected_ids = np.arange(len(concepts_sorted))
+    metadata_ids = concept_metadata["concept_id"].to_numpy(dtype=np.int64)
+    concept_ids = concepts_sorted["concept_index"].to_numpy(dtype=np.int64)
+    if concept_embeddings.shape[0] != len(expected_ids):
+        fail(f"Concept embedding count {concept_embeddings.shape[0]} does not match concepts.csv rows {len(expected_ids)}.")
+    if not np.array_equal(metadata_ids, expected_ids):
+        fail("Concept embedding metadata is not ordered by concept_id 0..N-1.")
+    if not np.array_equal(concept_ids, expected_ids):
+        fail("concepts.csv concept_index values are not contiguous after sorting.")
+
+    metadata_unique = concept_metadata["unique_id"].astype(str).to_numpy()
+    concept_unique = concepts_sorted["unique_id"].astype(str).to_numpy()
+    if not np.array_equal(metadata_unique, concept_unique):
+        fail("Concept embedding metadata unique_id order does not match concepts.csv concept_index order.")
+
+
 def retrieval_hit_at_k(image_embeddings: np.ndarray, concept_ids: np.ndarray, k: int) -> float:
     nn = NearestNeighbors(n_neighbors=k + 1, metric="cosine")
     nn.fit(image_embeddings)
@@ -113,8 +135,7 @@ def main() -> None:
     concept_embeddings, concept_metadata, image_embeddings, image_metadata, concepts = load_inputs(embedding_dir)
     concepts_sorted = concepts.sort_values("concept_index").reset_index(drop=True)
 
-    if concept_embeddings.shape[0] != len(concepts_sorted):
-        fail(f"Concept embedding count {concept_embeddings.shape[0]} does not match concepts.csv rows {len(concepts_sorted)}.")
+    validate_concept_alignment(concept_embeddings, concept_metadata, concepts_sorted)
     if image_embeddings.shape[0] != len(image_metadata):
         fail(f"Image embedding count {image_embeddings.shape[0]} does not match image metadata rows {len(image_metadata)}.")
 

@@ -1,0 +1,50 @@
+{
+  "status": "ok",
+  "device": "cpu",
+  "seed": 7,
+  "training_type": "human_informed_v2_current_batch_concept_triplets",
+  "num_classes": 1854,
+  "num_images": 27961,
+  "triplets": 370800,
+  "triplets_per_batch": 8,
+  "images_per_concept": 2,
+  "effective_train_image_batch_size": 48,
+  "lambda_similarity": 0.2,
+  "triplet_margin": 0.2,
+  "best_val_top1": 0.7393307468477207,
+  "test_loss": 1.1803871002391515,
+  "test_top1": 0.7327837051406402,
+  "test_top5": 0.914161008729389,
+  "elapsed_seconds": 7209.067186594009,
+  "outputs": {
+    "best_model": "outputs\\human_informed_resnet50_v2_1200\\best_model.pt",
+    "last_model": "outputs\\human_informed_resnet50_v2_1200\\last_model.pt",
+    "training_log": "outputs\\human_informed_resnet50_v2_1200\\training_log.csv",
+    "method_report": "outputs\\human_informed_resnet50_v2_1200\\method_report.json"
+  },
+  "leakage_controls": {
+    "human_similarity_supervision_level": "concept",
+    "human_loss_prototypes": "current batch concept prototypes",
+    "fixed_baseline_prototypes_used": false,
+    "validation_images_used_for_human_loss": false,
+    "test_images_used_for_human_loss": false,
+    "thingsplus_variables_used": false
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.48561154410243035,
+      "train_ce_loss": 0.46307954442997773,
+      "train_similarity_loss": 0.11265999953107288,
+      "train_top1": 0.9604340277777778,
+      "train_top5": 0.9969618055555556,
+      "train_triplets_used": 9600,
+      "val_loss": 1.1787774658804375,
+      "val_top1": 0.7393307468477207,
+      "val_top5": 0.9180407371483996,
+      "lr": 5e-06,
+      "lambda_similarity": 0.2,
+      "triplet_margin": 0.2
+    }
+  ]
+}

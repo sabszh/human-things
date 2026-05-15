@@ -5,6 +5,8 @@
   "number_of_train_pairs": 1343467,
   "number_of_triplets": 370800,
   "number_of_shuffled_triplets": 370800,
+  "shuffled_illegal_collisions": 0,
+  "shuffled_collision_resolution_iterations": 3,
   "concepts_with_no_triplets": [],
   "num_concepts_with_no_triplets": 0,
   "similarity_min": 0.0,

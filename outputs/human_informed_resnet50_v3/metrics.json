@@ -1,0 +1,70 @@
+{
+  "status": "ok",
+  "device": "cpu",
+  "seed": 7,
+  "training_type": "human_informed_v3_similarity_weighted",
+  "num_classes": 1854,
+  "num_images": 27961,
+  "triplets": 370800,
+  "triplet_anchors": 1854,
+  "lambda_ce": 0.2,
+  "lambda_similarity": 1.0,
+  "triplet_margin": 0.2,
+  "best_val_top1": 0.7371483996120272,
+  "test_loss": 0.35037274680359637,
+  "test_ce_loss": 1.2056773082361305,
+  "test_similarity_loss": 0.1092372794141478,
+  "test_top1": 0.7330261881668283,
+  "test_top5": 0.9124636275460718,
+  "elapsed_seconds": 3048.2436258792877,
+  "outputs": {
+    "best_model": "outputs\\human_informed_resnet50_v3\\best_model.pt",
+    "last_model": "outputs\\human_informed_resnet50_v3\\last_model.pt",
+    "training_log": "outputs\\human_informed_resnet50_v3\\training_log.csv",
+    "prototype_report": "outputs\\human_informed_resnet50_v3\\prototype_report.json"
+  },
+  "prototype_report": {
+    "status": "ok",
+    "source_embeddings": "outputs\\baseline_resnet50\\embeddings\\image_embeddings.npy",
+    "source_metadata": "outputs\\baseline_resnet50\\embeddings\\image_embedding_metadata.csv",
+    "prototype_path": "outputs\\human_informed_resnet50_v3\\train_image_concept_prototypes.npy",
+    "prototype_source": "baseline image embeddings",
+    "prototype_images_used": "train split only",
+    "validation_images_used": false,
+    "test_images_used": false,
+    "num_concepts": 1854,
+    "embedding_dim": 2048,
+    "train_images_used": 19713,
+    "train_images_per_concept_min": 9,
+    "train_images_per_concept_max": 26,
+    "train_images_per_concept_mean": 10.632686084142394
+  },
+  "leakage_controls": {
+    "human_similarity_supervision_level": "concept",
+    "prototype_images_used": "train split only",
+    "validation_images_used_for_prototypes": false,
+    "test_images_used_for_prototypes": false,
+    "thingsplus_variables_used": false
+  },
+  "method_note": "v3 deliberately makes classification a weaker anchor and human triplet alignment a stronger objective. It starts from the image-only baseline and uses fixed train-only baseline prototypes for CPU practicality.",
+  "similarity_loss_note": "Validation and test similarity losses are monitoring diagnostics computed against train-derived prototypes and train triplets; they are not independent human-similarity tests.",
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.18636894177998642,
+      "train_ce_loss": 0.3949364431552774,
+      "train_similarity_loss": 0.10738165167113607,
+      "train_top1": 0.9712879825495866,
+      "train_top5": 0.9978694262669304,
+      "val_loss": 0.3485362167415055,
+      "val_ce_loss": 1.1997513774525876,
+      "val_similarity_loss": 0.10858593807419334,
+      "val_top1": 0.7371483996120272,
+      "val_top5": 0.9151309408341416,
+      "lr": 5e-06,
+      "lambda_ce": 0.2,
+      "lambda_similarity": 1.0,
+      "triplet_margin": 0.2
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "status": "ok",
+  "margin": 0.2,
+  "seed": 7,
+  "max_triplets": 0,
+  "inputs": {
+    "real_triplets": "data/human_similarity/train_triplets.csv",
+    "shuffled_triplets": "data/human_similarity/shuffled_train_triplets.csv"
+  },
+  "interpretation": "Triplet satisfaction is a diagnostic of whether model concept geometry obeys the human-derived constraints. It is not an independent semantic benchmark when evaluated on training triplets.",
+  "models": {
+    "baseline": {
+      "model_dir": "outputs/baseline_resnet50",
+      "triplet_sets": {
+        "real_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.8516235167206041,
+          "margin_satisfaction_rate": 0.29570118662351674,
+          "violation_rate": 0.1483764832793959,
+          "mean_similarity_margin": 0.13928598165512085,
+          "median_similarity_margin": 0.11693944036960602,
+          "mean_positive_similarity": 0.34384575486183167,
+          "mean_negative_similarity": 0.20455971360206604,
+          "mean_triplet_hinge_loss": 0.09637948870658875,
+          "p05_similarity_margin": -0.06336490139365196,
+          "p95_similarity_margin": 0.4157968923449515,
+          "human_similarity_gap_mean": 0.7609410056583022,
+          "human_positive_similarity_mean": 0.7765000986188633,
+          "human_negative_similarity_mean": 0.015559092960561247
+        },
+        "shuffled_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.5324946062567422,
+          "margin_satisfaction_rate": 0.07984088457389428,
+          "violation_rate": 0.46750539374325784,
+          "mean_similarity_margin": 0.010137748904526234,
+          "median_similarity_margin": 0.008048627525568008,
+          "mean_positive_similarity": 0.255633145570755,
+          "mean_negative_similarity": 0.24549540877342224,
+          "mean_triplet_hinge_loss": 0.19753219187259674,
+          "p05_similarity_margin": -0.2222704216837883,
+          "p95_similarity_margin": 0.2475610740482807,
+          "human_similarity_gap_mean": 0.7609435908539978,
+          "human_positive_similarity_mean": 0.7764981740458908,
+          "human_negative_similarity_mean": 0.015554583191892903
+        }
+      }
+    },
+    "v1_human": {
+      "model_dir": "outputs/human_informed_resnet50",
+      "triplet_sets": {
+        "real_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.8341423948220065,
+          "margin_satisfaction_rate": 0.2733522114347357,
+          "violation_rate": 0.16585760517799353,
+          "mean_similarity_margin": 0.12864863872528076,
+          "median_similarity_margin": 0.10955146700143814,
+          "mean_positive_similarity": 0.36855506896972656,
+          "mean_negative_similarity": 0.2399064302444458,
+          "mean_triplet_hinge_loss": 0.10186649113893509,
+          "p05_similarity_margin": -0.07117559909820556,
+          "p95_similarity_margin": 0.3921847999095916,
+          "human_similarity_gap_mean": 0.7609410056583022,
+          "human_positive_similarity_mean": 0.7765000986188633,
+          "human_negative_similarity_mean": 0.015559092960561247
+        },
+        "shuffled_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.5331283710895361,
+          "margin_satisfaction_rate": 0.07496494066882417,
+          "violation_rate": 0.46687162891046385,
+          "mean_similarity_margin": 0.010182039812207222,
+          "median_similarity_margin": 0.00846986472606659,
+          "mean_positive_similarity": 0.28775036334991455,
+          "mean_negative_similarity": 0.2775683104991913,
+          "mean_triplet_hinge_loss": 0.19652438163757324,
+          "p05_similarity_margin": -0.21326421871781348,
+          "p95_similarity_margin": 0.23876453116536128,
+          "human_similarity_gap_mean": 0.7609435908539978,
+          "human_positive_similarity_mean": 0.7764981740458908,
+          "human_negative_similarity_mean": 0.015554583191892903
+        }
+      }
+    },
+    "v1_shuffled": {
+      "model_dir": "outputs/human_informed_resnet50_shuffled",
+      "triplet_sets": {
+        "real_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.8328505933117584,
+          "margin_satisfaction_rate": 0.27192286947141314,
+          "violation_rate": 0.16714940668824163,
+          "mean_similarity_margin": 0.1280246078968048,
+          "median_similarity_margin": 0.10892205685377121,
+          "mean_positive_similarity": 0.36841824650764465,
+          "mean_negative_similarity": 0.24039365351200104,
+          "mean_triplet_hinge_loss": 0.10227076709270477,
+          "p05_similarity_margin": -0.07155329957604407,
+          "p95_similarity_margin": 0.3912812203168869,
+          "human_similarity_gap_mean": 0.7609410056583022,
+          "human_positive_similarity_mean": 0.7765000986188633,
+          "human_negative_similarity_mean": 0.015559092960561247
+        },
+        "shuffled_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.5330987055016181,
+          "margin_satisfaction_rate": 0.0746143473570658,
+          "violation_rate": 0.4669012944983819,
+          "mean_similarity_margin": 0.010166834108531475,
+          "median_similarity_margin": 0.008461818099021912,
+          "mean_positive_similarity": 0.28798675537109375,
+          "mean_negative_similarity": 0.2778199017047882,
+          "mean_triplet_hinge_loss": 0.19649602472782135,
+          "p05_similarity_margin": -0.21283621490001678,
+          "p95_similarity_margin": 0.23825362175703044,
+          "human_similarity_gap_mean": 0.7609435908539978,
+          "human_positive_similarity_mean": 0.7764981740458908,
+          "human_negative_similarity_mean": 0.015554583191892903
+        }
+      }
+    },
+    "v2_1200": {
+      "model_dir": "outputs/human_informed_resnet50_v2_1200",
+      "triplet_sets": {
+        "real_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.8399568500539374,
+          "margin_satisfaction_rate": 0.2858522114347357,
+          "violation_rate": 0.1600431499460626,
+          "mean_similarity_margin": 0.13364113867282867,
+          "median_similarity_margin": 0.11319120228290558,
+          "mean_positive_similarity": 0.3623465299606323,
+          "mean_negative_similarity": 0.22870542109012604,
+          "mean_triplet_hinge_loss": 0.09954117238521576,
+          "p05_similarity_margin": -0.06937936842441558,
+          "p95_similarity_margin": 0.4039204686880111,
+          "human_similarity_gap_mean": 0.7609410056583022,
+          "human_positive_similarity_mean": 0.7765000986188633,
+          "human_negative_similarity_mean": 0.015559092960561247
+        },
+        "shuffled_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.5335059331175837,
+          "margin_satisfaction_rate": 0.07913700107874864,
+          "violation_rate": 0.46649406688241635,
+          "mean_similarity_margin": 0.010535285808146,
+          "median_similarity_margin": 0.008585698902606964,
+          "mean_positive_similarity": 0.27831536531448364,
+          "mean_negative_similarity": 0.26778003573417664,
+          "mean_triplet_hinge_loss": 0.19678503274917603,
+          "p05_similarity_margin": -0.21901880726218223,
+          "p95_similarity_margin": 0.24557143375277518,
+          "human_similarity_gap_mean": 0.7609435908539978,
+          "human_positive_similarity_mean": 0.7764981740458908,
+          "human_negative_similarity_mean": 0.015554583191892903
+        }
+      }
+    },
+    "v3_human": {
+      "model_dir": "outputs/human_informed_resnet50_v3",
+      "triplet_sets": {
+        "real_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.8662243797195254,
+          "margin_satisfaction_rate": 0.323042071197411,
+          "violation_rate": 0.13377562028047463,
+          "mean_similarity_margin": 0.1494363397359848,
+          "median_similarity_margin": 0.12997165322303772,
+          "mean_positive_similarity": 0.36745402216911316,
+          "mean_negative_similarity": 0.21801777184009552,
+          "mean_triplet_hinge_loss": 0.0894569680094719,
+          "p05_similarity_margin": -0.05938486009836197,
+          "p95_similarity_margin": 0.42406940907239904,
+          "human_similarity_gap_mean": 0.7609410056583022,
+          "human_positive_similarity_mean": 0.7765000986188633,
+          "human_negative_similarity_mean": 0.015559092960561247
+        },
+        "shuffled_train_triplets": {
+          "num_triplets": 370800,
+          "satisfaction_rate": 0.5332659115426106,
+          "margin_satisfaction_rate": 0.08671251348435814,
+          "violation_rate": 0.4667340884573894,
+          "mean_similarity_margin": 0.010806843638420105,
+          "median_similarity_margin": 0.008960768580436707,
+          "mean_positive_similarity": 0.27386385202407837,
+          "mean_negative_similarity": 0.26305702328681946,
+          "mean_triplet_hinge_loss": 0.19750773906707764,
+          "p05_similarity_margin": -0.2301657646894455,
+          "p95_similarity_margin": 0.25650839209556575,
+          "human_similarity_gap_mean": 0.7609435908539978,
+          "human_positive_similarity_mean": 0.7764981740458908,
+          "human_negative_similarity_mean": 0.015554583191892903
+        }
+      }
+    }
+  }
+}

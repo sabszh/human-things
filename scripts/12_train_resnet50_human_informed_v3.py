@@ -26,7 +26,7 @@ BASELINE_CHECKPOINT = ROOT / "outputs" / "baseline_resnet50" / "best_model.pt"
 BASELINE_IMAGE_EMBEDDINGS = ROOT / "outputs" / "baseline_resnet50" / "embeddings" / "image_embeddings.npy"
 BASELINE_IMAGE_METADATA = ROOT / "outputs" / "baseline_resnet50" / "embeddings" / "image_embedding_metadata.csv"
 DEFAULT_TRIPLETS = ROOT / "data" / "human_similarity" / "train_triplets.csv"
-OUTPUT_DIR = ROOT / "outputs" / "human_informed_resnet50"
+OUTPUT_DIR = ROOT / "outputs" / "human_informed_resnet50_v3"
 NUM_CLASSES = 1854
 
 REQUIRED_SPLIT_COLUMNS = {
@@ -320,7 +320,8 @@ def save_checkpoint(
             "epoch_info": epoch_info,
             "best_val_top1": best_val_top1,
             "num_classes": NUM_CLASSES,
-            "training_type": "human_informed",
+            "training_type": "human_informed_v3_similarity_weighted",
+            "lambda_ce": args.lambda_ce,
             "lambda_similarity": args.lambda_similarity,
             "triplet_margin": args.triplet_margin,
             "baseline_checkpoint": str(args.baseline_checkpoint),
@@ -338,6 +339,7 @@ def run_epoch(
     prototypes: torch.Tensor,
     triplet_lookup: Dict[int, np.ndarray],
     rng: np.random.Generator,
+    lambda_ce: float,
     lambda_similarity: float,
     triplet_margin: float,
     optimizer: torch.optim.Optimizer | None = None,
@@ -381,7 +383,7 @@ def run_epoch(
                 sim_batches += 1
                 sim_samples += int(len(anchor_idx))
 
-            loss = ce_loss + lambda_similarity * sim_loss
+            loss = lambda_ce * ce_loss + lambda_similarity * sim_loss
             if is_train:
                 loss.backward()
                 optimizer.step()
@@ -487,11 +489,11 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         log_path.unlink()
 
     print(f"Using device: {device}", flush=True)
-    print("Training type: human-informed fine-tuning", flush=True)
+    print("Training type: human-informed v3 similarity-weighted fine-tuning", flush=True)
     print(f"Baseline checkpoint: {args.baseline_checkpoint}", flush=True)
     print(f"Triplets: {args.triplets} rows={len(triplets)} anchors={len(triplet_lookup)}", flush=True)
     print(f"Triplet anchor coverage: {len(triplet_lookup)}/{NUM_CLASSES}", flush=True)
-    print(f"lambda_similarity={args.lambda_similarity} margin={args.triplet_margin}", flush=True)
+    print(f"lambda_ce={args.lambda_ce} lambda_similarity={args.lambda_similarity} margin={args.triplet_margin}", flush=True)
     print("Prototype rule: fixed baseline prototypes from train images only.", flush=True)
 
     best_val_top1 = -1.0
@@ -506,6 +508,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
             prototypes,
             triplet_lookup,
             rng,
+            args.lambda_ce,
             args.lambda_similarity,
             args.triplet_margin,
             optimizer=optimizer,
@@ -520,6 +523,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
             prototypes,
             triplet_lookup,
             rng,
+            args.lambda_ce,
             args.lambda_similarity,
             args.triplet_margin,
             optimizer=None,
@@ -541,6 +545,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
             "val_top1": val_metrics["top1"],
             "val_top5": val_metrics["top5"],
             "lr": args.lr,
+            "lambda_ce": args.lambda_ce,
             "lambda_similarity": args.lambda_similarity,
             "triplet_margin": args.triplet_margin,
         }
@@ -569,6 +574,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         prototypes,
         triplet_lookup,
         rng,
+        args.lambda_ce,
         args.lambda_similarity,
         args.triplet_margin,
         optimizer=None,
@@ -579,13 +585,14 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         "status": "ok",
         "device": str(device),
         "seed": args.seed,
-        "training_type": "human_informed",
+        "training_type": "human_informed_v3_similarity_weighted",
         "num_classes": NUM_CLASSES,
         "num_images": int(len(splits)),
         "triplets": int(len(triplets)),
         "triplet_anchors": int(len(triplet_lookup)),
         "missing_triplet_anchors": list(map(int, missing_triplet_anchors)),
         "num_missing_triplet_anchors": int(len(missing_triplet_anchors)),
+        "lambda_ce": args.lambda_ce,
         "lambda_similarity": args.lambda_similarity,
         "triplet_margin": args.triplet_margin,
         "best_val_top1": best_val_top1,
@@ -610,6 +617,10 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
             "test_images_used_for_prototypes": False,
             "thingsplus_variables_used": False,
         },
+        "method_note": (
+            "v3 deliberately makes classification a weaker anchor and human triplet alignment a stronger objective. "
+            "It starts from the image-only baseline and uses fixed train-only baseline prototypes for CPU practicality."
+        ),
         "similarity_loss_note": (
             "Validation and test similarity losses are monitoring diagnostics computed against "
             "train-derived prototypes and train triplets; they are not independent human-similarity tests."
@@ -621,7 +632,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Fine-tune ResNet-50 with concept-level human similarity regularization.")
+    parser = argparse.ArgumentParser(description="Fine-tune ResNet-50 with stronger human-similarity weighting.")
     parser.add_argument("--image-root", type=Path, default=DEFAULT_IMAGE_ROOT)
     parser.add_argument("--baseline-checkpoint", type=Path, default=BASELINE_CHECKPOINT)
     parser.add_argument("--baseline-image-embeddings", type=Path, default=BASELINE_IMAGE_EMBEDDINGS)
@@ -630,14 +641,15 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--num-workers", type=int, default=0)
-    parser.add_argument("--epochs", type=int, default=3)
-    parser.add_argument("--lr", type=float, default=1e-5)
+    parser.add_argument("--epochs", type=int, default=1)
+    parser.add_argument("--lr", type=float, default=5e-6)
     parser.add_argument("--weight-decay", type=float, default=1e-4)
-    parser.add_argument("--lambda-similarity", type=float, default=0.05)
+    parser.add_argument("--lambda-ce", type=float, default=0.2)
+    parser.add_argument("--lambda-similarity", type=float, default=1.0)
     parser.add_argument("--triplet-margin", type=float, default=0.2)
     parser.add_argument("--device", type=str, default="")
     parser.add_argument("--seed", type=int, default=7)
-    parser.add_argument("--max-train-batches", type=int, default=0)
+    parser.add_argument("--max-train-batches", type=int, default=1200)
     parser.add_argument("--max-eval-batches", type=int, default=0)
     parser.add_argument("--progress-every-batches", type=int, default=25)
     parser.add_argument("--dry-run", action="store_true")
