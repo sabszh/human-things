@@ -46,6 +46,26 @@ COMMON_ARGS=(
   "${EXTRA_ARGS[@]}"
 )
 
+run_joint_matrix() {
+  local output_dir="$1"
+  shift
+  local run_args=("${COMMON_ARGS[@]}")
+  if [[ "${RESUME:-0}" == "1" ]]; then
+    if [[ -f "$output_dir/last_model.pt" ]]; then
+      run_args+=(--resume)
+      echo "  resume: 1"
+    else
+      echo "  resume: 0 (no checkpoint found at $output_dir/last_model.pt)"
+    fi
+  else
+    echo "  resume: 0"
+  fi
+  "$PYTHON_BIN" scripts/15_train_resnet50_joint_matrix.py \
+    "${run_args[@]}" \
+    "$@" \
+    --output-dir "$output_dir"
+}
+
 echo "Running joint matrix model"
 echo "  batch size: $BATCH_SIZE"
 echo "  workers: $NUM_WORKERS"
@@ -55,17 +75,12 @@ echo "  lambda matrix: $LAMBDA_MATRIX"
 echo "  output: $REAL_OUTPUT_DIR"
 echo "  resume: ${RESUME:-0}"
 
-"$PYTHON_BIN" scripts/15_train_resnet50_joint_matrix.py \
-  "${COMMON_ARGS[@]}" \
-  --output-dir "$REAL_OUTPUT_DIR"
+run_joint_matrix "$REAL_OUTPUT_DIR"
 
 echo "Running shuffled joint matrix control"
 echo "  output: $SHUFFLED_OUTPUT_DIR"
 
-"$PYTHON_BIN" scripts/15_train_resnet50_joint_matrix.py \
-  "${COMMON_ARGS[@]}" \
-  --shuffle-human-matrix \
-  --output-dir "$SHUFFLED_OUTPUT_DIR"
+run_joint_matrix "$SHUFFLED_OUTPUT_DIR" --shuffle-human-matrix
 
 echo "Done."
 echo "Real metrics: $REAL_OUTPUT_DIR/metrics.json"

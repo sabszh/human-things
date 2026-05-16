@@ -62,6 +62,10 @@
       "png": "outputs/figures/figure_v1_human_vs_shuffled_deltas.png",
       "svg": "outputs/figures/figure_v1_human_vs_shuffled_deltas.svg"
     },
+    "joint_matrix_vs_shuffled_deltas": {
+      "png": "outputs/figures/figure_joint_matrix_vs_shuffled_deltas.png",
+      "svg": "outputs/figures/figure_joint_matrix_vs_shuffled_deltas.svg"
+    },
     "triplet_satisfaction": {
       "png": "outputs/figures/figure_triplet_satisfaction.png",
       "svg": "outputs/figures/figure_triplet_satisfaction.svg"
@@ -85,7 +89,8 @@
   "interpretation_notes": [
     "v1 human and v1 shuffled show nearly identical gains on classification and retrieval, suggesting generic fine-tuning or regularization rather than human-specific structure.",
     "v3 human increases within-source human-similarity alignment, but this is a manipulation check because the model is trained from the same human-similarity source.",
-    "Triplet satisfaction shows that the image-only baseline already satisfies most real human triplets; v3 improves this diagnostic while v1/v1 shuffled reduce it.",
-    "External THINGSplus transfer is mixed; current results do not support a broad claim that human similarity improves semantic quality or practical utility."
+    "Triplet satisfaction shows whether margin-based human constraints are already present in the image-only embedding space.",
+    "Joint matrix models test a different injection strategy: global relational alignment during THINGS classification training, with a shuffled-matrix control.",
+    "External THINGSplus transfer is evaluated separately from human-source alignment to avoid treating within-source human similarity as an independent semantic benchmark."
   ]
 }

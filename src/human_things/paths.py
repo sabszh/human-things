@@ -30,6 +30,8 @@ HUMAN_V3_OUTPUT_DIR = OUTPUTS_DIR / "human_informed_resnet50_v3"
 JOINT_MATRIX_OUTPUT_DIR = OUTPUTS_DIR / "joint_matrix_resnet50"
 JOINT_MATRIX_SHUFFLED_OUTPUT_DIR = OUTPUTS_DIR / "joint_matrix_resnet50_shuffled"
 
+BENCHMARK_SUMMARY_WITH_JOINT_MATRIX = OUTPUTS_DIR / "embedding_benchmark_summary_with_joint_matrix.csv"
+BENCHMARK_REPORT_WITH_JOINT_MATRIX = OUTPUTS_DIR / "embedding_benchmark_report_with_joint_matrix.json"
 BENCHMARK_SUMMARY_WITH_V3 = OUTPUTS_DIR / "embedding_benchmark_summary_with_v3.csv"
 BENCHMARK_SUMMARY = OUTPUTS_DIR / "embedding_benchmark_summary.csv"
 REAL_TRAIN_TRIPLETS = HUMAN_SIMILARITY_DIR / "train_triplets.csv"

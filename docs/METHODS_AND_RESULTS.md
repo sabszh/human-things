@@ -1,16 +1,16 @@
 # Human-Informed Visual Embeddings: Methods and Results
 
-This document summarizes the code, data processing, model training, benchmark design, and observed results for the THINGS human-similarity embedding project. It is written as a methods/results draft for later conversion into a paper section.
+This document describes the data preparation, model training, evaluation design, and empirical results for the Human Things project. The project investigates whether behavioral similarity judgments provide useful supervision for visual representation learning beyond standard image-based fine-tuning.
 
-The central research question was:
+The guiding research question was:
 
 > Does adding human similarity knowledge improve the semantic quality and practical usefulness of visual embeddings beyond visual-only training?
 
-The project used a ResNet-50 backbone and the THINGS image dataset as the visual training source. Human similarity supervision was derived from THINGS odd-one-out judgments and injected into the model through three increasingly targeted strategies. All trained embeddings were compared against an image-only baseline and, where possible, shuffled-similarity controls.
+All experiments used a ResNet-50 backbone and the THINGS image database as the primary visual training source. Human supervision was derived from THINGS odd-one-out similarity judgments and was treated as concept-level relational information rather than image-level class labels. The resulting models were evaluated against an image-only baseline, shuffled-similarity controls, practical embedding tasks, THINGSplus transfer variables, and within-source human-similarity diagnostics.
 
 ## Data Wrangling Overview
 
-The first stage of the project was data wrangling: converting the heterogeneous THINGS and THINGSplus files into analysis-ready concept, image, split, and human-similarity tables. This step was necessary before model training because the raw materials came from several sources with different granularities:
+The first stage of the analysis converted the heterogeneous THINGS, THINGSplus, and human-similarity files into a consistent set of concept-level, image-level, split-level, and similarity-level tables. This preprocessing step was necessary because the source files differed in granularity, naming conventions, and storage layout:
 
 - concept-level metadata from `concepts-metadata_things.tsv`
 - image-level metadata from `_images-metadata_things.tsv`
@@ -54,9 +54,9 @@ data/human_similarity/train_triplets.csv
 data/human_similarity/shuffled_train_triplets.csv
 ```
 
-The wrangling stage also created audit reports recording concept coverage, missing files, pair overlaps, similarity scale, triplet counts, and shuffled-control validity. These reports were used to verify that all 1,854 concepts were present, all 27,961 image files were found, no human-similarity train/validation/test pair overlaps existed, and the shuffled-control triplets contained zero illegal anchor-positive-negative collisions.
+The wrangling stage also produced audit reports for concept coverage, missing image files, pair overlap, similarity scale, triplet counts, and shuffled-control validity. These checks verified that all 1,854 concepts were represented, all 27,961 image files were available, train/validation/test human-similarity pair splits had zero overlap, and shuffled-control triplets contained no illegal anchor-positive-negative collisions.
 
-This matters for the interpretation of the experiments: all later model comparisons depend on the same aligned concept IDs, the same image splits, and human-similarity supervision that is concept-level rather than image-level. THINGSplus variables were reserved for benchmarking and were not used to construct the human-similarity training losses.
+These checks are central to the interpretation of the experiments. All model comparisons rely on a shared concept index, a shared image split, and a human-similarity signal defined at the concept level. THINGSplus variables were reserved for evaluation and were not used to construct the human-similarity training objectives.
 
 ## Repository Pipeline
 
@@ -87,7 +87,7 @@ The pipeline is also summarized visually in:
 outputs/figures/drawio/figure_pipeline_story.drawio
 ```
 
-This Draw.io figure is not just a decorative workflow diagram. It was designed to encode the logic of the project:
+The Draw.io figure summarizes the experimental logic:
 
 1. THINGS images, human similarity judgments, and THINGSplus metadata enter as separate data sources.
 2. The image-only ResNet-50 baseline is trained first and becomes the shared starting point.
@@ -107,7 +107,7 @@ The final Draw.io version uses a consistent visual hierarchy:
 | Odd-one-out triplet vignette | Visual reminder that human similarity supervision originates in relative judgments, not class labels. |
 | Filled arrows | Direction of data/model flow without line clutter. |
 
-The visual placeholders are intentionally schematic. The THINGS grid uses small labeled color tiles instead of real image thumbnails so that the figure remains clean, reproducible, and independent of image licensing/display constraints. The odd-one-out vignette uses a minimal `dog`, `wolf`, `car` example to show the judgment structure: two items form the more similar pair and one item is selected as least similar.
+The visual placeholders are schematic rather than literal. The THINGS grid uses labeled color tiles rather than image thumbnails to keep the figure reproducible and visually consistent. The odd-one-out vignette uses a minimal `dog`, `wolf`, `car` example to illustrate the behavioral judgment structure: two objects form the more similar pair, while the third is selected as least similar.
 
 The main outputs used in this write-up are:
 
@@ -125,7 +125,7 @@ The main outputs used in this write-up are:
 
 ### Data Wrangling
 
-The project required several data-wrangling steps before any model training. The raw THINGS release is distributed as a mixture of TSV metadata tables, password-protected image archives, CC0 image archives, object-level rating tables, and category-level annotation tables. The code converted these heterogeneous files into a smaller set of consistent CSV files used by the training and benchmark scripts.
+Several preprocessing steps were required before model training. The raw THINGS release contains TSV metadata tables, password-protected image archives, CC0 image archives, object-level rating tables, and category-level annotation tables. The preprocessing code converted these heterogeneous sources into a smaller set of consistent CSV files used by the training and benchmark scripts.
 
 The main wrangling script was:
 
@@ -170,7 +170,7 @@ When image download was requested, the setup script also handled:
 | `images_THINGS.zip` | `data/raw/THINGS-database/osfstorage/images_THINGS` |
 | `images_THINGSplus-CC0.zip` | `data/raw/THINGS-database/osfstorage/images_THINGSplus-CC0` |
 
-The project later used a restored data zip/Drive copy during the Colab/UCloud/local workflow, but the final code path treats the local `data/raw/THINGS-database/osfstorage` layout as the canonical data root.
+During development, the raw data were restored through several local, Colab, and UCloud workflows. The final code treats `data/raw/THINGS-database/osfstorage` as the canonical data root.
 
 #### Processed Concept Table
 
@@ -272,7 +272,7 @@ For image paths that do not contain a subdirectory, the script maps them to the 
 -> images_THINGSplus-CC0/object_images_CC0/<file>
 ```
 
-This mapping was necessary because the project included both standard THINGS object images and THINGSplus CC0 images. The script walks both extracted image directories and records which normalized paths actually exist.
+This mapping was necessary because the analysis included both standard THINGS object images and THINGSplus CC0 images. The script traverses both extracted image directories and records whether each normalized path exists locally.
 
 The final training metadata is:
 
@@ -308,7 +308,7 @@ The executed metadata audit found:
 | Images per concept, max | 36 |
 | Images per concept, mean | 15.08 |
 
-This audit was important because an earlier partial data state contained only 1,553 image concepts. The final wrangled data fixed that problem and restored all 1,854 concepts.
+This audit was used to detect and correct an earlier partial extraction state in which only 1,553 image concepts were represented. The final processed data restored all 1,854 concepts.
 
 #### Split Table Construction
 
@@ -387,9 +387,9 @@ scripts/07_make_similarity_triplets.py
 
 then converts the training pair table into robust training triplets. It avoids tiny similarity differences by using top/bottom quantiles and a minimum similarity gap. It also creates the shuffled-control triplets used to check whether improvements are due to meaningful human structure or generic regularization.
 
-#### Why This Wrangling Matters
+#### Data Integrity Constraints
 
-The main modeling question depends on precise alignment between images, concepts, human similarity judgments, and THINGSplus variables. The wrangling code therefore enforces the following invariants:
+The modeling question depends on exact alignment between images, concepts, human similarity judgments, and THINGSplus variables. The preprocessing code therefore enforced the following constraints:
 
 1. The canonical concept ID is always `concept_index` / `concept_id` in the range `0..1853`.
 2. Image paths are normalized to the actual extracted archive layout before training.
@@ -399,7 +399,7 @@ The main modeling question depends on precise alignment between images, concepts
 6. THINGSplus variables are reserved for evaluation and are not used to construct the human-informed training losses.
 7. Shuffled triplets preserve basic frequency structure while disrupting meaningful human similarity assignments.
 
-These choices make the later comparisons interpretable: when a human-informed model improves, the shuffled control and external THINGSplus benchmarks help distinguish real semantic transfer from ordinary fine-tuning, regularization, or leakage.
+These constraints make the later comparisons interpretable. When a human-informed model changes performance, the shuffled controls and external THINGSplus benchmarks help distinguish human-specific structure from generic fine-tuning, regularization, or leakage.
 
 ### THINGS Images
 
@@ -581,7 +581,7 @@ Validation/test images used resize, tensor conversion, and ImageNet normalizatio
 
 ### Training Procedure
 
-The baseline was trained with:
+The baseline was trained as the reference image-only model:
 
 ```powershell
 python .\scripts\03_train_resnet50_image_only.py
@@ -645,13 +645,13 @@ Concept embeddings are computed by averaging image embeddings within each concep
 
 ## Human-Informed Training Strategies
 
-All human-informed models started from the already trained image-only checkpoint:
+The first three human-informed models were initialized from the trained image-only checkpoint:
 
 ```text
 outputs/baseline_resnet50/best_model.pt
 ```
 
-Thus, these runs did not retrain ResNet-50 from ImageNet. They were additional fine-tuning experiments starting from the same image-only baseline.
+These runs therefore tested whether human-similarity supervision could reshape an already image-trained THINGS representation. They did not test whether human similarity could shape the representation during the initial THINGS fine-tuning process.
 
 ### v1: Fixed Train-Image Prototype Regularization
 
@@ -667,7 +667,7 @@ Run:
 python .\scripts\08_train_resnet50_human_informed.py
 ```
 
-Core idea:
+Training objective:
 
 ```text
 current image embedding
@@ -718,7 +718,7 @@ scripts/11_train_resnet50_human_informed_v2.py
 
 The v1 strategy used fixed baseline prototypes, so the human similarity signal was static. v2 was designed to apply the human triplet loss to the current model's concept geometry.
 
-Core idea:
+Training objective:
 
 ```text
 current images in batch
@@ -772,7 +772,7 @@ scripts/12_train_resnet50_human_informed_v3.py
 
 v3 returned to the CPU-practical fixed-prototype design of v1, but deliberately made the classification objective weaker and the human-similarity objective stronger.
 
-Core idea:
+Training objective:
 
 ```text
 loss = lambda_ce * CE + lambda_similarity * triplet_loss
@@ -797,7 +797,50 @@ Run:
 python .\scripts\12_train_resnet50_human_informed_v3.py
 ```
 
-This strategy tested whether human similarity could reshape the embedding space when allowed to matter more than in v1. It was expected to risk a tradeoff against classification/retrieval.
+This strategy tested whether a stronger human-similarity objective could measurably alter the concept geometry. Because the classification term was deliberately down-weighted, this model was expected to risk a tradeoff against classification and retrieval performance.
+
+### Joint Matrix Training from ImageNet Initialization
+
+Script:
+
+```text
+scripts/15_train_resnet50_joint_matrix.py
+```
+
+A subsequent extension was added to test a more direct version of the hypothesis. Instead of first training an image-only THINGS classifier and then applying human-informed fine-tuning, this strategy begins from the ImageNet-pretrained ResNet-50 weights and includes the human similarity objective from the first epoch of THINGS training.
+
+The training schedule was deliberately matched to the image-only baseline as closely as possible:
+
+| Stage | Trainable layers | Epochs | Learning rate |
+|---|---|---:|---:|
+| Head | `fc` only | 5 | `1e-4` |
+| Layer4 | `layer4` + `fc` | 10 | `1e-5` |
+
+The classification loss is the same cross-entropy loss used in the baseline. The additional human objective is a concept-batch matrix-alignment loss. Within each image batch, image embeddings are averaged by concept to form current concept prototypes. The cosine similarity matrix among these prototypes is then compared with the corresponding submatrix of the human pairwise similarity matrix:
+
+```text
+loss = CE(image concept) + lambda_matrix * MSE(zscore(model_similarity_matrix), zscore(human_similarity_matrix))
+```
+
+Default settings:
+
+| Setting | Value |
+|---|---:|
+| Batch size | 64 |
+| `lambda_matrix` | 0.05 |
+| Minimum human pairs per batch | 16 |
+| Optimizer | AdamW |
+| Weight decay | `1e-4` |
+
+This strategy is scientifically distinct from v1-v3 because the human similarity signal is present while the THINGS representation is being formed. It also avoids reducing the human similarity source to isolated triplets; instead, it trains directly on local relational geometry. A matched shuffled-matrix control is included through:
+
+```powershell
+python .\scripts\15_train_resnet50_joint_matrix.py `
+  --shuffle-human-matrix `
+  --output-dir outputs\joint_matrix_resnet50_shuffled
+```
+
+At the time of this draft, the joint matrix model was still training on UCloud and is therefore described as an ongoing extension rather than included in the completed benchmark table.
 
 ## Benchmarking
 
@@ -832,7 +875,7 @@ python .\scripts\09_benchmark_embeddings.py `
   --output-csv outputs\embedding_benchmark_summary_with_v3.csv
 ```
 
-The benchmark groups were:
+The benchmark suite was organized into three groups:
 
 #### Practical/Standard Embedding Utility
 
@@ -919,6 +962,8 @@ This diagnostic is not an independent semantic benchmark because it evaluates th
 
 ### Training Results
 
+The completed training runs are summarized below. These results exclude the joint matrix model, which was still training at the time of this draft.
+
 | Model | Training type | Best val top-1 | Test top-1 | Test top-5 | Notes |
 |---|---|---:|---:|---:|---|
 | Baseline | Image-only classifier | 0.7427 | 0.7274 | 0.9110 | Full 5+10 epoch baseline |
@@ -927,11 +972,11 @@ This diagnostic is not an independent semantic benchmark because it evaluates th
 | v2 1200 | Current-batch concept triplets | 0.7393 | 0.7328 | 0.9142 | CPU-feasible capped run |
 | v3 human | Stronger human weighting | 0.7371 | 0.7330 | 0.9125 | Strong human loss, weak CE |
 
-v1 improved classification and retrieval relative to the image-only baseline. However, the shuffled-control model improved by essentially the same amount, indicating that the gain was not specific to meaningful human-similarity structure.
+The v1 model improved classification and retrieval relative to the image-only baseline. However, the matched shuffled-control model improved by essentially the same amount, indicating that the gain cannot be attributed specifically to meaningful human-similarity structure.
 
-v2 was conceptually better matched to the supervision level, but the CPU-feasible version did not improve over v1 and only modestly exceeded the baseline.
+The v2 model was better matched to the concept-level nature of the supervision, but the CPU-feasible capped run did not improve over v1 and only modestly exceeded the image-only baseline.
 
-v3 sacrificed some practical utility relative to v1 but increased within-source human-similarity alignment.
+The v3 model reduced the dominance of the classification objective and increased within-source human-similarity alignment, but did not yield a comparable gain in practical utility.
 
 ### Full Benchmark Summary
 
@@ -953,11 +998,11 @@ The best practical utility came from v1 human and v1 shuffled:
 | v1 human | 0.7430 | 0.7422 |
 | v1 shuffled | 0.7430 | 0.7423 |
 
-Because v1 human and v1 shuffled were essentially identical, the practical utility improvement is best interpreted as an effect of continued fine-tuning or generic triplet-style regularization, not as evidence that meaningful human-similarity structure improved the visual embedding.
+Because v1 human and v1 shuffled produced nearly identical results, the practical utility improvement is best interpreted as an effect of continued fine-tuning or generic triplet-style regularization rather than as evidence that meaningful human-similarity structure improved the visual embedding.
 
 ### THINGSplus Transfer
 
-The THINGSplus transfer results were mixed and did not show a robust advantage for human-informed training.
+The THINGSplus transfer results did not show a robust advantage for human-informed training.
 
 Nameability:
 
@@ -1003,13 +1048,13 @@ Human-pair Spearman:
 | v2 1200 | 0.4001 |
 | v3 human | 0.4478 |
 
-v3 was the only strategy that increased human-source alignment relative to the image-only baseline. This suggests that stronger human-similarity weighting can move the embedding space toward the human similarity source.
+v3 was the only completed strategy that increased human-source alignment relative to the image-only baseline. This indicates that stronger human-similarity weighting can move the embedding space toward the behavioral similarity source.
 
-However, this score is partly circular because the model was trained using human similarity information from the same source family. Therefore, v3's human-pair improvement should be described as a manipulation check or within-source alignment result, not as independent proof of improved semantic quality.
+However, this score is not an independent semantic benchmark because the model was trained using human similarity information from the same source family. The v3 improvement should therefore be interpreted as a within-source alignment result or manipulation check, not as independent evidence of improved semantic quality.
 
 ### Triplet Satisfaction
 
-The triplet satisfaction diagnostic gave a clearer view of what the human losses did to the concept space.
+The triplet satisfaction diagnostic provides a more direct view of how the human losses affected the concept geometry.
 
 | Model | Real triplet satisfaction | Real margin satisfaction | Mean real margin | Shuffled triplet satisfaction |
 |---|---:|---:|---:|---:|
@@ -1045,7 +1090,7 @@ The triplet diagnostic therefore supports the interpretation that human similari
 
 ### Results as a Model-Comparison Story
 
-The benchmark results are easiest to interpret as a sequence of contrasts rather than as a single leaderboard.
+The benchmark results are most informative when interpreted as a sequence of controlled contrasts rather than as a single leaderboard.
 
 #### Contrast 1: Baseline vs v1 Human
 
@@ -1058,7 +1103,7 @@ At first glance, v1 human appears to improve the baseline:
 | Retrieval@1 | 0.7266 | 0.7422 | +0.0156 |
 | Image-to-concept@1 | 0.8840 | 0.8933 | +0.0093 |
 
-If evaluated without a shuffled control, this could be mistaken for evidence that human similarity improved practical embedding quality.
+Without a shuffled control, this pattern could be mistaken for evidence that human similarity improved practical embedding quality.
 
 #### Contrast 2: v1 Human vs v1 Shuffled
 
@@ -1071,7 +1116,7 @@ The shuffled control changes that interpretation:
 | Retrieval@1 | 0.7422 | 0.7423 |
 | Human-pair rho | 0.3897 | 0.3880 |
 
-The practical gains are essentially identical. The small differences are not in the direction expected if meaningful human similarity were driving the improvement. This supports the interpretation that v1 mainly provided extra fine-tuning/regularization.
+The practical gains are essentially identical. The small differences are not in the direction expected if meaningful human similarity were responsible for the improvement. This supports the interpretation that v1 primarily acted as additional fine-tuning or regularization.
 
 The figure:
 
@@ -1093,7 +1138,7 @@ v3 tests whether a stronger human-similarity objective can move the representati
 | Test top-1 | 0.7274 | 0.7330 | +0.0056 |
 | Retrieval@1 | 0.7266 | 0.7265 | -0.0001 |
 
-This indicates that the human-similarity objective can move the embedding toward the human source, but that this movement does not produce a corresponding practical retrieval gain.
+This contrast indicates that the human-similarity objective can move the embedding toward the behavioral similarity source, but that this movement does not necessarily produce a corresponding practical retrieval gain.
 
 #### Contrast 4: Human Alignment vs THINGSplus Transfer
 
@@ -1160,7 +1205,7 @@ and writes publication-ready PNG and SVG files to:
 outputs/figures
 ```
 
-The figure script was deliberately expanded beyond simple bar charts. Bar charts are useful for direct metric comparison, but they are weak at showing the main story of this project: controls, tradeoffs, within-source alignment, and disagreement between benchmarks. The final script therefore produces a mixture of:
+The figure script was expanded beyond simple bar charts because the main empirical pattern depends on controls, tradeoffs, within-source alignment, and disagreement between benchmarks. The final script therefore produces a mixture of:
 
 - bar charts for basic metric reporting
 - line plots for retrieval curves and metric profiles
@@ -1224,7 +1269,7 @@ Generated outputs:
 | `metric_delta_profiles` | `figure_metric_delta_profiles.png`, `.svg` | Line-profile version of baseline deltas, useful for showing each model's pattern of gains/losses. |
 | `v1_human_vs_shuffled_deltas` | `figure_v1_human_vs_shuffled_deltas.png`, `.svg` | Key control plot: v1 human and v1 shuffled have near-identical practical gains. |
 | `triplet_satisfaction` | `figure_triplet_satisfaction.png`, `.svg` | Direct bar-chart diagnostic of real/shuffled triplet satisfaction. |
-| `triplet_margin_intervals` | `figure_triplet_margin_intervals.png`, `.svg` | Shows the distribution of real human-triplet margins, not just satisfaction rates. |
+| `triplet_margin_intervals` | `figure_triplet_margin_intervals.png`, `.svg` | Shows the distribution of real human-triplet margins, rather than satisfaction rates alone. |
 | `triplet_real_vs_shuffled_gap` | `figure_triplet_real_vs_shuffled_gap.png`, `.svg` | Shows how much each embedding separates real human structure from shuffled triplet structure. |
 | `training_curves_val_top1` | `figure_training_curves_val_top1.png`, `.svg` | Documents training trajectory and shows that fine-tuning behavior differs across runs. |
 
@@ -1255,7 +1300,7 @@ The simpler bar charts are still useful as supplementary figures because they re
 
 The figure set supports four visual claims.
 
-First, the v1 human and v1 shuffled models are nearly indistinguishable on practical metrics. This is clearest in:
+First, the v1 human and v1 shuffled models are nearly indistinguishable on practical metrics. This is illustrated in:
 
 ```text
 figure_v1_human_vs_shuffled_deltas
@@ -1263,7 +1308,7 @@ figure_v1_human_vs_shuffled_deltas
 
 This plot directly visualizes the control logic. If human similarity structure mattered in v1, the v1 human points should separate from v1 shuffled. Instead, they largely move together.
 
-Second, v3 is visually separated from v1 in human-source alignment but not in practical utility. This is clearest in:
+Second, v3 is visually separated from v1 in human-source alignment but not in practical utility. This is illustrated in:
 
 ```text
 figure_tradeoff_retrieval_vs_human_alignment
@@ -1272,15 +1317,15 @@ figure_metric_delta_profiles
 
 These plots show that increasing human-loss pressure can move the embedding toward the human-similarity source while not improving retrieval.
 
-Third, external THINGSplus transfer does not simply rise with human-source alignment. This is clearest in:
+Third, external THINGSplus transfer does not simply rise with human-source alignment. This is illustrated in:
 
 ```text
 figure_semantic_transfer_vs_human_alignment
 ```
 
-The point of this figure is to prevent overclaiming. A model can improve on human-pair Spearman without improving nameability or object-property prediction.
+This figure is used to constrain interpretation: a model can improve on human-pair Spearman without improving nameability or object-property prediction.
 
-Fourth, the image-only baseline already satisfies much of the real human triplet structure. This is clearest in:
+Fourth, the image-only baseline already satisfies much of the real human triplet structure. This is illustrated in:
 
 ```text
 figure_triplet_satisfaction
@@ -1291,7 +1336,7 @@ The baseline does not start from a blank cognitive geometry. This helps explain 
 
 ## Interpretation
 
-The experiments support a nuanced conclusion:
+The completed experiments support a qualified conclusion:
 
 > Human similarity knowledge is not automatically beneficial for visual embeddings. In this ResNet-50/THINGS setting, the effect depended strongly on how the signal was injected, and improvements on the human-similarity source did not reliably transfer to independent semantic or practical benchmarks.
 
@@ -1306,7 +1351,7 @@ The strongest current claim is therefore:
 
 > The way human similarity information is injected matters. Naively adding human similarity as an auxiliary signal can produce apparent gains, but shuffled controls reveal that these gains may come from generic regularization. Stronger human alignment can reshape the embedding toward the human-similarity source, but this does not necessarily improve external semantic quality or practical utility.
 
-This is not evidence that human similarity can never help. It is evidence that, under the tested injection strategies, there was no robust improvement beyond visual-only training and shuffled controls on the external benchmarks.
+These results do not imply that human similarity cannot improve visual embeddings. Rather, they show that under the completed injection strategies, there was no robust improvement beyond visual-only training and shuffled controls on the external benchmarks.
 
 ## Limitations
 
@@ -1317,11 +1362,12 @@ Several limitations should be reported clearly:
 3. Human-pair alignment is within-source, not fully independent.
 4. The image-level split is appropriate for the 1,854-way classifier, but it does not test unseen-concept classification.
 5. THINGSplus variables were used only for benchmarking, not for training, which is appropriate for transfer evaluation but limits claims about whether directly training on those variables would help.
-6. The v3 shuffled control was not run in the current result table. Because v3 human increased human-pair alignment, a matched v3 shuffled run would be useful if the paper wants to make a stronger claim about v3 specificity.
+6. The v3 shuffled control was not run in the current result table. Because v3 human increased human-pair alignment, a matched v3 shuffled run would be necessary for a stronger claim about v3 specificity.
+7. The joint matrix model was still training at the time of this draft. Its inclusion will be important for testing whether human similarity is more effective when present from the beginning of THINGS fine-tuning.
 
-## Recommended Final Analysis for the Paper
+## Recommended Final Framing for the Paper
 
-The current paper should focus on the controlled learning process:
+The paper should emphasize the controlled learning process:
 
 - Start with a strong image-only baseline.
 - Add human similarity in a weak auxiliary form.

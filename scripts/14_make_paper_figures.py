@@ -23,12 +23,15 @@ try:
     from human_things.paths import (
         BASELINE_OUTPUT_DIR,
         BENCHMARK_SUMMARY,
+        BENCHMARK_SUMMARY_WITH_JOINT_MATRIX,
         BENCHMARK_SUMMARY_WITH_V3,
         FIGURES_DIR,
         HUMAN_V1_OUTPUT_DIR,
         HUMAN_V1_SHUFFLED_OUTPUT_DIR,
         HUMAN_V2_OUTPUT_DIR,
         HUMAN_V3_OUTPUT_DIR,
+        JOINT_MATRIX_OUTPUT_DIR,
+        JOINT_MATRIX_SHUFFLED_OUTPUT_DIR,
         PIPELINE_STORY_DRAWIO,
         TRIPLET_SATISFACTION_SUMMARY,
     )
@@ -49,19 +52,22 @@ except ModuleNotFoundError:
     from human_things.paths import (
         BASELINE_OUTPUT_DIR,
         BENCHMARK_SUMMARY,
+        BENCHMARK_SUMMARY_WITH_JOINT_MATRIX,
         BENCHMARK_SUMMARY_WITH_V3,
         FIGURES_DIR,
         HUMAN_V1_OUTPUT_DIR,
         HUMAN_V1_SHUFFLED_OUTPUT_DIR,
         HUMAN_V2_OUTPUT_DIR,
         HUMAN_V3_OUTPUT_DIR,
+        JOINT_MATRIX_OUTPUT_DIR,
+        JOINT_MATRIX_SHUFFLED_OUTPUT_DIR,
         PIPELINE_STORY_DRAWIO,
         TRIPLET_SATISFACTION_SUMMARY,
     )
     from human_things.utils import display_path, fail
 
-DEFAULT_SUMMARY = BENCHMARK_SUMMARY_WITH_V3
-FALLBACK_SUMMARY = BENCHMARK_SUMMARY
+DEFAULT_SUMMARY = BENCHMARK_SUMMARY_WITH_JOINT_MATRIX
+FALLBACK_SUMMARIES = [BENCHMARK_SUMMARY_WITH_V3, BENCHMARK_SUMMARY]
 TRIPLET_SUMMARY = TRIPLET_SATISFACTION_SUMMARY
 OUTPUT_DIR = FIGURES_DIR
 
@@ -71,6 +77,8 @@ TRAINING_LOGS = {
     "v1_shuffled": HUMAN_V1_SHUFFLED_OUTPUT_DIR / "training_log.csv",
     "v2_1200": HUMAN_V2_OUTPUT_DIR / "training_log.csv",
     "v3_human": HUMAN_V3_OUTPUT_DIR / "training_log.csv",
+    "joint_matrix": JOINT_MATRIX_OUTPUT_DIR / "training_log.csv",
+    "joint_matrix_shuffled": JOINT_MATRIX_SHUFFLED_OUTPUT_DIR / "training_log.csv",
 }
 PASTEL_CMAP = LinearSegmentedColormap.from_list(
     "paper_pastel",
@@ -499,6 +507,58 @@ def metric_delta_profile(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str
     return save_figure(fig, output_dir, "figure_metric_delta_profiles")
 
 
+
+def joint_matrix_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str] | None:
+    required_models = {"baseline", "joint_matrix", "joint_matrix_shuffled"}
+    if not required_models.issubset(set(frame["model"])):
+        print("Skipping joint matrix control delta figure; missing baseline/joint rows.")
+        return None
+    metrics = [
+        "test_top1",
+        "image_retrieval_hit@1",
+        "human_similarity_pair_spearman",
+        "nameability_mean_spearman",
+        "object_properties_mean_spearman",
+    ]
+    labels = ["top-1", "retrieval@1", "human rho", "nameability", "properties"]
+    missing = [metric for metric in metrics if metric not in frame.columns]
+    if missing:
+        fail(f"Missing metric columns in summary: {missing}")
+
+    indexed = frame.set_index("model")
+    baseline = indexed.loc["baseline", metrics].astype(float)
+    human = indexed.loc["joint_matrix", metrics].astype(float) - baseline
+    shuffled = indexed.loc["joint_matrix_shuffled", metrics].astype(float) - baseline
+
+    fig, ax = plt.subplots(figsize=(7.8, 4.8))
+    y = np.arange(len(metrics))
+    for i in y:
+        ax.plot([shuffled.iloc[i], human.iloc[i]], [i, i], color="#CBD5E1", linewidth=3.0, zorder=1)
+    ax.scatter(
+        shuffled.to_numpy(dtype=float),
+        y,
+        color=COLORS["joint_matrix_shuffled"],
+        s=85,
+        label="joint shuffled",
+        zorder=2,
+    )
+    ax.scatter(
+        human.to_numpy(dtype=float),
+        y,
+        color=COLORS["joint_matrix"],
+        s=85,
+        label="joint human matrix",
+        zorder=3,
+    )
+    ax.axvline(0, color="#111827", linewidth=1.0, alpha=0.72)
+    ax.set_yticks(y)
+    ax.set_yticklabels(labels)
+    ax.invert_yaxis()
+    ax.set_xlabel("delta vs image-only baseline")
+    ax.set_title("Joint Matrix Training vs Shuffled Matrix Control")
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.14), ncols=2)
+    return save_figure(fig, output_dir, "figure_joint_matrix_vs_shuffled_deltas")
+
 def v1_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str] | None:
     required_models = {"baseline", "v1_human", "v1_shuffled"}
     if not required_models.issubset(set(frame["model"])):
@@ -741,8 +801,9 @@ def write_caption_notes(frame: pd.DataFrame, output_dir: Path, figure_paths: Dic
         "interpretation_notes": [
             "v1 human and v1 shuffled show nearly identical gains on classification and retrieval, suggesting generic fine-tuning or regularization rather than human-specific structure.",
             "v3 human increases within-source human-similarity alignment, but this is a manipulation check because the model is trained from the same human-similarity source.",
-            "Triplet satisfaction shows that the image-only baseline already satisfies most real human triplets; v3 improves this diagnostic while v1/v1 shuffled reduce it.",
-            "External THINGSplus transfer is mixed; current results do not support a broad claim that human similarity improves semantic quality or practical utility.",
+            "Triplet satisfaction shows whether margin-based human constraints are already present in the image-only embedding space.",
+            "Joint matrix models test a different injection strategy: global relational alignment during THINGS classification training, with a shuffled-matrix control.",
+            "External THINGSplus transfer is evaluated separately from human-source alignment to avoid treating within-source human similarity as an independent semantic benchmark.",
         ],
     }
     path = output_dir / "paper_figure_notes.json"
@@ -759,7 +820,11 @@ def main() -> None:
 
     summary_path = args.summary_csv.expanduser().resolve()
     if not summary_path.exists() and args.summary_csv == DEFAULT_SUMMARY:
-        summary_path = FALLBACK_SUMMARY
+        for fallback in FALLBACK_SUMMARIES:
+            if fallback.exists():
+                summary_path = fallback
+                print(f"Default joint benchmark summary not found; using fallback {display_path(summary_path)}")
+                break
     output_dir = args.output_dir.expanduser().resolve()
     setup_style()
     frame = load_summary(summary_path)
@@ -820,6 +885,9 @@ def main() -> None:
     v1_control_paths = v1_control_delta_plot(frame, output_dir)
     if v1_control_paths is not None:
         figure_paths["v1_human_vs_shuffled_deltas"] = v1_control_paths
+    joint_control_paths = joint_matrix_control_delta_plot(frame, output_dir)
+    if joint_control_paths is not None:
+        figure_paths["joint_matrix_vs_shuffled_deltas"] = joint_control_paths
     triplet_paths = triplet_satisfaction_plot(args.triplet_summary_csv.expanduser().resolve(), output_dir)
     if triplet_paths is not None:
         figure_paths["triplet_satisfaction"] = triplet_paths
