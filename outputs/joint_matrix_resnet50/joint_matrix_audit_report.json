@@ -1,0 +1,12 @@
+{
+  "input_pairs": 1374182,
+  "usable_unordered_pairs": 1374182,
+  "diagonal_pairs_ignored": 0,
+  "duplicate_pairs_ignored": 0,
+  "shuffle_human_matrix": false,
+  "similarity_min": 0.0,
+  "similarity_max": 1.0,
+  "similarity_mean": 0.3334769308567047,
+  "finite_matrix_entries": 2748364,
+  "confirmation": "No THINGSplus variables are used in training; this uses train human-similarity pairs only."
+}

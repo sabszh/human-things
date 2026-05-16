@@ -64,13 +64,32 @@ def parse_password() -> bytes:
 
 
 def extract(zip_path: Path, target_dir: Path, password: bytes | None = None) -> None:
-    if target_dir.exists():
+    expected_files = count_archive_files(zip_path)
+    extracted_files = count_existing_files(target_dir)
+    if target_dir.exists() and expected_files > 0 and extracted_files >= expected_files:
         print(f"Exists, skipping extract: {target_dir}")
         return
     target_dir.mkdir(parents=True, exist_ok=True)
-    print(f"Extracting {zip_path} -> {target_dir}", flush=True)
+    if target_dir.exists() and extracted_files < expected_files:
+        print(
+            f"Extracting {zip_path} -> {target_dir} (found {extracted_files}/{expected_files} files)",
+            flush=True,
+        )
+    else:
+        print(f"Extracting {zip_path} -> {target_dir}", flush=True)
     with zipfile.ZipFile(zip_path) as archive:
         archive.extractall(target_dir, pwd=password)
+
+
+def count_archive_files(zip_path: Path) -> int:
+    with zipfile.ZipFile(zip_path) as archive:
+        return sum(1 for info in archive.infolist() if not info.is_dir())
+
+
+def count_existing_files(target_dir: Path) -> int:
+    if not target_dir.exists():
+        return 0
+    return sum(1 for path in target_dir.rglob("*") if path.is_file())
 
 
 def read_tsv(path: Path) -> pd.DataFrame:

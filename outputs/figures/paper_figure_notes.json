@@ -5,79 +5,81 @@
     "v1_human",
     "v1_shuffled",
     "v2_1200",
-    "v3_human"
+    "v3_human",
+    "joint_matrix",
+    "joint_matrix_shuffled"
   ],
   "figures": {
     "classification_top1": {
-      "png": "outputs\\figures\\figure_classification_top1.png",
-      "svg": "outputs\\figures\\figure_classification_top1.svg"
+      "png": "outputs/figures/figure_classification_top1.png",
+      "svg": "outputs/figures/figure_classification_top1.svg"
     },
     "image_retrieval": {
-      "png": "outputs\\figures\\figure_image_retrieval.png",
-      "svg": "outputs\\figures\\figure_image_retrieval.svg"
+      "png": "outputs/figures/figure_image_retrieval.png",
+      "svg": "outputs/figures/figure_image_retrieval.svg"
     },
     "retrieval_curves": {
-      "png": "outputs\\figures\\figure_retrieval_curves.png",
-      "svg": "outputs\\figures\\figure_retrieval_curves.svg"
+      "png": "outputs/figures/figure_retrieval_curves.png",
+      "svg": "outputs/figures/figure_retrieval_curves.svg"
     },
     "human_alignment": {
-      "png": "outputs\\figures\\figure_human_similarity_alignment.png",
-      "svg": "outputs\\figures\\figure_human_similarity_alignment.svg"
+      "png": "outputs/figures/figure_human_similarity_alignment.png",
+      "svg": "outputs/figures/figure_human_similarity_alignment.svg"
     },
     "thingsplus_transfer": {
-      "png": "outputs\\figures\\figure_thingsplus_transfer.png",
-      "svg": "outputs\\figures\\figure_thingsplus_transfer.svg"
+      "png": "outputs/figures/figure_thingsplus_transfer.png",
+      "svg": "outputs/figures/figure_thingsplus_transfer.svg"
     },
     "classification_vs_retrieval": {
-      "png": "outputs\\figures\\figure_classification_vs_retrieval.png",
-      "svg": "outputs\\figures\\figure_classification_vs_retrieval.svg"
+      "png": "outputs/figures/figure_classification_vs_retrieval.png",
+      "svg": "outputs/figures/figure_classification_vs_retrieval.svg"
     },
     "semantic_transfer_vs_human_alignment": {
-      "png": "outputs\\figures\\figure_semantic_transfer_vs_human_alignment.png",
-      "svg": "outputs\\figures\\figure_semantic_transfer_vs_human_alignment.svg"
+      "png": "outputs/figures/figure_semantic_transfer_vs_human_alignment.png",
+      "svg": "outputs/figures/figure_semantic_transfer_vs_human_alignment.svg"
     },
     "benchmark_scorecard": {
-      "png": "outputs\\figures\\figure_benchmark_scorecard.png",
-      "svg": "outputs\\figures\\figure_benchmark_scorecard.svg"
+      "png": "outputs/figures/figure_benchmark_scorecard.png",
+      "svg": "outputs/figures/figure_benchmark_scorecard.svg"
     },
     "benchmark_rank_bump_chart": {
-      "png": "outputs\\figures\\figure_benchmark_rank_bump_chart.png",
-      "svg": "outputs\\figures\\figure_benchmark_rank_bump_chart.svg"
+      "png": "outputs/figures/figure_benchmark_rank_bump_chart.png",
+      "svg": "outputs/figures/figure_benchmark_rank_bump_chart.svg"
     },
     "tradeoff": {
-      "png": "outputs\\figures\\figure_tradeoff_retrieval_vs_human_alignment.png",
-      "svg": "outputs\\figures\\figure_tradeoff_retrieval_vs_human_alignment.svg"
+      "png": "outputs/figures/figure_tradeoff_retrieval_vs_human_alignment.png",
+      "svg": "outputs/figures/figure_tradeoff_retrieval_vs_human_alignment.svg"
     },
     "delta_heatmap": {
-      "png": "outputs\\figures\\figure_delta_heatmap_vs_baseline.png",
-      "svg": "outputs\\figures\\figure_delta_heatmap_vs_baseline.svg"
+      "png": "outputs/figures/figure_delta_heatmap_vs_baseline.png",
+      "svg": "outputs/figures/figure_delta_heatmap_vs_baseline.svg"
     },
     "metric_delta_profiles": {
-      "png": "outputs\\figures\\figure_metric_delta_profiles.png",
-      "svg": "outputs\\figures\\figure_metric_delta_profiles.svg"
+      "png": "outputs/figures/figure_metric_delta_profiles.png",
+      "svg": "outputs/figures/figure_metric_delta_profiles.svg"
     },
     "v1_human_vs_shuffled_deltas": {
-      "png": "outputs\\figures\\figure_v1_human_vs_shuffled_deltas.png",
-      "svg": "outputs\\figures\\figure_v1_human_vs_shuffled_deltas.svg"
+      "png": "outputs/figures/figure_v1_human_vs_shuffled_deltas.png",
+      "svg": "outputs/figures/figure_v1_human_vs_shuffled_deltas.svg"
     },
     "triplet_satisfaction": {
-      "png": "outputs\\figures\\figure_triplet_satisfaction.png",
-      "svg": "outputs\\figures\\figure_triplet_satisfaction.svg"
+      "png": "outputs/figures/figure_triplet_satisfaction.png",
+      "svg": "outputs/figures/figure_triplet_satisfaction.svg"
     },
     "triplet_margin_intervals": {
-      "png": "outputs\\figures\\figure_triplet_margin_intervals.png",
-      "svg": "outputs\\figures\\figure_triplet_margin_intervals.svg"
+      "png": "outputs/figures/figure_triplet_margin_intervals.png",
+      "svg": "outputs/figures/figure_triplet_margin_intervals.svg"
     },
     "triplet_real_vs_shuffled_gap": {
-      "png": "outputs\\figures\\figure_triplet_real_vs_shuffled_gap.png",
-      "svg": "outputs\\figures\\figure_triplet_real_vs_shuffled_gap.svg"
+      "png": "outputs/figures/figure_triplet_real_vs_shuffled_gap.png",
+      "svg": "outputs/figures/figure_triplet_real_vs_shuffled_gap.svg"
     },
     "training_curves_val_top1": {
-      "png": "outputs\\figures\\figure_training_curves_val_top1.png",
-      "svg": "outputs\\figures\\figure_training_curves_val_top1.svg"
+      "png": "outputs/figures/figure_training_curves_val_top1.png",
+      "svg": "outputs/figures/figure_training_curves_val_top1.svg"
     },
     "pipeline_story": {
-      "drawio": "outputs\\figures\\drawio\\figure_pipeline_story.drawio"
+      "drawio": "outputs/figures/drawio/figure_pipeline_story.drawio"
     }
   },
   "interpretation_notes": [

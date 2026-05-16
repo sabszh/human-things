@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "checkpoint": "outputs/joint_matrix_resnet50/best_model.pt",
+  "normalized": true,
+  "num_images": 27961,
+  "num_concepts": 1854,
+  "embedding_dim": 2048,
+  "outputs": {
+    "image_embeddings": "outputs/joint_matrix_resnet50/embeddings/image_embeddings.npy",
+    "image_metadata": "outputs/joint_matrix_resnet50/embeddings/image_embedding_metadata.csv",
+    "concept_embeddings": "outputs/joint_matrix_resnet50/embeddings/concept_embeddings.npy",
+    "concept_metadata": "outputs/joint_matrix_resnet50/embeddings/concept_embedding_metadata.csv"
+  }
+}

@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PYTHON_BIN="${PYTHON_BIN:-python}"
+if [[ -z "${PYTHON_BIN:-}" ]]; then
+  if [[ -x ".venv/bin/python" ]]; then
+    PYTHON_BIN=".venv/bin/python"
+  else
+    PYTHON_BIN="python3"
+  fi
+fi
 BATCH_SIZE="${BATCH_SIZE:-64}"
 NUM_WORKERS="${NUM_WORKERS:-2}"
 PROGRESS_EVERY_BATCHES="${PROGRESS_EVERY_BATCHES:-25}"
@@ -25,6 +31,10 @@ if [[ "${SMOKE_TEST:-0}" == "1" ]]; then
   SHUFFLED_OUTPUT_DIR="${SMOKE_SHUFFLED_OUTPUT_DIR:-outputs/joint_matrix_resnet50_shuffled_smoke}"
 fi
 
+if [[ "${RESUME:-0}" == "1" ]]; then
+  EXTRA_ARGS+=(--resume)
+fi
+
 COMMON_ARGS=(
   --batch-size "$BATCH_SIZE"
   --num-workers "$NUM_WORKERS"
@@ -43,6 +53,7 @@ echo "  head epochs: $HEAD_EPOCHS"
 echo "  layer4 epochs: $LAYER4_EPOCHS"
 echo "  lambda matrix: $LAMBDA_MATRIX"
 echo "  output: $REAL_OUTPUT_DIR"
+echo "  resume: ${RESUME:-0}"
 
 "$PYTHON_BIN" scripts/15_train_resnet50_joint_matrix.py \
   "${COMMON_ARGS[@]}" \

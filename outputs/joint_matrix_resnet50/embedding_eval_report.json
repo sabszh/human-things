@@ -1,0 +1,26 @@
+{
+  "status": "ok",
+  "num_image_embeddings": 27961,
+  "num_concept_embeddings": 1854,
+  "embedding_dim": 2048,
+  "metrics": {
+    "image_retrieval_hit@1": 0.7328421730267158,
+    "image_retrieval_hit@5": 0.8936018025106398,
+    "image_retrieval_hit@10": 0.9334787740066521,
+    "category_probe_53": {
+      "accuracy_mean": 0.4930939028755518,
+      "accuracy_std": 0.013663487860374446,
+      "num_concepts": 1448,
+      "num_categories": 208
+    },
+    "norm_prediction": {
+      "num_targets": 14,
+      "num_concepts": 1854,
+      "r2_variance_weighted": -0.00481101218611002
+    }
+  },
+  "inputs": {
+    "concept_embeddings": "outputs/joint_matrix_resnet50/embeddings/concept_embeddings.npy",
+    "image_embeddings": "outputs/joint_matrix_resnet50/embeddings/image_embeddings.npy"
+  }
+}

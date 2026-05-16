@@ -351,9 +351,29 @@ def save_checkpoint(path: Path, model: nn.Module, epoch_info: Dict[str, object],
     )
 
 
-def load_model_state(path: Path, model: nn.Module, device: torch.device) -> None:
+def load_checkpoint(path: Path, model: nn.Module, device: torch.device) -> Dict[str, object]:
     checkpoint = torch.load(path, map_location=device, weights_only=False)
     model.load_state_dict(checkpoint["model_state_dict"])
+    return checkpoint
+
+
+def load_model_state(path: Path, model: nn.Module, device: torch.device) -> None:
+    load_checkpoint(path, model, device)
+
+
+def should_skip_epoch(stage: StageConfig, epoch: int, resume_info: Dict[str, object] | None) -> bool:
+    if resume_info is None:
+        return False
+    stage_order = {"head": 0, "layer4": 1}
+    completed_stage = str(resume_info.get("stage", ""))
+    completed_epoch = int(resume_info.get("epoch", 0))
+    completed_stage_order = stage_order.get(completed_stage, -1)
+    current_stage_order = stage_order.get(stage.name, 999)
+    if current_stage_order < completed_stage_order:
+        return True
+    if current_stage_order == completed_stage_order and epoch <= completed_epoch:
+        return True
+    return False
 
 
 def train(args: argparse.Namespace) -> Dict[str, object]:
@@ -391,10 +411,24 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
     last_path = output_dir / "last_model.pt"
     audit_path = output_dir / "joint_matrix_audit_report.json"
     audit_path.write_text(json.dumps(similarity_report, indent=2), encoding="utf-8")
-    if log_path.exists():
+    resume_info = None
+    best_val_top1 = -1.0
+    if args.resume:
+        resume_path = args.resume_checkpoint.expanduser().resolve() if args.resume_checkpoint else last_path
+        if not resume_path.exists():
+            fail(f"Cannot resume; checkpoint not found: {resume_path}")
+        checkpoint = load_checkpoint(resume_path, model, device)
+        resume_info = dict(checkpoint.get("epoch_info", {}))
+        best_val_top1 = float(checkpoint.get("best_val_top1", -1.0))
+        print(
+            f"Resuming from {display_path(resume_path)} "
+            f"after {resume_info.get('stage')} epoch {resume_info.get('epoch')} "
+            f"with best_val_top1={best_val_top1:.4f}",
+            flush=True,
+        )
+    if log_path.exists() and not args.resume:
         log_path.unlink()
 
-    best_val_top1 = -1.0
     history = []
     start_time = time.time()
     for stage in stages:
@@ -407,6 +441,9 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
             weight_decay=args.weight_decay,
         )
         for epoch in range(1, stage.epochs + 1):
+            if should_skip_epoch(stage, epoch, resume_info):
+                print(f"Skipping completed {stage.name} epoch {epoch}/{stage.epochs}", flush=True)
+                continue
             train_metrics = run_epoch(
                 model,
                 loaders["train"],
@@ -555,6 +592,8 @@ def main() -> None:
     parser.add_argument("--max-train-batches", type=int, default=0, help="Limit training batches per epoch; 0 means all batches.")
     parser.add_argument("--max-eval-batches", type=int, default=0, help="Limit validation/test batches per epoch; 0 means all batches.")
     parser.add_argument("--progress-every-batches", type=int, default=0, help="Print flushed batch progress every N batches; 0 disables extra batch prints.")
+    parser.add_argument("--resume", action="store_true", help="Resume from the last completed epoch checkpoint in output-dir.")
+    parser.add_argument("--resume-checkpoint", type=Path, default=None, help="Optional checkpoint path to resume from; defaults to output-dir/last_model.pt.")
     parser.add_argument("--dry-run", action="store_true", help="Validate data loading and matrix-loss construction without training.")
     args = parser.parse_args()
 

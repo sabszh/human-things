@@ -1,11 +1,11 @@
 {
   "status": "ok",
-  "image_root": "/mnt/c/users/szh/desktop/datsci/human-things/data/raw/THINGS-database/osfstorage",
+  "image_root": "/work/group01/human-things/data/raw/THINGS-database/osfstorage",
   "output_csv": "data/baseline/image_metadata.csv",
   "total_image_rows": 27961,
   "total_concepts": 1854,
-  "missing_image_files": 0,
-  "image_files_found": 27961,
+  "missing_image_files": 12700,
+  "image_files_found": 15261,
   "images_per_concept": {
     "min": 13,
     "max": 36,
