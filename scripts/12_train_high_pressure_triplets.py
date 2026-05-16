@@ -320,7 +320,7 @@ def save_checkpoint(
             "epoch_info": epoch_info,
             "best_val_top1": best_val_top1,
             "num_classes": NUM_CLASSES,
-            "training_type": "human_informed_v3_similarity_weighted",
+            "training_type": "high_pressure_triplets",
             "lambda_ce": args.lambda_ce,
             "lambda_similarity": args.lambda_similarity,
             "triplet_margin": args.triplet_margin,
@@ -489,7 +489,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         log_path.unlink()
 
     print(f"Using device: {device}", flush=True)
-    print("Training type: human-informed v3 similarity-weighted fine-tuning", flush=True)
+    print("Training type: high-pressure human triplets", flush=True)
     print(f"Baseline checkpoint: {args.baseline_checkpoint}", flush=True)
     print(f"Triplets: {args.triplets} rows={len(triplets)} anchors={len(triplet_lookup)}", flush=True)
     print(f"Triplet anchor coverage: {len(triplet_lookup)}/{NUM_CLASSES}", flush=True)
@@ -585,7 +585,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         "status": "ok",
         "device": str(device),
         "seed": args.seed,
-        "training_type": "human_informed_v3_similarity_weighted",
+        "training_type": "high_pressure_triplets",
         "num_classes": NUM_CLASSES,
         "num_images": int(len(splits)),
         "triplets": int(len(triplets)),
@@ -618,7 +618,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
             "thingsplus_variables_used": False,
         },
         "method_note": (
-            "v3 deliberately makes classification a weaker anchor and human triplet alignment a stronger objective. "
+            "The high-pressure strategy deliberately makes classification a weaker anchor and human triplet alignment a stronger objective. "
             "It starts from the image-only baseline and uses fixed train-only baseline prototypes for CPU practicality."
         ),
         "similarity_loss_note": (

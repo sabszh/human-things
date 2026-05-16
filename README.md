@@ -30,12 +30,13 @@ The tested model variants are:
 
 | Model | Description |
 |---|---|
-| `baseline` | Image-only ResNet-50 trained on THINGS concept classification. |
-| `v1_human` | Continued fine-tuning with cross-entropy plus weak human triplet regularization against fixed train-image prototypes. |
-| `v1_shuffled` | Matched control using shuffled human triplets with preserved anchor frequency. |
-| `v2_1200` | Current-batch concept-prototype triplet loss, capped to 1,200 CPU-feasible batches. |
-| `v3_human` | Stronger human-similarity weighting with weaker classification loss. |
-| `joint_matrix` | Joint THINGS fine-tuning from ImageNet initialization with classification plus human similarity matrix loss from the first epoch. |
+| Image-only classifier | `baseline`: ResNet-50 trained on THINGS concept classification. |
+| Fixed-prototype triplets | `fixed_prototype_triplets`: continued fine-tuning with cross-entropy plus weak human triplet regularization against fixed train-image prototypes. |
+| Fixed-prototype control | `fixed_prototype_control`: matched shuffled-triplet control with preserved anchor frequency. |
+| Batch-prototype triplets | `batch_prototype_triplets`: current-batch concept-prototype triplet loss, capped to 1,200 CPU-feasible batches. |
+| High-pressure triplets | `high_pressure_triplets`: stronger human-similarity weighting with weaker classification loss. |
+| Joint matrix alignment | `joint_matrix_alignment`: THINGS fine-tuning from ImageNet initialization with classification plus human similarity matrix loss from the first epoch. |
+| Matrix control | `matrix_control`: matched shuffled-matrix control. |
 
 The main result is nuanced: weak human-informed training improved practical metrics, but the shuffled control improved almost identically. Stronger human weighting improved within-source human-similarity alignment, but did not robustly improve practical utility or external THINGSplus transfer. The current evidence supports the claim that **how human similarity is injected matters**, and that shuffled controls are essential.
 
@@ -63,7 +64,7 @@ human-things/
 │   ├── ...
 │   ├── 13_evaluate_triplet_satisfaction.py
 │   ├── 14_make_paper_figures.py
-│   └── 15_train_resnet50_joint_matrix.py
+│   └── 15_train_joint_matrix_alignment.py
 ├── src/
 │   └── human_things/
 │       ├── __init__.py
@@ -223,24 +224,24 @@ outputs/human_similarity/triplet_audit_report.json
 
 ### 5. Train Human-Informed Models
 
-v1 human:
+Fixed-prototype triplets:
 
 ```powershell
-python .\scripts\08_train_resnet50_human_informed.py
+python .\scripts\08_train_fixed_prototype_triplets.py
 ```
 
-v1 shuffled control:
+Fixed-prototype shuffled control:
 
 ```powershell
-python .\scripts\08_train_resnet50_human_informed.py `
+python .\scripts\08_train_fixed_prototype_triplets.py `
   --triplets data\human_similarity\shuffled_train_triplets.csv `
   --output-dir outputs\human_informed_resnet50_shuffled
 ```
 
-v2 capped current-batch concept-triplet run:
+Batch-prototype triplets, CPU-capped:
 
 ```powershell
-python .\scripts\11_train_resnet50_human_informed_v2.py `
+python .\scripts\11_train_batch_prototype_triplets.py `
   --epochs 1 `
   --max-train-batches 1200 `
   --triplets-per-batch 8 `
@@ -248,22 +249,22 @@ python .\scripts\11_train_resnet50_human_informed_v2.py `
   --output-dir outputs\human_informed_resnet50_v2_1200
 ```
 
-v3 stronger human weighting:
+High-pressure triplets:
 
 ```powershell
-python .\scripts\12_train_resnet50_human_informed_v3.py
+python .\scripts\12_train_high_pressure_triplets.py
 ```
 
-Joint human-matrix training from ImageNet initialization:
+Joint matrix alignment from ImageNet initialization:
 
 ```powershell
-python .\scripts\15_train_resnet50_joint_matrix.py
+python .\scripts\15_train_joint_matrix_alignment.py
 ```
 
-Matched shuffled-matrix control:
+Matrix shuffled control:
 
 ```powershell
-python .\scripts\15_train_resnet50_joint_matrix.py `
+python .\scripts\15_train_joint_matrix_alignment.py `
   --shuffle-human-matrix `
   --output-dir outputs\joint_matrix_resnet50_shuffled
 ```
@@ -287,14 +288,14 @@ Repeat for each model output directory.
 ```powershell
 python .\scripts\09_benchmark_embeddings.py `
   --model baseline=outputs\baseline_resnet50 `
-  --model v1_human=outputs\human_informed_resnet50 `
-  --model v1_shuffled=outputs\human_informed_resnet50_shuffled `
-  --model v2_1200=outputs\human_informed_resnet50_v2_1200 `
-  --model v3_human=outputs\human_informed_resnet50_v3 `
-  --model joint_matrix=outputs\joint_matrix_resnet50 `
-  --model joint_matrix_shuffled=outputs\joint_matrix_resnet50_shuffled `
-  --output-json outputs\embedding_benchmark_report_with_v3.json `
-  --output-csv outputs\embedding_benchmark_summary_with_v3.csv
+  --model fixed_prototype_triplets=outputs\human_informed_resnet50 `
+  --model fixed_prototype_control=outputs\human_informed_resnet50_shuffled `
+  --model batch_prototype_triplets=outputs\human_informed_resnet50_v2_1200 `
+  --model high_pressure_triplets=outputs\human_informed_resnet50_v3 `
+  --model joint_matrix_alignment=outputs\joint_matrix_resnet50 `
+  --model matrix_control=outputs\joint_matrix_resnet50_shuffled `
+  --output-json outputs\embedding_benchmark_report_with_joint_matrix.json `
+  --output-csv outputs\embedding_benchmark_summary_with_joint_matrix.csv
 ```
 
 Compact comparison:
@@ -329,20 +330,20 @@ outputs/figures/drawio/figure_pipeline_story.drawio
 
 ## Current Results Snapshot
 
-From `outputs/embedding_benchmark_summary_with_v3.csv`:
+From `outputs/embedding_benchmark_summary_with_joint_matrix.csv`:
 
 | Model | Test top-1 | Retrieval@1 | Human-pair rho | Object-properties rho |
 |---|---:|---:|---:|---:|
-| baseline | 0.7274 | 0.7266 | 0.4173 | 0.5793 |
-| v1_human | 0.7430 | 0.7422 | 0.3897 | 0.5752 |
-| v1_shuffled | 0.7430 | 0.7423 | 0.3880 | 0.5752 |
-| v2_1200 | 0.7328 | 0.7334 | 0.4001 | 0.5747 |
-| v3_human | 0.7330 | 0.7265 | 0.4478 | 0.5787 |
+| Image-only classifier | 0.7274 | 0.7266 | 0.4173 | 0.5793 |
+| Fixed-prototype triplets | 0.7430 | 0.7422 | 0.3897 | 0.5752 |
+| Fixed-prototype control | 0.7430 | 0.7423 | 0.3880 | 0.5752 |
+| Batch-prototype triplets | 0.7328 | 0.7334 | 0.4001 | 0.5747 |
+| High-pressure triplets | 0.7330 | 0.7265 | 0.4478 | 0.5787 |
 
 Interpretation:
 
-- v1 improved practical utility, but v1 human and v1 shuffled were nearly identical.
-- v3 improved within-source human alignment, but not practical retrieval or THINGSplus transfer.
+- Fixed-prototype triplets improved practical utility, but the matched shuffled control was nearly identical.
+- High-pressure triplets improved within-source human alignment, but not practical retrieval or THINGSplus transfer.
 - The image-only baseline already satisfied much of the real human triplet structure.
 - The strongest conclusion is about the importance of controls and injection strategy, not a broad claim that human similarity universally improves visual embeddings.
 
@@ -356,7 +357,7 @@ docs/METHODS_AND_RESULTS.md
 
 The figure script generates 18 entries, including:
 
-- `figure_v1_human_vs_shuffled_deltas`
+- `figure_fixed_prototype_triplets_vs_control`
 - `figure_metric_delta_profiles`
 - `figure_semantic_transfer_vs_human_alignment`
 - `figure_triplet_margin_intervals`
@@ -411,7 +412,7 @@ Model checkpoints, embeddings, reports, and figures. Large `.pt` and `.npy` file
 - Human similarity is concept-level supervision.
 - THINGSplus variables are reserved for evaluation and are not used to train the human-informed losses.
 - Human-pair Spearman is a within-source alignment diagnostic, not a fully independent semantic benchmark.
-- The v2 run in the current results is CPU-capped at 1,200 batches.
+- The batch-prototype triplet run in the current results is CPU-capped at 1,200 batches.
 - CPU training is possible but slow. GPU training is recommended for new full runs.
 
 ## Git and Large Files

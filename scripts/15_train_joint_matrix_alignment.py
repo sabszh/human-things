@@ -343,7 +343,7 @@ def save_checkpoint(path: Path, model: nn.Module, epoch_info: Dict[str, object],
             "epoch_info": epoch_info,
             "best_val_top1": best_val_top1,
             "num_classes": NUM_CLASSES,
-            "training_type": "joint_matrix",
+            "training_type": "joint_matrix_alignment",
             "lambda_matrix": args.lambda_matrix,
             "shuffle_human_matrix": args.shuffle_human_matrix,
         },
@@ -388,7 +388,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
     )
     device = torch.device(args.device if args.device else ("cuda" if torch.cuda.is_available() else "cpu"))
     print(f"Using device: {device}", flush=True)
-    print("Training type: joint THINGS classification + human matrix loss from ImageNet initialization", flush=True)
+    print("Training type: joint matrix alignment from ImageNet initialization", flush=True)
     print("Baseline-matched settings: same ResNet-50 weights, transforms, schedule, optimizer defaults.", flush=True)
     print(
         f"lambda_matrix={args.lambda_matrix} min_matrix_pairs={args.min_matrix_pairs} "
@@ -521,7 +521,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         "status": "ok",
         "device": str(device),
         "seed": args.seed,
-        "training_type": "joint_matrix",
+        "training_type": "joint_matrix_alignment",
         "num_classes": NUM_CLASSES,
         "num_images": int(len(splits)),
         "split_counts": {str(k): int(v) for k, v in splits["split"].value_counts().items()},

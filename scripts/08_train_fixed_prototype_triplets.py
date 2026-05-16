@@ -320,7 +320,7 @@ def save_checkpoint(
             "epoch_info": epoch_info,
             "best_val_top1": best_val_top1,
             "num_classes": NUM_CLASSES,
-            "training_type": "human_informed",
+            "training_type": "fixed_prototype_triplets",
             "lambda_similarity": args.lambda_similarity,
             "triplet_margin": args.triplet_margin,
             "baseline_checkpoint": str(args.baseline_checkpoint),
@@ -487,7 +487,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         log_path.unlink()
 
     print(f"Using device: {device}", flush=True)
-    print("Training type: human-informed fine-tuning", flush=True)
+    print("Training type: fixed-prototype human triplets", flush=True)
     print(f"Baseline checkpoint: {args.baseline_checkpoint}", flush=True)
     print(f"Triplets: {args.triplets} rows={len(triplets)} anchors={len(triplet_lookup)}", flush=True)
     print(f"Triplet anchor coverage: {len(triplet_lookup)}/{NUM_CLASSES}", flush=True)
@@ -579,7 +579,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         "status": "ok",
         "device": str(device),
         "seed": args.seed,
-        "training_type": "human_informed",
+        "training_type": "fixed_prototype_triplets",
         "num_classes": NUM_CLASSES,
         "num_images": int(len(splits)),
         "triplets": int(len(triplets)),

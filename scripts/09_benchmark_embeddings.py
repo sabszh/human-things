@@ -18,8 +18,12 @@ CONCEPTS_CSV = ROOT / "data" / "processed" / "concepts.csv"
 HUMAN_TEST_PAIRS = ROOT / "data" / "human_similarity" / "test_similarity_pairs.csv"
 DEFAULT_MODELS = {
     "baseline": ROOT / "outputs" / "baseline_resnet50",
-    "human_informed": ROOT / "outputs" / "human_informed_resnet50",
-    "shuffled_control": ROOT / "outputs" / "human_informed_resnet50_shuffled",
+    "fixed_prototype_triplets": ROOT / "outputs" / "human_informed_resnet50",
+    "fixed_prototype_control": ROOT / "outputs" / "human_informed_resnet50_shuffled",
+    "batch_prototype_triplets": ROOT / "outputs" / "human_informed_resnet50_v2_1200",
+    "high_pressure_triplets": ROOT / "outputs" / "human_informed_resnet50_v3",
+    "joint_matrix_alignment": ROOT / "outputs" / "joint_matrix_resnet50",
+    "matrix_control": ROOT / "outputs" / "joint_matrix_resnet50_shuffled",
 }
 OUTPUT_JSON = ROOT / "outputs" / "embedding_benchmark_report.json"
 OUTPUT_CSV = ROOT / "outputs" / "embedding_benchmark_summary.csv"
@@ -429,7 +433,7 @@ def main() -> None:
         action="append",
         default=[],
         metavar="NAME=DIR",
-        help="Optional model entry. Can be repeated. Defaults to baseline, human_informed, shuffled_control.",
+        help="Optional model entry. Can be repeated. Defaults to the strategy names: baseline, fixed_prototype_triplets, fixed_prototype_control, batch_prototype_triplets, high_pressure_triplets, joint_matrix_alignment, matrix_control.",
     )
     args = parser.parse_args()
 

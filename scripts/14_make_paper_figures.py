@@ -12,7 +12,9 @@ import pandas as pd
 
 try:
     from human_things.metadata import (
+        CONTROL_MODELS,
         FIG_BG,
+        MODEL_ALIASES,
         GRID_COLOR,
         MODEL_COLORS as COLORS,
         MODEL_LABELS,
@@ -41,7 +43,9 @@ except ModuleNotFoundError:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
     from human_things.metadata import (
+        CONTROL_MODELS,
         FIG_BG,
+        MODEL_ALIASES,
         GRID_COLOR,
         MODEL_COLORS as COLORS,
         MODEL_LABELS,
@@ -73,17 +77,31 @@ OUTPUT_DIR = FIGURES_DIR
 
 TRAINING_LOGS = {
     "baseline": BASELINE_OUTPUT_DIR / "training_log.csv",
-    "v1_human": HUMAN_V1_OUTPUT_DIR / "training_log.csv",
-    "v1_shuffled": HUMAN_V1_SHUFFLED_OUTPUT_DIR / "training_log.csv",
-    "v2_1200": HUMAN_V2_OUTPUT_DIR / "training_log.csv",
-    "v3_human": HUMAN_V3_OUTPUT_DIR / "training_log.csv",
-    "joint_matrix": JOINT_MATRIX_OUTPUT_DIR / "training_log.csv",
-    "joint_matrix_shuffled": JOINT_MATRIX_SHUFFLED_OUTPUT_DIR / "training_log.csv",
+    "fixed_prototype_triplets": HUMAN_V1_OUTPUT_DIR / "training_log.csv",
+    "fixed_prototype_control": HUMAN_V1_SHUFFLED_OUTPUT_DIR / "training_log.csv",
+    "batch_prototype_triplets": HUMAN_V2_OUTPUT_DIR / "training_log.csv",
+    "high_pressure_triplets": HUMAN_V3_OUTPUT_DIR / "training_log.csv",
+    "joint_matrix_alignment": JOINT_MATRIX_OUTPUT_DIR / "training_log.csv",
+    "matrix_control": JOINT_MATRIX_SHUFFLED_OUTPUT_DIR / "training_log.csv",
 }
 PASTEL_CMAP = LinearSegmentedColormap.from_list(
     "paper_pastel",
     ["#fff7ed", "#edf4ff", "#e0f3da", "#eee2ff"],
 )
+
+
+def normalize_model_column(frame: pd.DataFrame) -> pd.DataFrame:
+    frame = frame.copy()
+    if "model" in frame.columns:
+        frame["model"] = frame["model"].replace(MODEL_ALIASES)
+    return frame
+
+
+def sort_by_model_order(frame: pd.DataFrame) -> pd.DataFrame:
+    order = {model: idx for idx, model in enumerate(MODEL_ORDER)}
+    frame = frame.copy()
+    frame["_order"] = frame["model"].map(order).fillna(999)
+    return frame.sort_values(["_order", "model"]).drop(columns=["_order"]).reset_index(drop=True)
 
 
 def load_summary(path: Path) -> pd.DataFrame:
@@ -92,10 +110,7 @@ def load_summary(path: Path) -> pd.DataFrame:
     frame = pd.read_csv(path)
     if "model" not in frame.columns:
         fail(f"{path} is missing a model column.")
-    order = {model: idx for idx, model in enumerate(MODEL_ORDER)}
-    frame["_order"] = frame["model"].map(order).fillna(999)
-    frame = frame.sort_values(["_order", "model"]).drop(columns=["_order"]).reset_index(drop=True)
-    return frame
+    return sort_by_model_order(normalize_model_column(frame))
 
 
 def setup_style() -> None:
@@ -137,6 +152,36 @@ def colors_for(frame: pd.DataFrame) -> List[str]:
     return [COLORS.get(model, "#6B7280") for model in frame["model"]]
 
 
+def is_control(model: str) -> bool:
+    return model in CONTROL_MODELS
+
+
+def label_for(model: str, single_line: bool = False) -> str:
+    label = MODEL_LABELS.get(model, model)
+    if single_line:
+        label = label.replace("\n", " ")
+    return label
+
+
+def alpha_for(model: str) -> float:
+    return 0.42 if is_control(model) else 0.96
+
+
+def linewidth_for(model: str) -> float:
+    return 1.5 if is_control(model) else 2.3
+
+
+def marker_size_for(model: str) -> float:
+    return 58 if is_control(model) else 92
+
+
+def apply_control_bar_style(bars, models: pd.Series | List[str]) -> None:
+    for bar, model in zip(bars, models):
+        if is_control(str(model)):
+            bar.set_alpha(0.45)
+            bar.set_color(COLORS.get(str(model), "#B8C0CC"))
+
+
 def style_figure(fig: plt.Figure) -> None:
     fig.patch.set_facecolor(FIG_BG)
     for ax in fig.axes:
@@ -175,11 +220,12 @@ def bar_metric(
     fig, ax = plt.subplots(figsize=(7.2, 4.2))
     x = np.arange(len(frame))
     values = frame[metric].to_numpy(dtype=float)
-    ax.bar(x, values, color=colors_for(frame), width=0.72, edgecolor="none")
+    bars = ax.bar(x, values, color=colors_for(frame), width=0.72, edgecolor="none")
+    apply_control_bar_style(bars, frame["model"])
     if baseline_line and "baseline" in set(frame["model"]):
         baseline_value = float(frame.loc[frame["model"] == "baseline", metric].iloc[0])
         ax.axhline(baseline_value, color="#111827", linewidth=1.0, linestyle="--", alpha=0.65)
-        ax.text(len(frame) - 0.55, baseline_value, "baseline", va="bottom", ha="right", fontsize=8)
+        ax.text(len(frame) - 0.55, baseline_value, "image-only", va="bottom", ha="right", fontsize=8)
     ax.set_xticks(x)
     ax.set_xticklabels(labels_for(frame))
     ax.set_ylabel(ylabel)
@@ -211,7 +257,7 @@ def grouped_metrics(
     offsets = np.linspace(-width, width, len(metrics))
     palette = ["#1D4ED8", "#059669", "#DC2626", "#7C3AED"]
     for metric, label, offset, color in zip(metrics, labels, offsets, palette):
-        ax.bar(
+        bars = ax.bar(
             x + offset,
             frame[metric].to_numpy(dtype=float),
             width=width,
@@ -220,6 +266,7 @@ def grouped_metrics(
             alpha=0.88,
             edgecolor="none",
         )
+        apply_control_bar_style(bars, frame["model"])
     ax.set_xticks(x)
     ax.set_xticklabels(labels_for(frame))
     ax.set_ylabel("score")
@@ -244,10 +291,11 @@ def retrieval_curve_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str
             x,
             y,
             marker="o",
-            linewidth=2.2,
-            markersize=6,
+            linewidth=linewidth_for(model),
+            markersize=5 if is_control(model) else 6.5,
             color=COLORS.get(model, "#6B7280"),
-            label=MODEL_LABELS.get(model, model).replace("\n", " "),
+            alpha=alpha_for(model),
+            label=label_for(model, single_line=True),
         )
     ax.set_xticks(x)
     ax.set_xlabel("retrieval k")
@@ -270,13 +318,14 @@ def classification_retrieval_scatter(frame: pd.DataFrame, output_dir: Path) -> D
         ax.scatter(
             row["test_top1"],
             row["image_retrieval_hit@1"],
-            s=95,
+            s=marker_size_for(model),
             color=COLORS.get(model, "#6B7280"),
             edgecolor="none",
+            alpha=alpha_for(model),
             zorder=3,
         )
         ax.annotate(
-            MODEL_LABELS.get(model, model).replace("\n", " "),
+            label_for(model, single_line=True),
             (row["test_top1"], row["image_retrieval_hit@1"]),
             xytext=(6, 4),
             textcoords="offset points",
@@ -310,13 +359,14 @@ def semantic_vs_human_scatter(frame: pd.DataFrame, output_dir: Path) -> Dict[str
             ax.scatter(
                 row["human_similarity_pair_spearman"],
                 row[metric],
-                s=90,
+                s=marker_size_for(model),
                 color=COLORS.get(model, "#6B7280"),
                 edgecolor="none",
+                alpha=alpha_for(model),
                 zorder=3,
             )
             ax.annotate(
-                MODEL_LABELS.get(model, model).replace("\n", " "),
+                label_for(model, single_line=True),
                 (row["human_similarity_pair_spearman"], row[metric]),
                 xytext=(5, 4),
                 textcoords="offset points",
@@ -353,7 +403,7 @@ def benchmark_scorecard(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str]
     ax.set_xticks(np.arange(len(metrics)))
     ax.set_xticklabels(labels, rotation=25, ha="right")
     ax.set_yticks(np.arange(len(frame)))
-    ax.set_yticklabels([MODEL_LABELS.get(model, model).replace("\n", " ") for model in frame["model"]])
+    ax.set_yticklabels([label_for(model, single_line=True) for model in frame["model"]])
     ax.set_title("Benchmark Scorecard Within Each Metric")
     for i in range(values.shape[0]):
         for j in range(values.shape[1]):
@@ -386,10 +436,11 @@ def benchmark_rank_bump_chart(frame: pd.DataFrame, output_dir: Path) -> Dict[str
             x,
             y,
             marker="o",
-            linewidth=2.0,
-            markersize=6,
+            linewidth=linewidth_for(model),
+            markersize=5 if is_control(model) else 6,
             color=COLORS.get(model, "#6B7280"),
-            label=MODEL_LABELS.get(model, model).replace("\n", " "),
+            alpha=alpha_for(model),
+            label=label_for(model, single_line=True),
         )
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=20, ha="right")
@@ -412,14 +463,15 @@ def tradeoff_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str]:
         ax.scatter(
             row["image_retrieval_hit@1"],
             row["human_similarity_pair_spearman"],
-            s=90,
+            s=marker_size_for(model),
             color=COLORS.get(model, "#6B7280"),
             edgecolor="white",
             linewidth=0.8,
+            alpha=alpha_for(model),
             zorder=3,
         )
         ax.annotate(
-            MODEL_LABELS.get(model, model).replace("\n", " "),
+            label_for(model, single_line=True),
             (row["image_retrieval_hit@1"], row["human_similarity_pair_spearman"]),
             xytext=(6, 4),
             textcoords="offset points",
@@ -457,7 +509,7 @@ def delta_heatmap(frame: pd.DataFrame, metrics: List[str], output_dir: Path) -> 
         ha="right",
     )
     ax.set_yticks(np.arange(len(delta.index)))
-    ax.set_yticklabels([MODEL_LABELS.get(model, model).replace("\n", " ") for model in delta.index])
+    ax.set_yticklabels([label_for(model, single_line=True) for model in delta.index])
     ax.set_title("Metric Deltas Relative to Image-Only Baseline")
     for i in range(delta.shape[0]):
         for j in range(delta.shape[1]):
@@ -494,10 +546,11 @@ def metric_delta_profile(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str
             x,
             row.to_numpy(dtype=float),
             marker="o",
-            linewidth=2.0,
-            markersize=5.5,
+            linewidth=linewidth_for(model),
+            markersize=4.8 if is_control(model) else 5.8,
             color=COLORS.get(model, "#6B7280"),
-            label=MODEL_LABELS.get(model, model).replace("\n", " "),
+            alpha=alpha_for(model),
+            label=label_for(model, single_line=True),
         )
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=20, ha="right")
@@ -509,7 +562,7 @@ def metric_delta_profile(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str
 
 
 def joint_matrix_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str] | None:
-    required_models = {"baseline", "joint_matrix", "joint_matrix_shuffled"}
+    required_models = {"baseline", "joint_matrix_alignment", "matrix_control"}
     if not required_models.issubset(set(frame["model"])):
         print("Skipping joint matrix control delta figure; missing baseline/joint rows.")
         return None
@@ -527,8 +580,8 @@ def joint_matrix_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Di
 
     indexed = frame.set_index("model")
     baseline = indexed.loc["baseline", metrics].astype(float)
-    human = indexed.loc["joint_matrix", metrics].astype(float) - baseline
-    shuffled = indexed.loc["joint_matrix_shuffled", metrics].astype(float) - baseline
+    human = indexed.loc["joint_matrix_alignment", metrics].astype(float) - baseline
+    shuffled = indexed.loc["matrix_control", metrics].astype(float) - baseline
 
     fig, ax = plt.subplots(figsize=(7.8, 4.8))
     y = np.arange(len(metrics))
@@ -537,17 +590,18 @@ def joint_matrix_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Di
     ax.scatter(
         shuffled.to_numpy(dtype=float),
         y,
-        color=COLORS["joint_matrix_shuffled"],
+        color=COLORS["matrix_control"],
         s=85,
-        label="joint shuffled",
+        alpha=alpha_for("matrix_control"),
+        label=label_for("matrix_control", single_line=True),
         zorder=2,
     )
     ax.scatter(
         human.to_numpy(dtype=float),
         y,
-        color=COLORS["joint_matrix"],
+        color=COLORS["joint_matrix_alignment"],
         s=85,
-        label="joint human matrix",
+        label=label_for("joint_matrix_alignment", single_line=True),
         zorder=3,
     )
     ax.axvline(0, color="#111827", linewidth=1.0, alpha=0.72)
@@ -555,14 +609,14 @@ def joint_matrix_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Di
     ax.set_yticklabels(labels)
     ax.invert_yaxis()
     ax.set_xlabel("delta vs image-only baseline")
-    ax.set_title("Joint Matrix Training vs Shuffled Matrix Control")
+    ax.set_title("Matrix Alignment Strategy vs Matched Control")
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.14), ncols=2)
     return save_figure(fig, output_dir, "figure_joint_matrix_vs_shuffled_deltas")
 
-def v1_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str] | None:
-    required_models = {"baseline", "v1_human", "v1_shuffled"}
+def fixed_prototype_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, str] | None:
+    required_models = {"baseline", "fixed_prototype_triplets", "fixed_prototype_control"}
     if not required_models.issubset(set(frame["model"])):
-        print("Skipping v1 control delta figure; missing baseline/v1 rows.")
+        print("Skipping fixed-prototype control delta figure; missing baseline/fixed-prototype rows.")
         return None
     metrics = [
         "test_top1",
@@ -578,30 +632,45 @@ def v1_control_delta_plot(frame: pd.DataFrame, output_dir: Path) -> Dict[str, st
 
     indexed = frame.set_index("model")
     baseline = indexed.loc["baseline", metrics].astype(float)
-    human = indexed.loc["v1_human", metrics].astype(float) - baseline
-    shuffled = indexed.loc["v1_shuffled", metrics].astype(float) - baseline
+    human = indexed.loc["fixed_prototype_triplets", metrics].astype(float) - baseline
+    shuffled = indexed.loc["fixed_prototype_control", metrics].astype(float) - baseline
 
     fig, ax = plt.subplots(figsize=(7.8, 4.8))
     y = np.arange(len(metrics))
     for i in y:
         ax.plot([shuffled.iloc[i], human.iloc[i]], [i, i], color="#CBD5E1", linewidth=3.0, zorder=1)
-    ax.scatter(shuffled.to_numpy(dtype=float), y, color=COLORS["v1_shuffled"], s=80, label="v1 shuffled", zorder=2)
-    ax.scatter(human.to_numpy(dtype=float), y, color=COLORS["v1_human"], s=80, label="v1 human", zorder=3)
+    ax.scatter(
+        shuffled.to_numpy(dtype=float),
+        y,
+        color=COLORS["fixed_prototype_control"],
+        alpha=alpha_for("fixed_prototype_control"),
+        s=80,
+        label=label_for("fixed_prototype_control", single_line=True),
+        zorder=2,
+    )
+    ax.scatter(
+        human.to_numpy(dtype=float),
+        y,
+        color=COLORS["fixed_prototype_triplets"],
+        s=80,
+        label=label_for("fixed_prototype_triplets", single_line=True),
+        zorder=3,
+    )
     ax.axvline(0, color="#111827", linewidth=1.0, alpha=0.72)
     ax.set_yticks(y)
     ax.set_yticklabels(labels)
     ax.invert_yaxis()
     ax.set_xlabel("delta vs image-only baseline")
-    ax.set_title("v1 Human vs Shuffled Control: Same Direction, Same Scale")
+    ax.set_title("Fixed-Prototype Triplets vs Matched Control")
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.14), ncols=2)
-    return save_figure(fig, output_dir, "figure_v1_human_vs_shuffled_deltas")
+    return save_figure(fig, output_dir, "figure_fixed_prototype_triplets_vs_control")
 
 
 def triplet_satisfaction_plot(path: Path, output_dir: Path) -> Dict[str, str] | None:
     if not path.exists():
         print(f"Skipping triplet satisfaction figure; missing {path}")
         return None
-    frame = pd.read_csv(path)
+    frame = normalize_model_column(pd.read_csv(path))
     required = {"model", "triplet_set", "satisfaction_rate", "margin_satisfaction_rate"}
     missing = sorted(required - set(frame.columns))
     if missing:
@@ -658,7 +727,7 @@ def triplet_margin_interval_plot(path: Path, output_dir: Path) -> Dict[str, str]
     if not path.exists():
         print(f"Skipping triplet margin interval figure; missing {path}")
         return None
-    frame = pd.read_csv(path)
+    frame = normalize_model_column(pd.read_csv(path))
     required = {
         "model",
         "triplet_set",
@@ -684,14 +753,22 @@ def triplet_margin_interval_plot(path: Path, output_dir: Path) -> Dict[str, str]
     med = real["median_similarity_margin"].to_numpy(dtype=float)
     high = real["p95_similarity_margin"].to_numpy(dtype=float)
     for i, row in real.iterrows():
-        color = COLORS.get(row["model"], "#6B7280")
-        ax.plot([low[i], high[i]], [i, i], color=color, linewidth=5, alpha=0.26, solid_capstyle="round")
-        ax.scatter(med[i], i, color=color, s=85, zorder=3)
+        model = row["model"]
+        color = COLORS.get(model, "#6B7280")
+        ax.plot(
+            [low[i], high[i]],
+            [i, i],
+            color=color,
+            linewidth=4 if is_control(model) else 5,
+            alpha=0.18 if is_control(model) else 0.28,
+            solid_capstyle="round",
+        )
+        ax.scatter(med[i], i, color=color, s=58 if is_control(model) else 85, alpha=alpha_for(model), zorder=3)
     ax.axvline(0, color="#111827", linewidth=1.0, alpha=0.7)
     ax.axvline(0.2, color="#111827", linewidth=1.0, linestyle="--", alpha=0.45)
     ax.text(0.202, -0.48, "margin 0.2", fontsize=8, color="#374151", va="bottom")
     ax.set_yticks(y)
-    ax.set_yticklabels([MODEL_LABELS.get(model, model).replace("\n", " ") for model in real["model"]])
+    ax.set_yticklabels([label_for(model, single_line=True) for model in real["model"]])
     ax.invert_yaxis()
     ax.set_xlabel("model cosine margin: sim(anchor,pos) - sim(anchor,neg)")
     ax.set_title("Distribution of Human-Triplet Margins in Embedding Space")
@@ -702,7 +779,7 @@ def triplet_real_vs_shuffled_gap_plot(path: Path, output_dir: Path) -> Dict[str,
     if not path.exists():
         print(f"Skipping real-vs-shuffled triplet gap figure; missing {path}")
         return None
-    frame = pd.read_csv(path)
+    frame = normalize_model_column(pd.read_csv(path))
     required = {"model", "triplet_set", "satisfaction_rate", "mean_similarity_margin"}
     missing = sorted(required - set(frame.columns))
     if missing:
@@ -737,13 +814,14 @@ def triplet_real_vs_shuffled_gap_plot(path: Path, output_dir: Path) -> Dict[str,
         ax.scatter(
             row["satisfaction_gap"],
             row["margin_gap"],
-            s=95,
+            s=marker_size_for(model),
             color=COLORS.get(model, "#6B7280"),
             edgecolor="none",
+            alpha=alpha_for(model),
             zorder=3,
         )
         ax.annotate(
-            MODEL_LABELS.get(model, model).replace("\n", " "),
+            label_for(model, single_line=True),
             (row["satisfaction_gap"], row["margin_gap"]),
             xytext=(6, 4),
             textcoords="offset points",
@@ -781,10 +859,11 @@ def training_curves_plot(output_dir: Path) -> Dict[str, str] | None:
             group["step"],
             group["val_top1"],
             marker="o",
-            linewidth=2.0,
-            markersize=4.5,
+            linewidth=linewidth_for(model),
+            markersize=3.8 if is_control(model) else 4.8,
             color=COLORS.get(model, "#6B7280"),
-            label=MODEL_LABELS.get(model, model).replace("\n", " "),
+            alpha=alpha_for(model),
+            label=label_for(model, single_line=True),
         )
     ax.set_xlabel("training checkpoint / epoch")
     ax.set_ylabel("validation top-1 accuracy")
@@ -799,8 +878,8 @@ def write_caption_notes(frame: pd.DataFrame, output_dir: Path, figure_paths: Dic
         "source_models": frame["model"].tolist(),
         "figures": figure_paths,
         "interpretation_notes": [
-            "v1 human and v1 shuffled show nearly identical gains on classification and retrieval, suggesting generic fine-tuning or regularization rather than human-specific structure.",
-            "v3 human increases within-source human-similarity alignment, but this is a manipulation check because the model is trained from the same human-similarity source.",
+            "Fixed-prototype triplets and their shuffled control show nearly identical gains on classification and retrieval, suggesting generic fine-tuning or regularization rather than human-specific structure.",
+            "High-pressure triplets increase within-source human-similarity alignment, but this is a manipulation check because the model is trained from the same human-similarity source.",
             "Triplet satisfaction shows whether margin-based human constraints are already present in the image-only embedding space.",
             "Joint matrix models test a different injection strategy: global relational alignment during THINGS classification training, with a shuffled-matrix control.",
             "External THINGSplus transfer is evaluated separately from human-source alignment to avoid treating within-source human similarity as an independent semantic benchmark.",
@@ -882,9 +961,9 @@ def main() -> None:
         ),
         "metric_delta_profiles": metric_delta_profile(frame, output_dir),
     }
-    v1_control_paths = v1_control_delta_plot(frame, output_dir)
-    if v1_control_paths is not None:
-        figure_paths["v1_human_vs_shuffled_deltas"] = v1_control_paths
+    fixed_prototype_control_paths = fixed_prototype_control_delta_plot(frame, output_dir)
+    if fixed_prototype_control_paths is not None:
+        figure_paths["fixed_prototype_triplets_vs_control"] = fixed_prototype_control_paths
     joint_control_paths = joint_matrix_control_delta_plot(frame, output_dir)
     if joint_control_paths is not None:
         figure_paths["joint_matrix_vs_shuffled_deltas"] = joint_control_paths

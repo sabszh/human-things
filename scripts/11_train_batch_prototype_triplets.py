@@ -362,7 +362,7 @@ def save_checkpoint(
             "epoch_info": epoch_info,
             "best_val_top1": best_val_top1,
             "num_classes": NUM_CLASSES,
-            "training_type": "human_informed_v2_current_batch_concept_triplets",
+            "training_type": "batch_prototype_triplets",
             "lambda_similarity": args.lambda_similarity,
             "triplet_margin": args.triplet_margin,
             "baseline_checkpoint": str(args.baseline_checkpoint),
@@ -564,7 +564,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
 
     method_report = {
         "status": "ok",
-        "training_type": "human_informed_v2_current_batch_concept_triplets",
+        "training_type": "batch_prototype_triplets",
         "baseline_checkpoint": display_path(args.baseline_checkpoint),
         "triplets": display_path(args.triplets),
         "human_similarity_supervision_level": "concept",
@@ -578,14 +578,14 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         "images_per_concept": args.images_per_concept,
         "effective_train_image_batch_size": args.triplets_per_batch * 3 * args.images_per_concept,
         "note": (
-            "This v2 trainer applies relative human similarity to current model concept prototypes "
-            "inside each sampled triplet batch, avoiding the static fixed-prototype limitation of v1."
+            "This batch-prototype trainer applies relative human similarity to current model concept prototypes "
+            "inside each sampled triplet batch, avoiding the static fixed-prototype limitation."
         ),
     }
     (args.output_dir / "method_report.json").write_text(json.dumps(method_report, indent=2), encoding="utf-8")
 
     print(f"Using device: {device}", flush=True)
-    print("Training type: human-informed v2 current-batch concept triplets", flush=True)
+    print("Training type: batch-prototype human triplets", flush=True)
     print(f"Baseline checkpoint: {args.baseline_checkpoint}", flush=True)
     print(f"Triplets: {args.triplets} rows={len(triplets)}", flush=True)
     print(f"triplets_per_batch={args.triplets_per_batch} images_per_concept={args.images_per_concept}", flush=True)
@@ -659,7 +659,7 @@ def train(args: argparse.Namespace) -> Dict[str, object]:
         "status": "ok",
         "device": str(device),
         "seed": args.seed,
-        "training_type": "human_informed_v2_current_batch_concept_triplets",
+        "training_type": "batch_prototype_triplets",
         "num_classes": NUM_CLASSES,
         "num_images": int(len(splits)),
         "triplets": int(len(triplets)),

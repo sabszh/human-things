@@ -2,12 +2,12 @@
   "status": "ok",
   "source_models": [
     "baseline",
-    "v1_human",
-    "v1_shuffled",
-    "v2_1200",
-    "v3_human",
-    "joint_matrix",
-    "joint_matrix_shuffled"
+    "fixed_prototype_triplets",
+    "fixed_prototype_control",
+    "batch_prototype_triplets",
+    "high_pressure_triplets",
+    "joint_matrix_alignment",
+    "matrix_control"
   ],
   "figures": {
     "classification_top1": {
@@ -58,9 +58,9 @@
       "png": "outputs/figures/figure_metric_delta_profiles.png",
       "svg": "outputs/figures/figure_metric_delta_profiles.svg"
     },
-    "v1_human_vs_shuffled_deltas": {
-      "png": "outputs/figures/figure_v1_human_vs_shuffled_deltas.png",
-      "svg": "outputs/figures/figure_v1_human_vs_shuffled_deltas.svg"
+    "fixed_prototype_triplets_vs_control": {
+      "png": "outputs/figures/figure_fixed_prototype_triplets_vs_control.png",
+      "svg": "outputs/figures/figure_fixed_prototype_triplets_vs_control.svg"
     },
     "joint_matrix_vs_shuffled_deltas": {
       "png": "outputs/figures/figure_joint_matrix_vs_shuffled_deltas.png",
@@ -87,8 +87,8 @@
     }
   },
   "interpretation_notes": [
-    "v1 human and v1 shuffled show nearly identical gains on classification and retrieval, suggesting generic fine-tuning or regularization rather than human-specific structure.",
-    "v3 human increases within-source human-similarity alignment, but this is a manipulation check because the model is trained from the same human-similarity source.",
+    "Fixed-prototype triplets and their shuffled control show nearly identical gains on classification and retrieval, suggesting generic fine-tuning or regularization rather than human-specific structure.",
+    "High-pressure triplets increase within-source human-similarity alignment, but this is a manipulation check because the model is trained from the same human-similarity source.",
     "Triplet satisfaction shows whether margin-based human constraints are already present in the image-only embedding space.",
     "Joint matrix models test a different injection strategy: global relational alignment during THINGS classification training, with a shuffled-matrix control.",
     "External THINGSplus transfer is evaluated separately from human-source alignment to avoid treating within-source human similarity as an independent semantic benchmark."

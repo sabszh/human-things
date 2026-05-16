@@ -8,7 +8,7 @@ from typing import Dict
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_BENCHMARK_REPORT = ROOT / "outputs" / "embedding_benchmark_report.json"
+DEFAULT_BENCHMARK_REPORT = ROOT / "outputs" / "embedding_benchmark_report_with_joint_matrix.json"
 OUTPUT_JSON = ROOT / "outputs" / "model_comparison_report.json"
 OUTPUT_CSV = ROOT / "outputs" / "model_comparison_summary.csv"
 
@@ -54,8 +54,8 @@ def make_summary(report: Dict[str, object]) -> pd.DataFrame:
             if col == "model" or not pd.api.types.is_numeric_dtype(summary[col]):
                 continue
             summary[f"delta_vs_baseline_{col}"] = summary[col] - baseline[col]
-    if "shuffled_control" in set(summary["model"]):
-        shuffled = summary.set_index("model").loc["shuffled_control"]
+    if "fixed_prototype_control" in set(summary["model"]):
+        shuffled = summary.set_index("model").loc["fixed_prototype_control"]
         for col in [
             "test_top1",
             "image_retrieval_hit@1",
